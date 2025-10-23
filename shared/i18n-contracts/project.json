@@ -1,0 +1,19 @@
+{
+  "name": "i18n-contracts",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/i18n-contracts/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:contract"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/i18n-contracts",
+        "main": "shared/i18n-contracts/src/index.ts",
+        "tsConfig": "shared/i18n-contracts/tsconfig.lib.json",
+        "assets": ["shared/i18n-contracts/*.md"]
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+
+{
+  "name": "db-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/db-types/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:contract"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/db-types",
+        "main": "shared/db-types/src/index.ts",
+        "tsConfig": "shared/db-types/tsconfig.lib.json",
+        "assets": []
+      }
+    }
+  }
+}

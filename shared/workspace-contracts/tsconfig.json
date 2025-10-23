@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "../db-types"
+    },
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}

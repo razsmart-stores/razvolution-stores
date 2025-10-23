@@ -1,0 +1,22 @@
+// RUTA: shared/observability/tsconfig.spec.json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "module": "commonjs",
+    "moduleResolution": "node10",
+    "types": ["jest", "node"]
+  },
+  "include": [
+    "jest.config.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts",
+    // --- [INICIO DE CORRECCIÓN DE CONTEXTO SOBERANO v1.0] ---
+    // Se incluye explícitamente todo el código fuente de la biblioteca
+    // para proporcionar a Jest el contexto de compilación completo y
+    // prevenir errores de resolución de módulos (TS6307).
+    "src/**/*.ts"
+    // --- [FIN DE CORRECCIÓN DE CONTEXTO SOBERANO v1.0] ---
+  ]
+}

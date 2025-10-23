@@ -1,0 +1,24 @@
+// RUTA: shared/utils/tsconfig.spec.json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "module": "commonjs",
+    "moduleResolution": "node10",
+    "types": ["jest", "node"]
+  },
+  "include": [
+    "jest.config.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts",
+    // --- [INICIO DE CORRECCIÓN DE CONTEXTO SOBERANO v1.0] ---
+    // Se incluye explícitamente todo el código fuente de la biblioteca.
+    // Esta es la corrección mandatoria para el error TS6307. Al incluir "src/**/*.ts",
+    // el compilador de TypeScript, cuando es invocado por Jest, ahora
+    // tiene visibilidad tanto del código de prueba como del código que
+    // se está probando, resolviendo el error de "archivo no encontrado en el proyecto".
+    "src/**/*.ts"
+    // --- [FIN DE CORRECCIÓN DE CONTEXTO SOBERANO v1.0] ---
+  ]
+}

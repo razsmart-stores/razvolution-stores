@@ -1,0 +1,19 @@
+// RUTA: shared/auth-contracts/tsconfig.spec.json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "module": "commonjs",
+    "moduleResolution": "node10",
+    "types": ["jest", "node"]
+  },
+  "include": [
+    "jest.config.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts",
+    // --- [INICIO DE CORRECCIÓN DE CONTEXTO SOBERANO v1.0] ---
+    "src/**/*.ts"
+    // --- [FIN DE CORRECCIÓN DE CONTEXTO SOBERANO v1.0] ---
+  ]
+}

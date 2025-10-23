@@ -1,0 +1,30 @@
+{
+  "userNav": {
+    "loginButton": "Sign In",
+    "logoutButton": "Log Out",
+    "sessionLabel": "Signed in as",
+    "viewAllNotificationsLink": "View all",
+    "notificationsLabel": "Notifications",
+    "noNotificationsText": "You have no notifications.",
+    "loadingText": "Loading...",
+    "lastSignIn": {
+      "title": "Last sign-in",
+      "location": "From {{location}}",
+      "ip": "IP: {{ip}}",
+      "unknownLocation": "an unknown location",
+      "unknownIp": "not recorded"
+    },
+    "workspaceSwitcher": {
+      "activeWorkspaceLabel": "Active Workspace",
+      "loadingText": "Loading...",
+      "noWorkspacesTitle": "No Workspaces Found",
+      "noWorkspacesDescription": "Your account is not associated with any workspace. Please contact support.",
+      "errorTitle": "Loading Error",
+      "errorDescription": "Could not load your workspaces. Please try again later."
+    }
+  },
+  "page": {
+    "title": "The Sovereign Base for the Modern Web",
+    "subtitle": "This site is a live demonstration..."
+  }
+}

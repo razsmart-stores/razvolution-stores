@@ -1,0 +1,30 @@
+{
+  "userNav": {
+    "loginButton": "Iniciar Sesión",
+    "logoutButton": "Cerrar Sesión",
+    "sessionLabel": "Sesión iniciada como",
+    "viewAllNotificationsLink": "Ver todas",
+    "notificationsLabel": "Notificaciones",
+    "noNotificationsText": "No tienes notificaciones.",
+    "loadingText": "Cargando...",
+    "lastSignIn": {
+      "title": "Último acceso",
+      "location": "Desde {{location}}",
+      "ip": "IP: {{ip}}",
+      "unknownLocation": "ubicación desconocida",
+      "unknownIp": "no registrada"
+    },
+    "workspaceSwitcher": {
+      "activeWorkspaceLabel": "Workspace Activo",
+      "loadingText": "Cargando...",
+      "noWorkspacesTitle": "No se Encontraron Workspaces",
+      "noWorkspacesDescription": "Tu cuenta no está asociada a ningún workspace. Contacta con soporte.",
+      "errorTitle": "Error de Carga",
+      "errorDescription": "No se pudieron cargar tus workspaces. Inténtalo de nuevo más tarde."
+    }
+  },
+  "page": {
+    "title": "La Base Soberana para la Web Moderna",
+    "subtitle": "Este sitio es una demostración en vivo..."
+  }
+}

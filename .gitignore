@@ -1,0 +1,71 @@
+# ==============================================================================
+# MANIFIESTO DE ARCHIVOS IGNORADOS v1.0 (Holístico para NX + Next.js)
+#
+# SSoT para ignorar artefactos de build, dependencias, logs, secretos y
+# archivos específicos del entorno de desarrollo.
+# ==============================================================================
+
+# Dependencias
+node_modules
+
+# Archivos de Entorno y Secretos (¡MUY IMPORTANTE!)
+# Nunca subir claves de API o contraseñas al repositorio.
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build y Salida de Compilación
+.next/
+out/
+dist/
+tmp/
+out-tsc/
+
+# Caché y Datos de Workspace de NX
+.nx/cache
+.nx/workspace-data
+
+# Logs y Reportes
+*.log
+npm-debug.log*
+yarn-error.log
+yarn-debug.log
+error.log
+# Reportes de diagnóstico y snapshots que generamos localmente
+reports/
+snapshot-reports/
+
+# Reportes y Resultados de Pruebas
+coverage/
+playwright-report/
+test-results/
+
+# Archivos temporales de Supabase CLI
+supabase/.temp/
+
+# Configuración de IDE y Editores
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Configuración de VSCode (ignora todo excepto la configuración compartida)
+.vscode/*
+!/.vscode/settings.json
+!/.vscode/tasks.json
+!/.vscode/launch.json
+!/.vscode/extensions.json
+
+# Archivos de Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Archivos específicos de herramientas de IA (si aplica)
+.cursor/
+
+test-output

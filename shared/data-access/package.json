@@ -1,0 +1,18 @@
+{
+  "name": "@razvolution/shared-data-access",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "next": "14.2.3",
+    "zod": "^3.23.8",
+    "@razvolution/shared-auth-contracts": "workspace:*",
+    "@razvolution/shared-logging": "workspace:*",
+    "@razvolution/shared-supabase": "workspace:*",
+    "@razvolution/shared-utils": "workspace:*"
+  },
+  "devDependencies": {}
+}

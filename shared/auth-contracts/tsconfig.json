@@ -1,0 +1,20 @@
+// RUTA: shared/auth-contracts/tsconfig.json
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Se elimina la anulación "module": "commonjs".
+    // Esta biblioteca, como todas las demás, debe compilar a ES Modules
+    // según la configuración base soberana.
+    "composite": true
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

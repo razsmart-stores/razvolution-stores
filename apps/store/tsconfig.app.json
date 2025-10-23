@@ -1,0 +1,54 @@
+// RUTA: apps/store/tsconfig.app.json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "allowJs": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "types": ["jest", "node"]
+  },
+  // --- [INICIO DE CORRECCIÓN SOBERANA DE GRAFO v2.0] ---
+  // Se elimina el 'include' manual de dependencias externas.
+  // La visibilidad del código fuente de las dependencias ahora es
+  // gestionada EXCLUSIVAMENTE por las "Project References"
+  // definidas en 'apps/store/tsconfig.json'.
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
+  // --- [FIN DE CORRECCIÓN SOBERANA DE GRAFO v2.0] ---
+  "exclude": ["node_modules", "jest.config.ts"],
+  // --- [INICIO DE CORRECCIÓN SOBERANA DE GRAFO v2.0] ---
+  // Se añade el array 'references' para conectar explícitamente esta
+  // configuración de aplicación con las bibliotecas de las que depende.
+  // Esto le da al compilador el contexto completo para resolver los tipos.
+  "references": [
+    {
+      "path": "../../shared/ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../shared/utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../shared/supabase/tsconfig.lib.json"
+    },
+    {
+      "path": "../../shared/logging/tsconfig.lib.json"
+    },
+    {
+      "path": "../../shared/i18n-contracts/tsconfig.lib.json"
+    },
+    {
+      "path": "../../shared/db-types/tsconfig.lib.json"
+    },
+    {
+      "path": "../../features/auth/tsconfig.lib.json"
+    }
+  ]
+  // --- [FIN DE CORRECCIÓN SOBERANA DE GRAFO v2.0] ---
+}

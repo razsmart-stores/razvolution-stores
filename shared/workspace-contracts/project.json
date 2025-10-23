@@ -1,0 +1,19 @@
+{
+  "name": "workspace-contracts",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/workspace-contracts/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:contract"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/workspace-contracts",
+        "main": "shared/workspace-contracts/src/index.ts",
+        "tsConfig": "shared/workspace-contracts/tsconfig.lib.json",
+        "assets": []
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "es2022",
+    "lib": ["es2022", "dom"],
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@razvolution/features-auth": ["features/auth/src/index.ts"],
+      "@razvolution/shared-auth-contracts": [
+        "shared/auth-contracts/src/index.ts"
+      ],
+      "@razvolution/shared-data-access": ["shared/data-access/src/index.ts"],
+      "@razvolution/shared-db-types": ["shared/db-types/src/index.ts"],
+      "@razvolution/shared-i18n-contracts": [
+        "shared/i18n-contracts/src/index.ts"
+      ],
+      "@razvolution/shared-logging": ["shared/logging/src/index.ts"],
+      "@razvolution/shared-observability": [
+        "shared/observability/src/index.ts"
+      ],
+      "@razvolution/shared-supabase": ["shared/supabase/src/index.ts"],
+      "@razvolution/shared-test-utils": ["shared/test-utils/src/index.ts"],
+      "@razvolution/shared-ui": ["shared/ui/src/index.ts"],
+      "@razvolution/shared-utils": ["shared/utils/src/index.ts"]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "importHelpers": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "exclude": ["node_modules", "tmp"]
+}

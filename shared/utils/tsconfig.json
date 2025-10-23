@@ -1,0 +1,22 @@
+// RUTA: shared/utils/tsconfig.json
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // --- [INICIO DE CORRECCIÓN SOBERANA] ---
+    // Se elimina la anulación "module": "commonjs" y otras opciones redundantes.
+    // Este archivo debe heredar la configuración del compilador de la base
+    // y solo añadir lo estrictamente necesario para su rol de "conector".
+    "composite": true
+    // --- [FIN DE CORRECCIÓN SOBERANA] ---
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

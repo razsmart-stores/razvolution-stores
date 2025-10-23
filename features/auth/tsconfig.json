@@ -1,0 +1,39 @@
+// RUTA: features/auth/tsconfig.json
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowJs": false,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "../../shared/db-types"
+    },
+    {
+      "path": "../../shared/logging"
+    },
+    {
+      "path": "../../shared/i18n-contracts"
+    },
+    {
+      "path": "../../shared/utils"
+    },
+    {
+      "path": "../../shared/ui"
+    },
+    {
+      "path": "../../shared/supabase"
+    },
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ],
+  "extends": "../../tsconfig.base.json"
+}

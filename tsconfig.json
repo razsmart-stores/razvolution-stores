@@ -1,0 +1,52 @@
+{
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./shared/auth-contracts"
+    },
+    {
+      "path": "./shared/observability"
+    },
+    {
+      "path": "./shared/data-access"
+    },
+    {
+      "path": "./shared/test-utils"
+    },
+    {
+      "path": "./shared/supabase"
+    },
+    {
+      "path": "./shared/logging"
+    },
+    {
+      "path": "./features/auth"
+    },
+    {
+      "path": "./shared/utils"
+    },
+    {
+      "path": "./shared/ui"
+    },
+    {
+      "path": "./shared/workspace-contracts"
+    },
+    {
+      "path": "./shared/db-types"
+    },
+    {
+      "path": "./shared/i18n-contracts"
+    },
+    {
+      "path": "./apps/store"
+    },
+    {
+      "path": "./shared/ui"
+    },
+    {
+      "path": "./shared/config"
+    }
+  ]
+}

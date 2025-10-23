@@ -1,0 +1,19 @@
+{
+  "name": "supabase",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/supabase/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:data-access"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/supabase",
+        "main": "shared/supabase/src/index.ts",
+        "tsConfig": "shared/supabase/tsconfig.lib.json",
+        "assets": ["shared/supabase/*.md"]
+      }
+    }
+  }
+}

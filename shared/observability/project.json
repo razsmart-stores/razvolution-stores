@@ -1,0 +1,19 @@
+{
+  "name": "observability",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/observability/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:observability"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/observability",
+        "main": "shared/observability/src/index.ts",
+        "tsConfig": "shared/observability/tsconfig.lib.json",
+        "assets": ["shared/observability/*.md"]
+      }
+    }
+  }
+}

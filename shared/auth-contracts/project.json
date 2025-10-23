@@ -1,0 +1,19 @@
+{
+  "name": "auth-contracts",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/auth-contracts/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:contract"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/auth-contracts",
+        "main": "shared/auth-contracts/src/index.ts",
+        "tsConfig": "shared/auth-contracts/tsconfig.lib.json",
+        "assets": ["shared/auth-contracts/*.md"]
+      }
+    }
+  }
+}
