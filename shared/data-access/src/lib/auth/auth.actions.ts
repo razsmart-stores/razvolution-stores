@@ -2,16 +2,13 @@
 /**
  * @file auth.actions.ts
  * @description SSoT para las Server Actions de autenticación, con instrumentación de Heimdall.
- * @version 16.0.0 (Sovereign Alignment)
+ * @version 18.0.0 (Sovereign Server Entrypoint Consumption)
  * @author RaZ Podestá - MetaShark Tech
  */
 "use server";
 
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
-// --- [INICIO DE ALINEACIÓN SOBERANA] ---
-// Se actualizan las rutas de importación para usar los alias corregidos
-// y válidos definidos en tsconfig.base.json.
 import {
   type ForgotPasswordFormData,
   ForgotPasswordSchema,
@@ -19,13 +16,15 @@ import {
   LoginSchema,
   type SignUpFormData,
   SignUpSchema,
-} from "@razvolution/shared-auth-contracts"; // Corregido
+} from "@razvolution/shared-auth-contracts";
 import { logger } from "@razvolution/shared-logging";
-import { createServerClient } from "@razvolution/shared-supabase";
-import type { ActionResult } from "@razvolution/shared-utils"; // Corregido
-// --- [FIN DE ALINEACIÓN SOBERANA] ---
+// --- [INICIO DE CORRECCIÓN SOBERANA DE PUNTO DE ENTRADA v18.0.0] ---
+// Se consume la función 'createServerClient' desde el punto de entrada de servidor
+// explícito y soberano, respetando las fronteras de módulos.
+import { createServerClient } from "@razvolution/shared-supabase/server";
+// --- [FIN DE CORRECCIÓN SOBERANA DE PUNTO DE ENTRADA v18.0.0] ---
+import type { ActionResult } from "@razvolution/shared-utils";
 
-// ... el resto del archivo permanece igual ...
 export async function loginWithPasswordAction(
   data: LoginFormData
 ): Promise<ActionResult<null>> {

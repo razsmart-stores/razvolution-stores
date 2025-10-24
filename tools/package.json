@@ -1,0 +1,13 @@
+{
+  "name": "@razvolution/tools",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "generators": "./generators.json",
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "@nx/devkit": "21.6.5"
+  }
+}

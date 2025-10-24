@@ -1,26 +1,40 @@
-// Ruta correcta: src/components/features/auth/LanguageSelectorClient.tsx
+// RUTA: features/auth/src/lib/components/auth/LanguageSelectorClient.tsx
 /**
  * @file LanguageSelectorClient.tsx
- * @description Componente de cliente para la selección de idioma con temporizador.
- * @version 3.0.0 (Architectural Relocation & Elite Leveling)
- * @author RaZ Podestá - MetaShark Tech
+ * @description Componente de cliente para la selección de idioma con temporizador,
+ *              nivelado para la arquitectura soberana del monorepo.
+ * @version 4.1.0 (Sovereign Leveling & Code Hygiene)
+ * @author IA Arquitecto
  */
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-import { Button } from "@/components/ui/Button";
+// --- [INICIO DE NIVELACIÓN SOBERANA v4.1.0] ---
+// Se corrigen las importaciones para usar los alias soberanos del monorepo
+// definidos en tsconfig.base.json, resolviendo los errores TS2307.
+
 import {
+  Button,
   Card,
   CardContent,
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/Card";
-import { defaultLocale, type Locale } from "@/shared/lib/i18n/i18n.config";
-import { logger } from "@/shared/lib/logging";
-import type { SelectLanguagePageContent } from "@/shared/lib/schemas/pages/select-language.schema";
+} from "@razvolution/shared-ui";
+import { defaultLocale, type Locale } from "@razvolution/shared-utils";
+import { logger } from "@razvolution/shared-logging";
+
+// NOTA: El tipo 'SelectLanguagePageContent' no existe en los contratos actuales.
+// Se asume que será parte de `Dictionary` en `@razvolution/shared-i18n-contracts`.
+// Por ahora, se define un tipo local como placeholder.
+type SelectLanguagePageContent = {
+  title: string;
+  subtitle: string;
+  languages: Record<string, string>;
+};
+// --- [FIN DE NIVELACIÓN SOBERANA v4.1.0] ---
 
 interface LanguageSelectorClientProps {
   content: SelectLanguagePageContent;
@@ -29,7 +43,7 @@ interface LanguageSelectorClientProps {
 export function LanguageSelectorClient({
   content,
 }: LanguageSelectorClientProps) {
-  logger.info("[LanguageSelectorClient] Renderizando v3.0 (Elite Leveling).");
+  logger.info("[LanguageSelectorClient] Renderizando v4.1 (Sovereign & Clean).");
   const router = useRouter();
   const searchParams = useSearchParams();
   const [countdown, setCountdown] = useState(5);
@@ -90,4 +104,3 @@ export function LanguageSelectorClient({
     </Card>
   );
 }
-// Ruta correcta: src/components/features/auth/LanguageSelectorClient.tsx

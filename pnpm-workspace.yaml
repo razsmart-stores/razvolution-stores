@@ -1,15 +1,8 @@
-// RUTA: pnpm-workspace.yaml
 packages:
-  # --- [INICIO DE CONFIGURACIÓN SOBERANA DE WORKSPACE] ---
-  # Se definen explícitamente las rutas que contienen los paquetes
-  # de nuestro monorepo. pnpm buscará archivos package.json
-  # dentro de los directorios que coincidan con estos patrones (glob).
   - 'apps/*'
   - 'features/*'
   - 'shared/*'
-  # --- [FIN DE CONFIGURACIÓN SOBERANA DE WORKSPACE] ---
-
-# La siguiente directiva es una optimización, la mantenemos.
+  - 'tools'
 onlyBuiltDependencies:
   - '@swc/core'
-  - nx
+  - 'nx'

@@ -1,6 +1,16 @@
 // RUTA: apps/store/app/[lang]/page.tsx
+/**
+ * @file page.tsx
+ * @description Página de inicio de la tienda.
+ * @version 2.0.0 (Sovereign Import Path Correction)
+ * @author IA Arquitecto
+ */
 import { getDictionary } from '../../get-dictionary';
-import type { Locale } from '../../../../shared/utils/src/lib/i18n/i18n-config';
+// --- [INICIO DE CORRECCIÓN DE RUTA SOBERANA v2.0.0] ---
+// Se corrige la importación para consumir el tipo 'Locale' desde el punto de
+// entrada de la biblioteca, cumpliendo con los principios del monorepo.
+import type { Locale } from '@razvolution/shared-utils';
+// --- [FIN DE CORRECCIÓN DE RUTA SOBERANA v2.0.0] ---
 
 export default async function IndexPage({
   params: { lang },

@@ -1,3 +1,7 @@
+
+
+---
+
 # Manifiesto del Dominio de Utilidades (`shared/utils`)
 
 ## 1. Propósito y Alcance Soberano
@@ -69,4 +73,4 @@ Este dominio está diseñado para crecer. Los siguientes aparatos son candidatos
     *   **Funcionalidades:** `debounce`, `throttle`, `delay`.
     ---
 
-    
+

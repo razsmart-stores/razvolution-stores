@@ -1,5 +1,5 @@
 {
-  "name": "@razsmart/shared/config",
+  "name": "@razvolution/shared-config",
   "version": "0.0.1",
   "type": "module",
   "main": "./dist/index.js",

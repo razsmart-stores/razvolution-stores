@@ -1,19 +1,16 @@
-// RUTA: shared/test-utils/tsconfig.spec.json
+// PLANTILLA SOBERANA DEFINITIVA: [biblioteca]/tsconfig.spec.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
     "module": "commonjs",
-    "moduleResolution": "node10",
     "types": ["jest", "node"]
   },
   "include": [
     "jest.config.ts",
-    "src/**/*.test.ts",
     "src/**/*.spec.ts",
+    "src/**/*.spec.tsx",
     "src/**/*.d.ts",
-    // --- [INICIO DE CORRECCIÓN DE CONTEXTO SOBERANO v1.0] ---
-    "src/**/*.ts"
-    // --- [FIN DE CORRECCIÓN DE CONTEXTO SOBERANO v1.0] ---
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ]
 }

@@ -1,8 +1,18 @@
+// RUTA: shared/ui/tsconfig.json
 {
   "extends": "../../tsconfig.base.json",
   "files": [],
   "include": [],
   "references": [
+    {
+      "path": "../i18n-contracts"
+    },
+    {
+      "path": "../logging"
+    },
+    {
+      "path": "../utils"
+    },
     {
       "path": "./tsconfig.lib.json"
     },

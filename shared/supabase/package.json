@@ -5,8 +5,11 @@
   "type": "commonjs",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
+  "exports": {
+    ".": "./src/index.js",
+    "./server": "./src/lib/server.ts"
+  },
   "dependencies": {
-    "tslib": "^2.3.0",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.57.4",
     "next": "14.2.3",

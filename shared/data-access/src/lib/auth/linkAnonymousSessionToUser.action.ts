@@ -1,29 +1,22 @@
 // RUTA: shared/data-access/src/lib/auth/linkAnonymousSessionToUser.action.ts
 /**
  * @file linkAnonymousSessionToUser.action.ts
- * @description Server Action que orquesta el "Traspaso de Identidad", ahora con
- *              instrumentación de Tareas de Heimdall y alineación de importación soberana.
- * @version 4.0.0 (Sovereign Import Alignment)
+ * @description Server Action que orquesta el "Traspaso de Identidad", con
+ *              instrumentación de Heimdall y consumo de punto de entrada soberano.
+ * @version 5.0.0 (Sovereign Server Entrypoint Consumption)
  * @author RaZ Podestá - MetaShark Tech
  */
 "use server";
 
 import { z } from "zod";
 
-// --- [INICIO DE CORRECCIÓN SOBERANA v4.0.0] ---
-// Se actualizan las rutas de importación para usar los alias válidos y
-// centralizados definidos en el tsconfig.base.json del monorepo.
-// Esto resuelve los errores TS2307 de "módulo no encontrado".
-
-// ANTES: import { createServerClient } from "@/shared/lib/supabase/server";
-import { createServerClient } from "@razvolution/shared-supabase";
-
-// ANTES: import { logger } from "@/shared/lib/telemetry/heimdall.emitter";
+// --- [INICIO DE CORRECCIÓN SOBERANA DE PUNTO DE ENTRADA v5.0.0] ---
+// Se corrige la importación para consumir desde el punto de entrada de servidor
+// explícito, respetando las fronteras de módulos del monorepo.
+import { createServerClient } from "@razvolution/shared-supabase/server";
+// --- [FIN DE CORRECCIÓN SOBERANA DE PUNTO DE ENTRADA v5.0.0] ---
 import { logger } from "@razvolution/shared-logging";
-
-// ANTES: import type { ActionResult } from "@/shared/lib/types/actions.types";
 import type { ActionResult } from "@razvolution/shared-utils";
-// --- [FIN DE CORRECCIÓN SOBERANA v4.0.0] ---
 
 const LinkSessionInputSchema = z.object({
   fingerprintId: z

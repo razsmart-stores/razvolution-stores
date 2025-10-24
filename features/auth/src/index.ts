@@ -2,18 +2,17 @@
 /**
  * @file index.ts (Barrel File)
  * @description Fachada pública soberana para la biblioteca de funcionalidades de autenticación.
- * @version 2.0.0 (Scalable Public API)
+ * @version 3.0.0 (Sovereign API Correction)
  * @author IA Arquitecto
  */
 
-// Exportamos todos los componentes orquestadores y de UI del dominio.
+// Se exporta el orquestador principal y los componentes atómicos reutilizables.
+// LoginForm y SignUpForm son detalles de implementación internos de AuthForm y no se exportan.
 export * from './lib/components/auth/AuthForm';
 export * from './lib/components/auth/ForgotPasswordForm';
 export * from './lib/components/auth/LastSignInInfo';
-export * from './lib/components/auth/LoginForm';
 export * from './lib/components/auth/OAuthButtons';
-export * from './lib/components/auth/SignUpForm';
 export * from './lib/components/auth/UserNav';
 
-// Exportamos los hooks de cliente del dominio.
+// Se exportan los hooks de cliente del dominio.
 export * from './lib/hooks/use-auth';

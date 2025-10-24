@@ -1,18 +1,10 @@
 // RUTA: shared/i18n-contracts/tsconfig.json
 {
   "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    // Declara que esta biblioteca es una pieza componible del monorepo.
-    "composite": true
-  },
   "files": [],
   "include": [],
   "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
+    { "path": "./tsconfig.lib.json" },
+    { "path": "./tsconfig.spec.json" }
   ]
 }

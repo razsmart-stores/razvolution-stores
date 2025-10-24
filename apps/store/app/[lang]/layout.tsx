@@ -2,19 +2,29 @@
 /**
  * @file layout.tsx
  * @description Layout raíz soberano y orquestador de datos.
- * @version 5.1.0 (Sovereign Import Alignment & Code Hygiene)
+ * @version 7.0.0 (Server Module Consumption Fix)
  * @author IA Arquitecto
  */
-import { createServerClient } from '@razvolution/shared-supabase';
+
+// --- [INICIO DE CORRECCIÓN SOBERANA v7.0.0] ---
+// Se elimina la importación del lado del cliente de createServerClient.
+// Los módulos de servidor se importarán directamente a continuación.
 import { getDictionary } from '../../get-dictionary';
-// --- [INICIO DE CORRECCIÓN SOBERANA DE IMPORTACIÓN v5.1.0] ---
-// Se corrige la ruta de importación para apuntar a la SSoT en 'shared-utils'.
 import type { Locale } from '@razvolution/shared-utils';
-// --- [FIN DE CORRECCIÓN SOBERANA DE IMPORTACIÓN v5.1.0] ---
 import { Footer } from '../../components/Footer';
 import { Header } from './components/Header';
 import { HeimdallProvider } from './components/HeimdallProvider';
-import './global.css';
+import '../global.css';
+
+// Se importa el módulo 'server-only' para garantizar que este componente
+// nunca se ejecute en el cliente.
+import 'server-only';
+
+// Se importa el createServerClient directamente desde su archivo de origen
+// usando una ruta relativa. Esta es la forma soberana de consumir un módulo
+// de servidor desde otro módulo de servidor en un monorepo.
+import { createServerClient } from '../../../../shared/supabase/src/lib/server';
+// --- [FIN DE CORRECCIÓN SOBERANA v7.0.0] ---
 
 export const metadata = {
   title: 'razvolution | Sovereign E-commerce',
@@ -42,9 +52,6 @@ export default async function RootLayout({
     <html lang={lang}>
       <body className="flex flex-col min-h-screen bg-white text-black dark:bg-black dark:text-white">
         <HeimdallProvider>
-          {/* --- [INICIO DE CORRECCIÓN DE HIGIENE DE CÓDIGO v5.1.0] --- */}
-          {/* Se elimina la directiva '@ts-expect-error' ya que es innecesaria. */}
-          {/* --- [FIN DE CORRECCIÓN DE HIGIENE DE CÓDIGO v5.1.0] --- */}
           <Header
             lang={lang}
             user={user}

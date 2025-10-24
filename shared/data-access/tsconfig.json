@@ -1,29 +1,27 @@
 // RUTA: shared/data-access/tsconfig.json
 {
   "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    // Se elimina cualquier anulación para heredar la configuración soberana.
-    "composite": true
-  },
   "files": [],
   "include": [],
   "references": [
-    // --- [INICIO DE CORRECCIÓN DE GRAFO v2.0] ---
-    // Referencias a nivel de proyecto. Esto es para la inteligencia del editor
-    // y la estructura general del monorepo.
     {
-      "path": "../auth-contracts"
+      "path": "../shopify"
     },
     {
-      "path": "../logging"
+      "path": "../payments"
+    },
+    {
+      "path": "../utils"
     },
     {
       "path": "../supabase"
     },
     {
-      "path": "../utils"
+      "path": "../logging"
     },
-    // --- [FIN DE CORRECCIÓN DE GRAFO v2.0] ---
+    {
+      "path": "../auth-contracts"
+    },
     {
       "path": "./tsconfig.lib.json"
     },

@@ -2,18 +2,37 @@
 /**
  * @file UserNavClient.tsx
  * @description Componente de cliente puro para la interactividad de UserNav.
- *              Recibe todos los datos y contenido como props.
- * @version 1.0.0
+ *              Nivelado para una seguridad de tipos absoluta mediante la importación
+ *              de contratos soberanos.
+ * @version 2.0.0 (Sovereign Type Safety)
  * @author IA Arquitecto
  */
 "use client";
 
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { createClient } from '@razvolution/shared-supabase';
-// ... (Componentes de UI de marcado de posición como antes)
 
-export function UserNavClient({ user, profile, navContent }) {
+// --- [INICIO DE CORRECCIÓN SOBERANA v2.0.0] ---
+// Se importan los tipos necesarios desde las bibliotecas soberanas para
+// eliminar los errores de tipo 'any' implícito.
+import type { User } from '@supabase/supabase-js';
+import { createClient } from '@razvolution/shared-supabase';
+import type { Tables } from '@razvolution/shared-db-types';
+import type { Dictionary } from '@razvolution/shared-i18n-contracts';
+// --- [FIN DE CORRECCIÓN SOBERANA v2.0.0] ---
+
+
+// Se definen los tipos para las props, siguiendo las mejores prácticas.
+type NavContent = NonNullable<Dictionary['userNav']>;
+type Profile = Tables<'profiles'> | null;
+
+interface UserNavClientProps {
+  user: User | null;
+  profile: Profile;
+  navContent: NavContent;
+}
+
+export function UserNavClient({ user, profile, navContent }: UserNavClientProps) {
   const router = useRouter();
 
   const handleLogout = async () => {

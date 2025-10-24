@@ -1,28 +1,36 @@
-// RUTA: src/components/features/auth/AuthForm.tsx
+// RUTA: features/auth/src/lib/components/auth/AuthForm.tsx
 /**
  * @file AuthForm.tsx
- * @description Orquestador de UI para autenticación, nivelado para un flujo de datos unidireccional.
- * @version 6.0.0 (Unidirectional Data Flow & Elite State Management)
- * @author RaZ Podestá - MetaShark Tech
+ * @description Orquestador de UI para autenticación, nivelado para el monorepo.
+ * @version 8.0.0 (Holistic Integrity Restoration)
+ * @author IA Arquitecto
  */
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 
-import { DeveloperErrorDisplay } from "@/components/features/dev-tools/DeveloperErrorDisplay";
-import { DynamicIcon } from "@/components/ui";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert";
-import { TiltCard } from "@/components/ui/TiltCard";
-import type { Locale } from "@/shared/lib/i18n/i18n.config";
-import { logger } from "@/shared/lib/logging";
-import type { LoginFormData } from "@/shared/lib/schemas/auth/login.schema";
-import type { Dictionary } from "@/shared/lib/schemas/i18n.schema";
+// --- [INICIO DE CORRECCIÓN SOBERANA v8.0.0] ---
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  DynamicIcon,
+  TiltCard,
+} from "@razvolution/shared-ui";
+import { logger } from "@razvolution/shared-logging";
+import {
+  type LoginFormData,
+  type SignUpFormData,
+} from "@razvolution/shared-auth-contracts";
+import type { Dictionary } from "@razvolution/shared-i18n-contracts";
+import type { Locale } from "@razvolution/shared-utils";
 
 import { LoginForm } from "./LoginForm";
 import { SignUpForm } from "./SignUpForm";
+// --- [FIN DE CORRECCIÓN SOBERANA v8.0.0] ---
 
-type AuthFormContent = NonNullable<Dictionary["devLoginPage"]>;
+type AuthFormContent = NonNullable<Dictionary["auth"]>;
 type OAuthButtonsContent = NonNullable<Dictionary["oAuthButtons"]>;
 
 interface AuthFormProps {
@@ -31,6 +39,7 @@ interface AuthFormProps {
   locale: Locale;
   contextualMessage?: string;
   onLoginSubmit: (data: LoginFormData) => void;
+  onSignUpSubmit: (data: SignUpFormData) => void; // <-- Prop añadida
   isPending: boolean;
 }
 
@@ -40,36 +49,19 @@ export function AuthForm({
   locale,
   contextualMessage,
   onLoginSubmit,
+  onSignUpSubmit, // <-- Prop añadida
   isPending,
 }: AuthFormProps) {
-  const traceId = useMemo(
-    () => logger.startTrace("AuthForm_Lifecycle_v6.0"),
-    []
-  );
+  const traceId = useMemo(() => logger.startTrace("AuthForm_Lifecycle"), []);
   useEffect(() => {
-    logger.info("[AuthForm] Orquestador de UI montado.", {
-      traceId,
-      hasContextualMessage: !!contextualMessage,
-    });
+    logger.info("[AuthForm] Orquestador de UI montado.", { traceId });
     return () => logger.endTrace(traceId);
-  }, [traceId, contextualMessage]);
+  }, [traceId]);
 
   const [view, setView] = useState<"login" | "signup">("login");
 
-  if (!content || !oAuthContent) {
-    return (
-      <DeveloperErrorDisplay
-        context="AuthForm"
-        errorMessage="Contenido i18n incompleto."
-      />
-    );
-  }
-
   const handleSwitchView = (newView: "login" | "signup") => {
-    logger.traceEvent(
-      traceId,
-      `Acción de usuario: Cambiando vista a '${newView}'.`
-    );
+    logger.traceEvent(traceId, `Cambiando vista a '${newView}'.`);
     setView(newView);
   };
 
@@ -92,15 +84,7 @@ export function AuthForm({
           </motion.div>
         )}
       </AnimatePresence>
-      <TiltCard
-        options={{
-          max: 5,
-          scale: 1.01,
-          speed: 500,
-          glare: true,
-          "max-glare": 0.1,
-        }}
-      >
+      <TiltCard>
         <AnimatePresence mode="wait">
           <motion.div
             key={view}
@@ -124,6 +108,8 @@ export function AuthForm({
                 oAuthContent={oAuthContent}
                 locale={locale}
                 onSwitchView={() => handleSwitchView("login")}
+                onSubmit={onSignUpSubmit}
+                isPending={isPending}
               />
             )}
           </motion.div>

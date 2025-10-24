@@ -1,18 +1,24 @@
-// RUTA: shared/supabase/tsconfig.lib.json
+// PLANTILLA SOBERANA DEFINITIVA: [biblioteca]/tsconfig.lib.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": true,
     "types": ["node"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": [
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.tsx",
+    "src/**/*.test.tsx"
+  ],
   "references": [
     {
-      "path": "../db-types/tsconfig.lib.json"
+      "path": "../logging/tsconfig.lib.json"
     },
     {
-      "path": "../logging/tsconfig.lib.json"
+      "path": "../db-types/tsconfig.lib.json"
     }
   ]
 }

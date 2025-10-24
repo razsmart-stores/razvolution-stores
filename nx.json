@@ -18,6 +18,12 @@
   "nxCloudId": "68f793411922065e2c826071",
   "plugins": [
     {
+      "plugin": "./tools/package.json",
+      "options": {
+        "buildTargetName": "build"
+      }
+    },
+    {
       "plugin": "@nx/js/typescript",
       "options": {
         "typecheck": {
@@ -29,7 +35,8 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
-      }
+      },
+      "exclude": ["shared/rewards-contracts/*"]
     },
     {
       "plugin": "@nx/eslint/plugin",
@@ -41,6 +48,15 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
+      }
+    },
+    {
+      "plugin": "@nx/js/typescript",
+      "include": ["shared/rewards-contracts/*"],
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        }
       }
     }
   ],

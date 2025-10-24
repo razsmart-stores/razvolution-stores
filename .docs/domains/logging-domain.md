@@ -1,3 +1,81 @@
+Manifiesto del Dominio de Observabilidad (shared/logging)
+Atributo	Valor
+Dominio	@razvolution/shared/logging
+Alias	Protocolo Heimdall
+Scope (Etiqueta Nx)	scope:shared
+Tipo (Etiqueta Nx)	type:observability
+Principios Clave	Visibilidad Unificada, Instrumentación Semántica, Resiliencia del Cliente, Desacoplamiento Arquitectónico
+1. Propósito y Alcance Soberano
+El dominio de logging es el sistema nervioso central del ecosistema razvolution. Su propósito es proporcionar una visibilidad profunda y unificada sobre el comportamiento, rendimiento y salud de la aplicación en todos sus entornos (cliente, servidor, edge).
+La observabilidad no es un añadido; es un pilar arquitectónico que garantiza nuestra capacidad para diagnosticar, depurar y optimizar el sistema con precisión quirúrgica.
+Alcance:
+Contiene: El logger isomórfico, contratos de datos de telemetría (Zod), un emisor de eventos para el navegador y el hook useHeimdall para la integración con el ciclo de vida de la UI.
+Prohíbe: Dependencias de bibliotecas de features o de negocio. Su única dependencia interna permitida es shared/utils y los contratos de shared/db-types.
+2. El Contrato del Dominio (Principios Inmutables)
+Visibilidad Unificada: El logger exportado es la única interfaz permitida para generar telemetría. Se prohíbe el uso de console.log para información de negocio o de flujo en código de producción.
+Instrumentación Semántica: Las entradas de log no son cadenas de texto arbitrarias. Deben ser eventos semánticos (startTask, taskStep, endTask) que describan una acción de negocio o un flujo de ejecución medible.
+Resiliencia del Cliente: El emisor del lado del cliente está diseñado para la resiliencia. Encola eventos en localStorage y los envía en lotes. Es tolerante a fallos de red y garantiza la entrega "best-effort" incluso si el usuario cierra la pestaña (sendBeacon).
+Desacoplamiento Arquitectónico: El logger es puro y agnóstico a la UI. Obtiene contexto (como el workspaceId) bajo demanda en el momento del envío de datos, no en el momento de la instrumentación.
+3. Inventario de Aparatos Implementados
+Archivo	Aparato(s)	Descripción Soberana
+logger.ts	logger, flushTelemetryQueue	El corazón del dominio. Un logger isomórfico que adapta su salida (consola enriquecida en DEV, JSON estructurado en PROD) y gestiona el ciclo de vida del emisor de telemetría del cliente (encolado, batching, envío resiliente).
+heimdall.contracts.ts	HeimdallEventSchema	Define la SSoT con Zod para la estructura de todos los datos de telemetría, garantizando la consistencia entre la aplicación y la base de datos.
+use-heimdall.hook.ts	useHeimdall()	Un hook de React ("use client") cuya única responsabilidad es inicializar y gestionar los listeners del ciclo de vida del navegador (visibilitychange, beforeunload) necesarios para el emisor.
+4. Flujo de Datos del Emisor (Lado del Cliente)
+code
+Mermaid
+sequenceDiagram
+    participant App as Aplicación (UI)
+    participant Logger as logger
+    participant LocalStorage as localStorage
+    participant Emitter as Emisor (flushTelemetryQueue)
+    participant API as API Endpoint (/api/telemetry/ingest)
+
+    App->>Logger: logger.startTask(...)
+    Logger->>LocalStorage: Añade evento a la cola 'heimdall_queue_v1'
+
+    loop Batching (cada 15s) o Cierre de Pestaña
+        Emitter->>LocalStorage: Lee y vacía la cola
+        Emitter->>API: Envía lote de eventos (fetch / sendBeacon)
+        alt Envío Exitoso
+            API-->>Emitter: 200 OK
+        else Envío Fallido
+            API-->>Emitter: Error de red
+            Emitter->>LocalStorage: Re-encola los eventos para reintento
+        end
+    end
+5. Hoja de Ruta y Evolución del Dominio
+Integración de Errores no Capturados: Capturar automáticamente errores de JavaScript (window.onerror) y rechazos de promesas no manejados.
+Métricas de Rendimiento (Web Vitals): Integrar la captura de métricas Core Web Vitals (LCP, FID, CLS) y conectarlas con las sesiones de usuario.
+Muestreo Inteligente (Sampling): Implementar una lógica de muestreo configurable para reducir el volumen de telemetría en entornos de alto tráfico sin perder visibilidad.
+6. Integración Arquitectónica y Dependencias
+shared/logging es una biblioteca de infraestructura crítica. Depende de las fundaciones (utils, db-types) y es consumida por casi todo el ecosistema para proporcionar observabilidad.
+code
+Mermaid
+graph TD
+    subgraph Leyenda
+        direction LR
+        A[Biblioteca Base]
+        B[Biblioteca Consumidora]
+    end
+
+    subgraph Grafo de Dependencias
+        direction TD
+        data_access["shared/data-access"] -- Consume --> logging
+        supabase["shared/supabase"] -- Consume --> logging
+        auth_feature["features/auth"] -- Consume --> logging
+        store_app["apps/store"] -- Consume --> logging
+
+        logging["<b>shared/logging</b>"] -- Depende de --> utils["shared/utils"]
+        logging -- Depende de --> db_types["shared/db-types"]
+    end
+
+    classDef mid fill:#0d9488,stroke:#fff,stroke-width:2px,color:#fff;
+    class logging mid;
+
+    ---
+
+    
 // RUTA: .docs/domains/logging-domain.md
 
 # Manifiesto del Dominio de Observabilidad (`shared/logging`)
@@ -78,4 +156,4 @@ El Protocolo Heimdall está diseñado para evolucionar hacia una plataforma de o
 
     ---
 
-    
+

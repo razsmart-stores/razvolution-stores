@@ -1,15 +1,11 @@
-// RUTA: shared/i18n-contracts/tsconfig.lib.json
+// PLANTILLA SOBERANA DEFINITIVA: [biblioteca]/tsconfig.lib.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    // La propiedad "outDir" es gestionada por el ejecutor de build de Nx.
-    // Al eliminarla, dejamos de forzar al compilador a buscar en 'dist/'.
     "declaration": true,
     "types": ["node"]
   },
-  // Incluye únicamente el código fuente de producción.
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  // Excluye rigurosamente cualquier archivo que no sea de producción.
   "exclude": [
     "jest.config.ts",
     "src/**/*.spec.ts",

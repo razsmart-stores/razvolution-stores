@@ -1,3 +1,55 @@
+Manifiesto del Dominio Supabase (shared/supabase)
+Atributo	Valor
+Dominio	@razvolution/shared/supabase
+Scope (Etiqueta Nx)	scope:shared
+Tipo (Etiqueta Nx)	type:data-access
+Principios Clave	Abstracción, Seguridad por Contexto, Seguridad de Tipos Absoluta
+1. Propósito y Alcance Soberano
+El dominio supabase es la única y exclusiva capa de abstracción para todas las interacciones con los servicios de Supabase (Base de Datos, Autenticación, Storage, etc.). Su propósito es proporcionar un conjunto de clientes seguros y optimizados para cada entorno de ejecución (client, server, middleware, script).
+Este dominio centraliza la configuración y el acceso, actuando como el guardián de la conexión con nuestro backend.
+Alcance:
+Contiene: Fábricas de clientes que instancian el cliente de Supabase apropiado para cada contexto.
+Prohíbe: La instanciación directa de un cliente de Supabase (createClient) en cualquier otro lugar del ecosistema. Toda interacción con Supabase DEBE realizarse a través de las funciones exportadas por esta biblioteca.
+2. El Contrato del Dominio (Principios Inmutables)
+Seguridad por Contexto: El dominio proporciona un cliente específico para cada entorno. Utilizar el cliente incorrecto (ej. createServerClient en un componente de cliente) es una violación arquitectónica grave que puede comprometer la seguridad de las sesiones.
+Seguridad de Tipos Absoluta: Los clientes fabricados por este dominio están fuertemente tipados con los tipos de la biblioteca @razvolution/shared-db-types. Esto garantiza que cualquier consulta realizada a través de estos clientes tenga seguridad de tipos y autocompletado.
+Abstracción, no Implementación: Esta biblioteca proporciona los clientes (el "cómo" conectarse), no la lógica de negocio (el "qué" hacer). No contiene Server Actions ni consultas específicas. Su única responsabilidad es fabricar y configurar el conector.
+Configuración Centralizada: Todas las variables de entorno (SUPABASE_URL, SUPABASE_KEY, etc.) se leen y validan exclusivamente dentro de este dominio, reduciendo la superficie de configuración y simplificando el mantenimiento.
+3. Inventario de Aparatos Implementados
+Archivo	Aparato(s)	Descripción Soberana
+client.ts	createClient()	Fabrica una instancia Singleton del cliente de Supabase para el lado del navegador ("use client"). Maneja de forma segura las cookies de sesión.
+server.ts	createServerClient()	Fabrica una nueva instancia del cliente de Supabase para el entorno del servidor (Server Actions, Server Components), utilizando el service_role_key para operaciones con privilegios.
+middleware.ts	updateSession()	Orquesta el refresco del token de sesión del usuario en cada petición de Next.js, crucial para mantener al usuario autenticado.
+script-client.ts	createScriptClient()	Fabrica una instancia del cliente para ser usada en scripts de Node.js fuera de Next.js (ej. seeding, crons), autenticada con privilegios de superusuario.
+4. Hoja de Ruta y Evolución del Dominio
+Fachada para Invocación de Funciones (RPC): Crear funciones fuertemente tipadas que envuelvan las llamadas a funciones de base de datos (rpc). Esto mejoraría la experiencia de desarrollo al reemplazar supabase.rpc('my_function', ...) por una función myFunction(...) con tipos de entrada y salida definidos.
+Abstracción del Cliente de Storage: Crear funciones de utilidad específicas para interactuar con Supabase Storage (ej. uploadAvatar, getPublicUrlForImage) para centralizar la lógica de construcción de URLs y políticas de acceso.
+Integración de Health Checks: Añadir una función de diagnóstico (ej. checkSupabaseConnection()) para verificar la conectividad con las APIs de Supabase.
+5. Integración Arquitectónica y Dependencias
+shared/supabase es una biblioteca de infraestructura que depende de los contratos (db-types) y de la observabilidad (logging). Es consumida por cualquier dominio que necesite interactuar directamente con el backend.
+code
+Mermaid
+graph TD
+    subgraph Leyenda
+        direction LR
+        A[Biblioteca Base]
+        B[Biblioteca Consumidora]
+    end
+
+    subgraph Grafo de Dependencias
+        direction TD
+        data_access["shared/data-access"] -- Consume --> supabase
+        auth_feature["features/auth"] -- Consume --> supabase
+
+        supabase["<b>shared/supabase</b>"] -- Depende de --> db_types["shared/db-types"]
+        supabase -- Depende de --> logging["shared/logging"]
+    end
+
+    classDef mid fill:#0d9488,stroke:#fff,stroke-width:2px,color:#fff;
+    class supabase mid;
+
+    ---
+
 // RUTA: .docs/domains/supabase-domain.md
 
 # Manifiesto del Dominio Supabase (`shared/supabase`)

@@ -3,41 +3,38 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
-   "scripts": {
+  "scripts": {
     "//": "--- [1] ENTORNO DE DESARROLLO ---",
     "dev": "pnpm nx serve store",
     "build": "pnpm nx build store",
     "start": "pnpm nx start store",
-    "graph": "pnpm nx graph",
-
-    "//--": "--- [2] CALIDAD, VALIDACIÓN Y LINTING ---",
+    "//--": "--- [2] ANÁLISIS ARQUITECTÓNICO (GRAFO) ---",
+    "graph:web": "pnpm nx graph",
+    "graph:json": "pnpm nx graph --file=graph.json",
+    "//---": "--- [3] CALIDAD, VALIDACIÓN Y LINTING ---",
     "lint": "pnpm nx run-many --target=lint --all --fix",
     "format:write": "prettier --write . --log-level warn",
     "format:check": "prettier --check . --log-level warn",
     "check-types": "tsc --noEmit",
     "validate": "pnpm gen:all && pnpm format:write && pnpm lint && pnpm check-types",
-
-    "//---": "--- [3] ORQUESTADORES DE PRUEBAS SOBERANAS ---",
+    "//----": "--- [4] ORQUESTADORES DE PRUEBAS SOBERANAS ---",
     "test": "pnpm nx run-many --target=test --all --passWithNoTests",
     "test:watch": "pnpm nx run-many --target=test --all --watch --passWithNoTests",
     "test:affected": "pnpm nx affected --target=test --passWithNoTests",
-
-    "//----": "--- [4] GENERACIÓN DE CÓDIGO Y ARTEFACTOS ---",
-    "gen:types": "pnpm supabase:gen-types",
-    "gen:icons": "tsx --tsconfig tsconfig.scripts.json scripts/generation/generate-lucide-icon-enum.ts",
-    "gen:all": "pnpm gen:types && pnpm gen:icons",
-
-    "//-----": "--- [5] GESTIÓN DE SUPABASE (CLI) ---",
+    "//-----": "--- [5] GENERACIÓN DE CÓDIGO Y ARTEFACTOS ---",
+    "build:tools": "pnpm nx build tools",
+    "gen:types": "pnpm nx g @razvolution/tools:generate-db-types",
+    "gen:icons": "pnpm nx generate-icons",
+    "gen:all": "pnpm build:tools && pnpm gen:types && pnpm gen:icons",
+    "//------": "--- [6] GESTIÓN DE SUPABASE (CLI) ---",
     "supabase:login": "supabase login",
     "supabase:link": "supabase link --project-ref lbdhtkfsnosfttorlblh",
     "supabase:gen-types": "tsx --tsconfig tsconfig.scripts.json scripts/supabase/generation/generate-db-types.ts",
     "supabase:db:push": "supabase db push",
-
-    "//------": "--- [6] SEEDING DE BASE DE DATOS ---",
+    "//-------": "--- [7] SEEDING DE BASE DE DATOS ---",
     "db:seed:superuser": "tsx --tsconfig tsconfig.scripts.json scripts/run-with-env.ts scripts/supabase/seeding/superuser.ts",
     "db:seed:all": "pnpm db:seed:superuser",
-
-    "//-------": "--- [7] DIAGNÓSTICOS Y SCRIPTS DE SISTEMA ---",
+    "//--------": "--- [8] DIAGNÓSTICOS Y SCRIPTS DE SISTEMA ---",
     "diag:auth:contracts": "tsx --tsconfig tsconfig.scripts.json scripts/diagnostics/auth-contracts.diag.ts",
     "diag:supabase:connect": "tsx --tsconfig tsconfig.scripts.json scripts/run-with-env.ts scripts/supabase/connect.ts"
   },
@@ -133,14 +130,17 @@
     "@eslint/js": "^9.35.0",
     "@jest/globals": "^29.7.0",
     "@next/eslint-plugin-next": "^15.5.3",
+    "@nx/devkit": "22.0.1",
     "@nx/eslint": "21.6.5",
     "@nx/eslint-plugin": "21.6.5",
-    "@nx/jest": "21.6.5",
-    "@nx/js": "21.6.5",
+    "@nx/jest": "22.0.1",
+    "@nx/js": "22.0.1",
     "@nx/next": "^21.6.5",
-    "@nx/react": "^21.6.5",
+    "@nx/plugin": "^22.0.1",
+    "@nx/react": "21.6.6",
     "@playwright/test": "^1.44.1",
     "@swc-node/register": "~1.9.1",
+    "@swc/cli": "~0.6.0",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
     "@swc/jest": "^0.2.36",
@@ -204,9 +204,11 @@
       "react-dom": "18.3.1"
     },
     "onlyBuiltDependencies": [
-      "@parcel/watcher",
       "@swc/core",
-      "nx"
+      "esbuild",
+      "nx",
+      "supabase",
+      "unrs-resolver"
     ]
   },
   "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
@@ -220,6 +222,18 @@
           "config": ".verdaccio/config.yml",
           "storage": "tmp/local-registry/storage"
         }
+      },
+      "generate-icons": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "pnpm nx g @razvolution/tools:generate-icons"
+        },
+        "dependsOn": [
+          {
+            "target": "build",
+            "project": "tools"
+          }
+        ]
       }
     }
   }

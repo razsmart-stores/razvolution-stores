@@ -1,25 +1,77 @@
+// RUTA: tsconfig.json
 {
   "extends": "./tsconfig.base.json",
   "files": [],
   "include": [],
   "references": [
     {
+      "path": "./shared/workspace-contracts"
+    },
+    {
+      "path": "./shared/commerce-contracts"
+    },
+    {
+      "path": "./shared/content-contracts"
+    },
+    {
+      "path": "./shared/rewards-contracts"
+    },
+    {
       "path": "./shared/auth-contracts"
     },
     {
-      "path": "./shared/observability"
+      "path": "./shared/i18n-contracts"
+    },
+    {
+      "path": "./shared/ai-contracts"
+    },
+    {
+      "path": "./features/community"
+    },
+    {
+      "path": "./features/marketing"
     },
     {
       "path": "./shared/data-access"
     },
     {
+      "path": "./features/checkout"
+    },
+    {
       "path": "./shared/test-utils"
+    },
+    {
+      "path": "./features/ai-chat"
+    },
+    {
+      "path": "./features/rewards"
+    },
+    {
+      "path": "./features/product"
+    },
+    {
+      "path": "./shared/payments"
+    },
+    {
+      "path": "./shared/shipping"
+    },
+    {
+      "path": "./shared/db-types"
     },
     {
       "path": "./shared/supabase"
     },
     {
+      "path": "./shared/shopify"
+    },
+    {
       "path": "./shared/logging"
+    },
+    {
+      "path": "./features/cart"
+    },
+    {
+      "path": "./shared/config"
     },
     {
       "path": "./features/auth"
@@ -28,25 +80,13 @@
       "path": "./shared/utils"
     },
     {
-      "path": "./shared/ui"
-    },
-    {
-      "path": "./shared/workspace-contracts"
-    },
-    {
-      "path": "./shared/db-types"
-    },
-    {
-      "path": "./shared/i18n-contracts"
-    },
-    {
       "path": "./apps/store"
     },
     {
       "path": "./shared/ui"
     },
     {
-      "path": "./shared/config"
+      "path": "./tools"
     }
   ]
 }

@@ -1,45 +1,47 @@
-// RUTA: src/components/features/auth/_components/ForgotPasswordForm.tsx
+// RUTA: features/auth/src/lib/components/auth/ForgotPasswordForm.tsx
 /**
  * @file ForgotPasswordForm.tsx
- * @description Componente de cliente puro para el formulario modal de recuperación de contraseña.
- * @version 1.2.0 (Build Integrity Restoration)
- *@author RaZ Podestá - MetaShark Tech - Asistente de Refactorización
+ * @description Componente de cliente para el formulario de recuperación de contraseña,
+ *              nivelado para cumplir con la arquitectura soberana del monorepo y
+ *              la estructura de exportación de la capa de datos.
+ * @version 2.1.0 (Sovereign Export Structure Compliance)
+ * @author IA Arquitecto
  */
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useTransition } from "react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/Button";
 import {
+  Button,
   DialogHeader,
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/Dialog";
-import { DynamicIcon } from "@/components/ui/DynamicIcon";
-import {
+  DynamicIcon,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/Form";
-import { Input } from "@/components/ui/Input";
-import { sendPasswordResetAction } from "@/shared/lib/actions/auth/auth.actions";
-import { logger } from "@/shared/lib/logging";
+  Input,
+} from "@razvolution/shared-ui";
+// --- [INICIO DE CORRECCIÓN SOBERANA v2.1.0] ---
+// Se importa el objeto 'actions' en lugar de la función directamente.
+import { actions } from "@razvolution/shared-data-access";
+// --- [FIN DE CORRECCIÓN SOBERANA v2.1.0] ---
+import { logger } from "@razvolution/shared-logging";
 import {
   ForgotPasswordSchema,
   type ForgotPasswordFormData,
-} from "@/shared/lib/schemas/auth/forgot-password.schema";
-import type { Dictionary } from "@/shared/lib/schemas/i18n.schema";
+} from "@razvolution/shared-auth-contracts";
+import type { Dictionary } from "@razvolution/shared-i18n-contracts";
 
-type ForgotPasswordContent = NonNullable<
-  NonNullable<Dictionary["devLoginPage"]>["forgotPassword"]
->;
+// Asumimos que el tipo Dictionary se actualizará para tener esta forma
+type ForgotPasswordContent = NonNullable<Dictionary["auth"]>["forgotPassword"];
 
 interface ForgotPasswordFormProps {
   content: ForgotPasswordContent;
@@ -52,20 +54,23 @@ export function ForgotPasswordForm({
   onSuccess,
   onCancel,
 }: ForgotPasswordFormProps) {
-  logger.info("[ForgotPasswordForm] Renderizando v1.2.");
+  logger.info("[ForgotPasswordForm] Renderizando v2.1 (Sovereign).");
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(ForgotPasswordSchema),
     defaultValues: {
       email:
-        process.env.NODE_ENV === "development" ? "superuser@webvork.dev" : "",
+        process.env['NODE_ENV'] === "development" ? "superuser@webvork.dev" : "",
     },
   });
 
   const onSubmit = (data: ForgotPasswordFormData) => {
     startTransition(async () => {
-      const result = await sendPasswordResetAction(data);
+      // --- [INICIO DE CORRECCIÓN SOBERANA v2.1.0] ---
+      // Se utiliza la estructura correcta para llamar a la Server Action.
+      const result = await actions.auth.sendPasswordResetAction(data);
+      // --- [FIN DE CORRECCIÓN SOBERANA v2.1.0] ---
       if (result.success) {
         toast.success(content.successToastTitle, {
           description: content.successToastDescription,

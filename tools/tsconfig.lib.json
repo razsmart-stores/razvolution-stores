@@ -1,0 +1,21 @@
+// RUTA: tools/tsconfig.lib.json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // La propiedad "outDir" es gestionada por el 'outputPath' en project.json.
+    // No es necesario especificarla aquí para evitar conflictos.
+    "declaration": true,
+    "types": ["node"],
+    // --- [INICIO DE REFUERZO DE BUILD v7.0.0] ---
+    // Se establece 'rootDir' a 'src'. Esto es CRÍTICO. Le dice a TypeScript
+    // que la estructura de salida no debe incluir la carpeta 'src'.
+    "rootDir": "src"
+    // --- [FIN DE REFUERZO DE BUILD v7.0.0] ---
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": [
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
+}

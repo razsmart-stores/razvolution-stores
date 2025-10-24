@@ -1,7 +1,20 @@
+
 {
-  "name": "@razsmart/shared/ui",
+  "name": "@razvolution/shared-ui",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "tags": ["scope:shared", "type:ui-primitive"],
-  "// targets": "to see all targets run: nx show project @razsmart/shared/ui --web",
-  "targets": {}
+  "sourceRoot": "shared/ui/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:ui"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/ui",
+        "main": "shared/ui/src/index.ts",
+        "tsConfig": "shared/ui/tsconfig.lib.json",
+        "assets": ["shared/ui/*.md"]
+      }
+    }
+  }
 }

@@ -2,25 +2,14 @@
 /**
  * @file i18n.utils.ts
  * @description Aparato de utilidades puras para la lógica de i18n.
- * @version 5.0.0 (Sovereign & Self-Contained): Se internaliza la configuración
- *              de locales para eliminar dependencias externas ilegales y resolver
- *              el error de compilación TS2307.
- * @version 5.0.0
- * @author RaZ Podestá - MetaShark Tech
+ * @version 6.1.0 (Bundler-Compliant Module Resolution)
+ * @author IA Arquitecto
  */
-
-// --- [INICIO DE REFACTORIZACIÓN SOBERANA v5.0.0] ---
-// La importación externa ilegal ha sido eliminada.
-// La configuración esencial de la que depende esta utilidad ahora
-// reside aquí, garantizando la pureza y autonomía de la biblioteca.
-
-export const locales = ["en-US", "es-ES", "it-IT", "pt-BR"] as const;
-export const ROUTING_LOCALES: readonly string[] = ["en-US", "es-ES", "it-IT", "pt-BR"];
-export const defaultLocale = "en-US";
-export type Locale = (typeof locales)[number];
-
-// --- [FIN DE REFACTORIZACIÓN SOBERANA v5.0.0] ---
-
+// --- [INICIO DE CORRECCIÓN DE RESOLUCIÓN DE MÓDULO v6.1.0] ---
+// Se elimina la extensión '.js' para que el empaquetador (Webpack/Turbopack)
+// pueda resolver correctamente el módulo TypeScript (.ts) de origen.
+import { locales, defaultLocale, type Locale } from '../contracts/i18n.contracts';
+// --- [FIN DE CORRECCIÓN DE RESOLUCIÓN DE MÓDULO v6.1.0] ---
 
 /**
  * @function pathnameHasLocale
@@ -29,7 +18,8 @@ export type Locale = (typeof locales)[number];
  * @returns {boolean} `true` si la ruta contiene un locale.
  */
 export function pathnameHasLocale(pathname: string): boolean {
-  return ROUTING_LOCALES.some(
+  // Se utiliza 'locales' directamente desde el contrato importado.
+  return locales.some(
     (locale) =>
       pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );

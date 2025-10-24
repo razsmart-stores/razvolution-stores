@@ -1,9 +1,8 @@
-// RUTA: shared/logging/tsconfig.spec.json
+// PLANTILLA SOBERANA DEFINITIVA: [biblioteca]/tsconfig.spec.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
-    "moduleResolution": "node10",
     "types": ["jest", "node"]
   },
   "include": [
@@ -13,13 +12,5 @@
     "src/**/*.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx"
-  ],
-  "references": [
-    // --- [INICIO DE CORRECCIÓN DE GRAFO DE PRUEBAS v1.0] ---
-    // Se añade esta referencia para que el compilador de TypeScript, al
-    // ejecutar las pruebas de 'logging', entienda el contrato y la estructura
-    // de su dependencia, 'utils'. Esto resuelve los errores TS6059 y TS6307.
-    { "path": "../utils/tsconfig.spec.json" }
-    // --- [FIN DE CORRECCIÓN DE GRAFO DE PRUEBAS v1.0] ---
   ]
 }

@@ -1,0 +1,18 @@
+
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "tools",
+  "version": "0.0.1",
+  "generators": {
+    "generate-db-types": {
+      "implementation": "./src/generators/generate-db-types/generator",
+      "schema": "./src/generators/generate-db-types/schema.json",
+      "description": "Generador soberano para crear los tipos de la base de datos a partir de la CLI de Supabase."
+    },
+    "generate-icons": {
+      "implementation": "./src/generators/generate-icons/generator",
+      "schema": "./src/generators/generate-icons/schema.json",
+      "description": "Generador soberano para crear el manifiesto de iconos de Lucide a partir de 'lucide-react'."
+    }
+  }
+}

@@ -1,21 +1,36 @@
-// RUTA: shared/data-access/tsconfig.lib.json
+// PLANTILLA SOBERANA DEFINITIVA: [biblioteca]/tsconfig.lib.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    // --- [INICIO DE CORRECCIÓN DE DELEGACIÓN SOBERANA] ---
-    // Se elimina la propiedad "outDir". Nx inyectará la ruta de salida
-    // correcta ('dist/shared/data-access') durante el build.
-    // ANTES: "outDir": "../../dist/out-tsc",
-    // --- [FIN DE CORRECCIÓN DE DELEGACIÓN SOBERANA] ---
     "declaration": true,
     "types": ["node"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": [
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.tsx",
+    "src/**/*.test.tsx"
+  ],
   "references": [
-    { "path": "../auth-contracts/tsconfig.lib.json" },
-    { "path": "../logging/tsconfig.lib.json" },
-    { "path": "../supabase/tsconfig.lib.json" },
-    { "path": "../utils/tsconfig.lib.json" }
+    {
+      "path": "../shopify/tsconfig.lib.json"
+    },
+    {
+      "path": "../payments/tsconfig.lib.json"
+    },
+    {
+      "path": "../utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../supabase/tsconfig.lib.json"
+    },
+    {
+      "path": "../logging/tsconfig.lib.json"
+    },
+    {
+      "path": "../auth-contracts/tsconfig.lib.json"
+    }
   ]
 }

@@ -1,35 +1,47 @@
-// RUTA: src/components/features/auth/components/OAuthButtons.tsx
+// RUTA: features/auth/src/lib/components/auth/OAuthButtons.tsx
 /**
  * @file OAuthButtons.tsx
- * @description Componente de cliente para los botones de inicio de sesión OAuth, ahora
- *              con funcionalidad completa para Google y observabilidad de élite.
- * @version 4.0.0 (Functional & Observable)
- * @author RaZ Podestá - MetaShark Tech
+ * @description Componente de cliente para los botones de inicio de sesión OAuth.
+ *              v5.0.0 (Sovereign Alignment): Nivelado holísticamente para alinearse
+ *              con la arquitectura soberana del monorepo, corrigiendo los alias de
+ *              importación, eliminando dependencias innecesarias y consumiendo
+ *              los contratos de i18n correctos.
+ * @version 5.0.0
+ * @author IA Arquitecto
  */
 "use client";
 
-import React, { useTransition, useMemo, useEffect } from "react";
+import { useTransition, useMemo, useEffect } from "react";
 import { toast } from "sonner";
-import type { z } from "zod";
 
-import { Button, DynamicIcon } from "@/components/ui";
-import { logger } from "@/shared/lib/logging";
-import type { OAuthButtonsContentSchema } from "@/shared/lib/schemas/components/auth/oauth-buttons.schema";
-import { createClient } from "@/shared/lib/supabase/client";
+// --- [INICIO DE ALINEACIÓN SOBERANA v5.0.0] ---
 
-type Content = z.infer<typeof OAuthButtonsContentSchema>;
+// Se importan las dependencias utilizando los alias de workspace correctos
+// definidos en el tsconfig.base.json, resolviendo los errores TS2307.
+import { Button, DynamicIcon } from "@razvolution/shared-ui";
+import { logger } from "@razvolution/shared-logging";
+import { createClient } from "@razvolution/shared-supabase";
+
+// Se consume el tipo 'Dictionary' desde la biblioteca de contratos soberana,
+// en lugar de un schema local o incorrecto.
+import type { Dictionary } from "@razvolution/shared-i18n-contracts";
+
+// --- [FIN DE ALINEACIÓN SOBERANA v5.0.0] ---
+
+// Se define el tipo de contenido específico para este componente a partir del Dictionary global.
+type OAuthButtonsContent = NonNullable<Dictionary["oAuthButtons"]>;
 
 interface OAuthButtonsProps {
-  content: Content;
+  content: OAuthButtonsContent;
 }
 
 export function OAuthButtons({ content }: OAuthButtonsProps) {
   const traceId = useMemo(
-    () => logger.startTrace("OAuthButtons_Lifecycle_v4.0"),
+    () => logger.startTrace("OAuthButtons_Lifecycle_v5.0"),
     []
   );
   useEffect(() => {
-    logger.info("[OAuthButtons] Componente funcional montado.", { traceId });
+    logger.info("[OAuthButtons] Componente soberano montado.", { traceId });
     return () => logger.endTrace(traceId);
   }, [traceId]);
 
@@ -39,10 +51,13 @@ export function OAuthButtons({ content }: OAuthButtonsProps) {
   const handleOAuthLogin = (provider: "google") => {
     logger.traceEvent(traceId, `Iniciando login con: ${provider}`);
     startTransition(async () => {
+      // Se obtiene la URL de redirección del entorno del navegador para mayor robustez.
+      const redirectTo = `${window.location.origin}/auth/callback`;
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo,
         },
       });
 
@@ -50,7 +65,7 @@ export function OAuthButtons({ content }: OAuthButtonsProps) {
         logger.error(
           `[OAuthButtons] Fallo en signInWithOAuth para ${provider}.`,
           {
-            error,
+            error: error.message,
             traceId,
           }
         );
@@ -76,11 +91,12 @@ export function OAuthButtons({ content }: OAuthButtonsProps) {
             className="mr-2 h-4 w-4 animate-spin"
           />
         ) : (
+          // Icono semánticamente más apropiado para un proveedor externo.
           <DynamicIcon name="KeyRound" className="mr-2 h-4 w-4" />
         )}
         {content.google}
       </Button>
-      {/* Los otros botones permanecen como placeholders por ahora */}
+      {/* Placeholder para futuros proveedores de OAuth */}
       <Button variant="outline" className="w-full" disabled>
         <DynamicIcon name="Apple" className="mr-2 h-4 w-4" />
         {content.apple}

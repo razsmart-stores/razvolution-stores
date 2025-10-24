@@ -12,7 +12,9 @@
     "@razvolution/shared-auth-contracts": "workspace:*",
     "@razvolution/shared-logging": "workspace:*",
     "@razvolution/shared-supabase": "workspace:*",
-    "@razvolution/shared-utils": "workspace:*"
+    "@razvolution/shared-utils": "workspace:*",
+    "@razvolution/shared-payments": "workspace:*",
+    "@razvolution/shared-shopify": "workspace:*"
   },
   "devDependencies": {}
 }

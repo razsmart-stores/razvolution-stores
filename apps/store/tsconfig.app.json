@@ -4,29 +4,12 @@
   "compilerOptions": {
     "jsx": "preserve",
     "allowJs": true,
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "emitDeclarationOnly": false, // Las aplicaciones emiten JS, no solo tipos.
+    "noEmit": true, // Next.js se encarga de la transpilación.
     "types": ["jest", "node"]
   },
-  // --- [INICIO DE CORRECCIÓN SOBERANA DE GRAFO v2.0] ---
-  // Se elimina el 'include' manual de dependencias externas.
-  // La visibilidad del código fuente de las dependencias ahora es
-  // gestionada EXCLUSIVAMENTE por las "Project References"
-  // definidas en 'apps/store/tsconfig.json'.
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
-  // --- [FIN DE CORRECCIÓN SOBERANA DE GRAFO v2.0] ---
-  "exclude": ["node_modules", "jest.config.ts"],
-  // --- [INICIO DE CORRECCIÓN SOBERANA DE GRAFO v2.0] ---
-  // Se añade el array 'references' para conectar explícitamente esta
-  // configuración de aplicación con las bibliotecas de las que depende.
-  // Esto le da al compilador el contexto completo para resolver los tipos.
+  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts"],
   "references": [
     {
       "path": "../../shared/ui/tsconfig.lib.json"
@@ -50,5 +33,4 @@
       "path": "../../features/auth/tsconfig.lib.json"
     }
   ]
-  // --- [FIN DE CORRECCIÓN SOBERANA DE GRAFO v2.0] ---
 }
