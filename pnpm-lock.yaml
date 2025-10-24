@@ -710,9 +710,6 @@ importers:
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
-      tslib:
-        specifier: ^2.3.0
-        version: 2.8.1
 
   shared/test-utils:
     dependencies:

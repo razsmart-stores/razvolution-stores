@@ -2,22 +2,32 @@
 /**
  * @file heimdall.contracts.ts
  * @description SSoT para los contratos de datos del Protocolo Heimdall.
- *              v7.0.0 (Circular Dependency Severed): Se rompe la dependencia circular
- *              importando los tipos de la base de datos desde la nueva biblioteca
- *              soberana @razvolution/shared-db-types.
- * @version 7.0.0
+ *              v8.1.0 (Type-Safe & Inferred Payload): Se refactoriza el contrato del payload
+ *              para utilizar la inferencia de tipos de Zod, garantizando la
+ *              seguridad de tipos de extremo a extremo de forma robusta.
+ * @version 8.1.0
  * @author IA Arquitecto
  */
 import { z } from "zod";
-
-// --- [INICIO DE CORRECCIÓN ARQUITECTÓNICA] ---
-// Se importa desde la nueva biblioteca base, rompiendo el ciclo con 'supabase'.
 import type {
   Tables,
   TablesInsert,
-  TablesUpdate,
+  TablesUpdate
 } from "@razvolution/shared-db-types";
-// --- [FIN DE CORRECCIÓN ARQUITECTÓNICA] ---
+
+// --- [INICIO DE CORRECCIÓN SOBERANA v8.1.0] ---
+
+// Se define un esquema Zod recursivo que representa fielmente el tipo 'Json'.
+// Esta es la forma canónica recomendada por la documentación de Zod.
+const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
+type Literal = z.infer<typeof literalSchema>;
+type Json = Literal | { [key: string]: Json } | Json[];
+
+const jsonSchema: z.ZodType<Json> = z.lazy(() =>
+  z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)])
+);
+
+// --- [FIN DE CORRECCIÓN SOBERANA v8.1.0] ---
 
 
 // --- Contratos de Aplicación (Zod) ---
@@ -42,7 +52,8 @@ export const HeimdallEventSchema = z.object({
   stepName: z.string().optional(),
   timestamp: z.string().datetime(),
   duration: z.number().optional(),
-  payload: z.record(z.unknown()).optional(),
+  // Se utiliza el nuevo esquema 'jsonSchema' para una validación estricta.
+  payload: jsonSchema.optional(),
   context: z.object({
     runtime: z.enum(["browser", "server", "edge"]),
     user: z.string().optional(),
