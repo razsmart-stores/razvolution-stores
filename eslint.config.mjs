@@ -1,10 +1,19 @@
 // RUTA: eslint.config.mjs
+/**
+ * @file eslint.config.mjs
+ * @description Configuración de ESLint soberana y raíz para el ecosistema razvolution.
+ *              v2.0.0 (Architectural Enforcement): Se implementan restricciones de
+ *              dependencia estrictas para hacer cumplir la arquitectura de capas
+ *              (app > feature > shared) a nivel de linter, resolviendo violaciones
+ *              de fronteras de módulos.
+ * @version 2.0.0
+ * @author IA Arquitecto
+ */
 import nx from '@nx/eslint-plugin';
 
 export default [
   {
     files: ['**/*.json'],
-    // Override or add rules here
     rules: {},
     languageOptions: {
       parser: await import('jsonc-eslint-parser'),
@@ -14,11 +23,7 @@ export default [
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
   {
-    // --- [INICIO DE REFUERZO DE FRONTERA v1.0] ---
-    // Se añaden explícitamente los directorios que NUNCA deben ser
-    // analizados por ESLint para garantizar un rendimiento óptimo.
     ignores: ['**/node_modules', '**/dist', '**/tmp'],
-    // --- [FIN DE REFUERZO DE FRONTERA v1.0] ---
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
@@ -30,8 +35,16 @@ export default [
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
           depConstraints: [
             {
-              sourceTag: '*',
-              onlyDependOnLibsWithTags: ['*'],
+              sourceTag: 'scope:app',
+              onlyDependOnLibsWithTags: ['scope:feature', 'scope:shared'],
+            },
+            {
+              sourceTag: 'scope:feature',
+              onlyDependOnLibsWithTags: ['scope:feature', 'scope:shared'],
+            },
+            {
+              sourceTag: 'scope:shared',
+              onlyDependOnLibsWithTags: ['scope:shared'],
             },
           ],
         },
