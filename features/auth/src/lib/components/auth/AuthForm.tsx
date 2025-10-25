@@ -5,10 +5,10 @@
  * @version 8.0.0 (Holistic Integrity Restoration)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { AnimatePresence, motion } from "framer-motion";
-import { useState, useMemo, useEffect } from "react";
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState, useMemo, useEffect } from 'react';
 
 // --- [INICIO DE CORRECCIÓN SOBERANA v8.0.0] ---
 import {
@@ -17,21 +17,21 @@ import {
   AlertTitle,
   DynamicIcon,
   TiltCard,
-} from "@razvolution/shared-ui";
-import { logger } from "@razvolution/shared-logging";
+} from '@razvolution/shared-ui';
+import { logger } from '@razvolution/shared-logging';
 import {
   type LoginFormData,
   type SignUpFormData,
-} from "@razvolution/shared-auth-contracts";
-import type { Dictionary } from "@razvolution/shared-i18n-contracts";
-import type { Locale } from "@razvolution/shared-utils";
+} from '@razvolution/shared-auth-contracts';
+import type { Dictionary } from '@razvolution/shared-i18n-contracts';
+import type { Locale } from '@razvolution/shared-utils';
 
-import { LoginForm } from "./LoginForm";
-import { SignUpForm } from "./SignUpForm";
+import { LoginForm } from './LoginForm';
+import { SignUpForm } from './SignUpForm';
 // --- [FIN DE CORRECCIÓN SOBERANA v8.0.0] ---
 
-type AuthFormContent = NonNullable<Dictionary["auth"]>;
-type OAuthButtonsContent = NonNullable<Dictionary["oAuthButtons"]>;
+type AuthFormContent = NonNullable<Dictionary['auth']>;
+type OAuthButtonsContent = NonNullable<Dictionary['oAuthButtons']>;
 
 interface AuthFormProps {
   content: AuthFormContent;
@@ -52,15 +52,15 @@ export function AuthForm({
   onSignUpSubmit, // <-- Prop añadida
   isPending,
 }: AuthFormProps) {
-  const traceId = useMemo(() => logger.startTrace("AuthForm_Lifecycle"), []);
+  const traceId = useMemo(() => logger.startTrace('AuthForm_Lifecycle'), []);
   useEffect(() => {
-    logger.info("[AuthForm] Orquestador de UI montado.", { traceId });
+    logger.info('[AuthForm] Orquestador de UI montado.', { traceId });
     return () => logger.endTrace(traceId);
   }, [traceId]);
 
-  const [view, setView] = useState<"login" | "signup">("login");
+  const [view, setView] = useState<'login' | 'signup'>('login');
 
-  const handleSwitchView = (newView: "login" | "signup") => {
+  const handleSwitchView = (newView: 'login' | 'signup') => {
     logger.traceEvent(traceId, `Cambiando vista a '${newView}'.`);
     setView(newView);
   };
@@ -73,7 +73,7 @@ export function AuthForm({
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
             className="mb-4"
           >
             <Alert>
@@ -88,17 +88,17 @@ export function AuthForm({
         <AnimatePresence mode="wait">
           <motion.div
             key={view}
-            initial={{ opacity: 0, x: view === "login" ? -20 : 20 }}
+            initial={{ opacity: 0, x: view === 'login' ? -20 : 20 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: view === "login" ? 20 : -20 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            exit={{ opacity: 0, x: view === 'login' ? 20 : -20 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            {view === "login" ? (
+            {view === 'login' ? (
               <LoginForm
                 content={content}
                 oAuthContent={oAuthContent}
                 locale={locale}
-                onSwitchView={() => handleSwitchView("signup")}
+                onSwitchView={() => handleSwitchView('signup')}
                 onSubmit={onLoginSubmit}
                 isPending={isPending}
               />
@@ -107,7 +107,7 @@ export function AuthForm({
                 content={content}
                 oAuthContent={oAuthContent}
                 locale={locale}
-                onSwitchView={() => handleSwitchView("login")}
+                onSwitchView={() => handleSwitchView('login')}
                 onSubmit={onSignUpSubmit}
                 isPending={isPending}
               />

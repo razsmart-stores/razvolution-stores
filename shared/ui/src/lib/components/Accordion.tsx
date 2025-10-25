@@ -6,19 +6,19 @@
  * @version 4.0.0 (Sovereign Import Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { motion } from "framer-motion";
-import * as React from "react";
+import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { motion } from 'framer-motion';
+import * as React from 'react';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v4.0.0] ---
 // Se actualizan todas las importaciones para usar los alias del workspace,
 // resolviendo el error de dependencia no utilizada y alineando el componente
 // con la arquitectura del monorepo.
-import { logger } from "@razvolution/shared-logging";
-import { cn } from "@razvolution/shared-utils";
-import { DynamicIcon } from "./DynamicIcon";
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
+import { DynamicIcon } from './DynamicIcon';
 // --- [FIN DE NIVELACIÓN SOBERANA v4.0.0] ---
 
 const Accordion = AccordionPrimitive.Root;
@@ -27,16 +27,16 @@ const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
 >(({ className, ...props }, ref) => {
-  logger.trace("[AccordionItem] Renderizando.");
+  logger.trace('[AccordionItem] Renderizando.');
   return (
     <AccordionPrimitive.Item
       ref={ref}
-      className={cn("border-b", className)}
+      className={cn('border-b', className)}
       {...props}
     />
   );
 });
-AccordionItem.displayName = "AccordionItem";
+AccordionItem.displayName = 'AccordionItem';
 
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
@@ -46,7 +46,7 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+        'flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180',
         className
       )}
       {...props}
@@ -65,7 +65,7 @@ const AccordionContent = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
 >(({ className, children, ...props }, ref) => {
-  logger.trace("[AccordionContent] Renderizando contenido v4.0.");
+  logger.trace('[AccordionContent] Renderizando contenido v4.0.');
   return (
     <AccordionPrimitive.Content
       ref={ref}
@@ -77,16 +77,16 @@ const AccordionContent = React.forwardRef<
         initial={{ opacity: 0, height: 0 }}
         animate={{
           opacity: 1,
-          height: "auto",
-          transition: { duration: 0.3, ease: "easeInOut" },
+          height: 'auto',
+          transition: { duration: 0.3, ease: 'easeInOut' },
         }}
         exit={{
           opacity: 0,
           height: 0,
-          transition: { duration: 0.3, ease: "easeInOut" },
+          transition: { duration: 0.3, ease: 'easeInOut' },
         }}
       >
-        <div className={cn("pb-4 pt-0", className)}>{children}</div>
+        <div className={cn('pb-4 pt-0', className)}>{children}</div>
       </motion.div>
     </AccordionPrimitive.Content>
   );

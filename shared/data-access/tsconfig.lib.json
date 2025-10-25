@@ -15,6 +15,9 @@
   ],
   "references": [
     {
+      "path": "../db-types/tsconfig.lib.json"
+    },
+    {
       "path": "../shopify/tsconfig.lib.json"
     },
     {

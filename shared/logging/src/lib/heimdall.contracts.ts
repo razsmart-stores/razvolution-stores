@@ -2,37 +2,22 @@
 /**
  * @file heimdall.contracts.ts
  * @description SSoT para los contratos de datos del Protocolo Heimdall.
- *              v8.1.0 (Type-Safe & Inferred Payload): Se refactoriza el contrato del payload
- *              para utilizar la inferencia de tipos de Zod, garantizando la
- *              seguridad de tipos de extremo a extremo de forma robusta.
- * @version 8.1.0
+ * @version 60.1.0 (Batch Payload Contract Restoration)
  * @author IA Arquitecto
  */
-import { z } from "zod";
-import type {
-  Tables,
-  TablesInsert,
-  TablesUpdate
-} from "@razvolution/shared-db-types";
+import { z } from 'zod';
+import type { Tables } from '@razvolution/shared-db-types';
 
-// --- [INICIO DE CORRECCIÓN SOBERANA v8.1.0] ---
-
-// Se define un esquema Zod recursivo que representa fielmente el tipo 'Json'.
-// Esta es la forma canónica recomendada por la documentación de Zod.
 const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
 type Literal = z.infer<typeof literalSchema>;
-type Json = Literal | { [key: string]: Json } | Json[];
+
+export type Json = Literal | { [key: string]: Json } | Json[];
 
 const jsonSchema: z.ZodType<Json> = z.lazy(() =>
   z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)])
 );
 
-// --- [FIN DE CORRECCIÓN SOBERANA v8.1.0] ---
-
-
-// --- Contratos de Aplicación (Zod) ---
-
-export const EventStatusSchema = z.enum(["SUCCESS", "FAILURE", "IN_PROGRESS"]);
+export const EventStatusSchema = z.enum(['SUCCESS', 'FAILURE', 'IN_PROGRESS']);
 export type EventStatus = z.infer<typeof EventStatusSchema>;
 
 export const EventIdentifierSchema = z.object({
@@ -52,50 +37,31 @@ export const HeimdallEventSchema = z.object({
   stepName: z.string().optional(),
   timestamp: z.string().datetime(),
   duration: z.number().optional(),
-  // Se utiliza el nuevo esquema 'jsonSchema' para una validación estricta.
   payload: jsonSchema.optional(),
-  context: z.object({
-    runtime: z.enum(["browser", "server", "edge"]),
-    user: z.string().optional(),
-    path: z.string().optional(),
-  }),
+  context: z
+    .object({
+      runtime: z.enum(['browser', 'server', 'edge']),
+      user: z.string().optional(),
+      path: z.string().optional(),
+    })
+    .passthrough(),
 });
 export type HeimdallEvent = z.infer<typeof HeimdallEventSchema>;
+
+// --- [INICIO DE CORRECCIÓN SOBERANA v60.1.0] ---
+// Se añade el esquema y tipo para el payload de lotes, que era requerido por el logger
+// y no estaba definido, causando el error de compilación TS2305.
+export const HeimdallBatchPayloadSchema = z.object({
+  batchId: z.string(),
+  batchSequence: z.number(),
+  eventCount: z.number(),
+  events: z.array(HeimdallEventSchema),
+});
+export type HeimdallBatchPayload = z.infer<typeof HeimdallBatchPayloadSchema>;
+// --- [FIN DE CORRECCIÓN SOBERANA v60.1.0] ---
 
 export const HeimdallIngestPayloadSchema = z.object({
   events: z.array(HeimdallEventSchema),
 });
 
-// --- Contratos de Base de Datos (SSoT para Supabase) ---
-
-export type HeimdallEventRow = Tables<"heimdall_events">;
-export type HeimdallEventInsert = TablesInsert<"heimdall_events">;
-export type HeimdallEventUpdate = TablesUpdate<"heimdall_events">;
-export const HeimdallEventRowSchema = z.object({
-  event_id: z.string(),
-  trace_id: z.string(),
-  task_id: z.string().nullable(),
-  step_name: z.string().nullable(),
-  event_name: z.string(),
-  status: z.string(),
-  timestamp: z.string().datetime(),
-  duration_ms: z.number().nullable(),
-  payload: z.any().nullable(),
-  context: z.any().nullable(),
-  created_at: z.string().datetime(),
-});
-
-export type TaskHealthSummaryRow = Tables<"task_health_summary">;
-export type TaskHealthSummaryInsert = TablesInsert<"task_health_summary">;
-export type TaskHealthSummaryUpdate = TablesUpdate<"task_health_summary">;
-export const TaskHealthSummaryRowSchema = z.object({
-  task_id: z.string(),
-  task_name: z.string(),
-  status: z.enum(["SUCCESS", "FAILURE"]),
-  duration_ms: z.number().int().nullable(),
-  timestamp: z.string().datetime(),
-  user_id: z.string().uuid().nullable(),
-  workspace_id: z.string().uuid().nullable(),
-  context: z.any().nullable(),
-  created_at: z.string().datetime(),
-});
+export type HeimdallEventRow = Tables<'heimdall_events'>;

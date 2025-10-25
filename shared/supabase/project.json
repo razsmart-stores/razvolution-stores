@@ -1,5 +1,5 @@
 {
-  "name": "supabase",
+  "name": "@razvolution/shared-supabase",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "shared/supabase/src",
   "projectType": "library",

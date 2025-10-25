@@ -11,7 +11,7 @@
  */
 export function normalizeStringForId(input: string | undefined | null): string {
   if (!input) {
-    return "";
+    return '';
   }
 
   // --- [INICIO DE REFACTORIZACIÓN SOBERANA v8.0.0] ---

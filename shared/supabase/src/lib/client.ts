@@ -28,7 +28,9 @@ export function createClient() {
   const supabaseAnonKey = process.env['NEXT_PUBLIC_SUPABASE_ANON_KEY'];
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('CRÍTICO: Las variables de entorno de Supabase del cliente no están definidas.');
+    throw new Error(
+      'CRÍTICO: Las variables de entorno de Supabase del cliente no están definidas.'
+    );
   }
   // --- [FIN DE CORRECCIÓN DE SEGURIDAD DE TIPOS v6.0.0] ---
 

@@ -15,6 +15,9 @@
   ],
   "references": [
     {
+      "path": "../../shared/commerce-contracts/tsconfig.lib.json"
+    },
+    {
       "path": "../../shared/utils/tsconfig.lib.json"
     },
     {

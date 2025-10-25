@@ -7,14 +7,14 @@
  * @version 2.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import * as SliderPrimitive from "@radix-ui/react-slider";
-import * as React from "react";
+import * as SliderPrimitive from '@radix-ui/react-slider';
+import * as React from 'react';
 
 // --- [PASO 1: NIVELACIÓN DE IMPORTACIONES (ARQUITECTURA)] ---
-import { logger } from "@razvolution/shared-logging";
-import { cn } from "@razvolution/shared-utils";
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
 
 /**
  * @component Slider
@@ -35,7 +35,7 @@ const Slider = React.forwardRef<
       ref={ref}
       // --- [PASO 3: CUMPLIMIENTO DE THEMING] ---
       className={cn(
-        "relative flex w-full touch-none select-none items-center",
+        'relative flex w-full touch-none select-none items-center',
         className
       )}
       {...props}

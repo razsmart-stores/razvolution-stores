@@ -30,7 +30,11 @@ export const createPaymentIntent = async (
   currency: string,
   metadata: object
 ): Promise<PaymentIntentResult> => {
-  console.log('Placeholder: createPaymentIntent called with:', { amount, currency, metadata });
+  console.log('Placeholder: createPaymentIntent called with:', {
+    amount,
+    currency,
+    metadata,
+  });
   // En una implementación real, aquí iría la lógica para llamar a Stripe, Mercado Pago, etc.
   // El objeto devuelto ahora cumple con el contrato 'PaymentIntentResult'.
   return Promise.resolve({

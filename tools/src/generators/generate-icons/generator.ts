@@ -27,28 +27,43 @@ export async function generateIconsGenerator(tree: Tree) {
     const customRequire = createRequire(__dirname);
 
     logger.info('1. Introspeccionando el módulo `lucide-react`...');
-    const dynamicIconImportsModule = customRequire('lucide-react/dynamicIconImports');
+    const dynamicIconImportsModule = customRequire(
+      'lucide-react/dynamicIconImports'
+    );
 
-    if (!dynamicIconImportsModule || typeof dynamicIconImportsModule !== 'object') {
-      throw new Error("No se pudo requerir o analizar el módulo 'lucide-react/dynamicIconImports'.");
+    if (
+      !dynamicIconImportsModule ||
+      typeof dynamicIconImportsModule !== 'object'
+    ) {
+      throw new Error(
+        "No se pudo requerir o analizar el módulo 'lucide-react/dynamicIconImports'."
+      );
     }
 
     // --- [INICIO DE CORRECCIÓN SOBERANA DE INTROSPECCIÓN v10.0.0] ---
     // Se accede a la propiedad 'default' para obtener el objeto real de los iconos,
     // resolviendo el problema de interoperabilidad CJS/ESM.
-    const dynamicIconImports = dynamicIconImportsModule.default || dynamicIconImportsModule;
+    const dynamicIconImports =
+      dynamicIconImportsModule.default || dynamicIconImportsModule;
     const iconKeys = Object.keys(dynamicIconImports);
     // --- [FIN DE CORRECCIÓN SOBERANA DE INTROSPECCIÓN v10.0.0] ---
 
-    logger.info(`   ✅ Módulo analizado. ${iconKeys.length} iconos encontrados.`);
+    logger.info(
+      `   ✅ Módulo analizado. ${iconKeys.length} iconos encontrados.`
+    );
 
-    if (iconKeys.length < 100) { // Un chequeo de sanidad, lucide tiene cientos de iconos.
-      throw new Error(`Se encontraron muy pocos iconos (${iconKeys.length}). La estructura del módulo 'lucide-react' puede haber cambiado drásticamente.`);
+    if (iconKeys.length < 100) {
+      // Un chequeo de sanidad, lucide tiene cientos de iconos.
+      throw new Error(
+        `Se encontraron muy pocos iconos (${iconKeys.length}). La estructura del módulo 'lucide-react' puede haber cambiado drásticamente.`
+      );
     }
 
     logger.info('2. Normalizando nombres de iconos a PascalCase...');
     const pascalCaseIconNames = iconKeys.map(kebabToPascal).sort();
-    logger.info(`   ✅ ${pascalCaseIconNames.length} nombres normalizados y ordenados.`);
+    logger.info(
+      `   ✅ ${pascalCaseIconNames.length} nombres normalizados y ordenados.`
+    );
 
     logger.info('3. Construyendo el archivo de contrato...');
     const fileContent = `// RUTA: shared/utils/src/lib/contracts/lucide-icon-names.contracts.ts
@@ -77,7 +92,8 @@ export type LucideIconName = z.infer<typeof LucideIconNameSchema>;
 `;
     logger.info('   ✅ Contrato generado.');
 
-    const outputPath = 'shared/utils/src/lib/contracts/lucide-icon-names.contracts.ts';
+    const outputPath =
+      'shared/utils/src/lib/contracts/lucide-icon-names.contracts.ts';
     logger.info(`4. Escribiendo contrato en: ${outputPath}`);
     tree.write(outputPath, fileContent);
     logger.info('   ✅ Archivo escrito en el workspace virtual.');
@@ -87,7 +103,6 @@ export type LucideIconName = z.infer<typeof LucideIconNameSchema>;
     logger.info('   ✅ Archivos formateados.');
 
     logger.info('🎉 Manifiesto de Iconos generado con éxito.');
-
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logger.error(`🔥 Error catastrófico durante la generación del manifiesto:`);

@@ -7,12 +7,12 @@
  * @version 2.1.0 (Sovereign Export Structure Compliance)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import {
   Button,
@@ -28,20 +28,20 @@ import {
   FormLabel,
   FormMessage,
   Input,
-} from "@razvolution/shared-ui";
+} from '@razvolution/shared-ui';
 // --- [INICIO DE CORRECCIÓN SOBERANA v2.1.0] ---
 // Se importa el objeto 'actions' en lugar de la función directamente.
-import { actions } from "@razvolution/shared-data-access";
+import { actions } from '@razvolution/shared-data-access';
 // --- [FIN DE CORRECCIÓN SOBERANA v2.1.0] ---
-import { logger } from "@razvolution/shared-logging";
+import { logger } from '@razvolution/shared-logging';
 import {
   ForgotPasswordSchema,
   type ForgotPasswordFormData,
-} from "@razvolution/shared-auth-contracts";
-import type { Dictionary } from "@razvolution/shared-i18n-contracts";
+} from '@razvolution/shared-auth-contracts';
+import type { Dictionary } from '@razvolution/shared-i18n-contracts';
 
 // Asumimos que el tipo Dictionary se actualizará para tener esta forma
-type ForgotPasswordContent = NonNullable<Dictionary["auth"]>["forgotPassword"];
+type ForgotPasswordContent = NonNullable<Dictionary['auth']>['forgotPassword'];
 
 interface ForgotPasswordFormProps {
   content: ForgotPasswordContent;
@@ -54,14 +54,16 @@ export function ForgotPasswordForm({
   onSuccess,
   onCancel,
 }: ForgotPasswordFormProps) {
-  logger.info("[ForgotPasswordForm] Renderizando v2.1 (Sovereign).");
+  logger.info('[ForgotPasswordForm] Renderizando v2.1 (Sovereign).');
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(ForgotPasswordSchema),
     defaultValues: {
       email:
-        process.env['NODE_ENV'] === "development" ? "superuser@webvork.dev" : "",
+        process.env['NODE_ENV'] === 'development'
+          ? 'superuser@webvork.dev'
+          : '',
     },
   });
 
@@ -77,7 +79,7 @@ export function ForgotPasswordForm({
         });
         onSuccess();
       } else {
-        toast.error("Error", { description: result.error });
+        toast.error('Error', { description: result.error });
       }
     });
   };

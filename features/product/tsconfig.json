@@ -7,6 +7,9 @@
   "include": [],
   "references": [
     {
+      "path": "../../shared/commerce-contracts"
+    },
+    {
       "path": "../../shared/utils"
     },
     {

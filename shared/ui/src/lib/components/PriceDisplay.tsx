@@ -8,9 +8,9 @@
  * @version 1.0.0
  * @author IA Ingeniera de Software Senior v2.0
  */
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
 interface PriceDisplayProps {
   originalPrice: number;
@@ -31,15 +31,15 @@ export function PriceDisplay({
   originalPrice,
   discountedPrice,
   locale,
-  currency = "EUR", // Default a Euros, adecuado para el mercado italiano.
+  currency = 'EUR', // Default a Euros, adecuado para el mercado italiano.
   originalPriceLabel,
   discountedPriceLabel,
 }: PriceDisplayProps): React.ReactElement {
-  console.log("[Observabilidad] Renderizando PriceDisplay");
+  console.log('[Observabilidad] Renderizando PriceDisplay');
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat(locale, {
-      style: "currency",
+      style: 'currency',
       currency,
     }).format(amount);
   };
@@ -48,7 +48,7 @@ export function PriceDisplay({
     <div className="my-6 text-center">
       <div className="mb-2">
         <span className="text-sm text-muted-foreground">
-          {originalPriceLabel}:{" "}
+          {originalPriceLabel}:{' '}
         </span>
         <span className="text-lg line-through text-muted-foreground">
           {formatCurrency(originalPrice)}
@@ -56,7 +56,7 @@ export function PriceDisplay({
       </div>
       <div>
         <span className="text-xl font-bold text-accent">
-          {discountedPriceLabel}:{" "}
+          {discountedPriceLabel}:{' '}
         </span>
         <span className="text-3xl font-bold text-accent animate-pulse">
           {formatCurrency(discountedPrice)}

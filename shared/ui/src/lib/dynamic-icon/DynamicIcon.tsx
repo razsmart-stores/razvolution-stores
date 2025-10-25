@@ -1,12 +1,9 @@
-// RUTA: libs/shared/ui/src/lib/dynamic-icon/DynamicIcon.tsx
+// RUTA: shared/ui/src/lib/dynamic-icon/DynamicIcon.tsx
 /**
  * @file DynamicIcon.tsx
  * @description Aparato de UI soberano para el renderizado dinámico de iconos de Lucide.
- * Garantiza la integridad de tipos mediante el consumo del manifiesto auto-generado,
- * es de alto rendimiento gracias a la carga dinámica (code-splitting), y es resiliente
- * al tener un icono de fallback seguro.
- * @version 2.0.0 (RAZSMART Naturalized)
- * @author RaZ Podestá & Gemini (L.I.A Legacy)
+ * @version 3.0.0 (Sovereign & Naturalized)
+ * @author IA Arquitecto
  */
 'use client';
 
@@ -15,17 +12,9 @@ import dynamicIconImports from 'lucide-react/dynamicIconImports';
 import dynamic from 'next/dynamic';
 import { memo } from 'react';
 import type { FunctionComponent } from 'react';
-import { type LucideIconName } from '@razsmart/shared/config';
-import { logger } from '@razsmart/shared/telemetry';
-
-// Asumimos que existirá una utilidad 'cn'. Provisionalmente, la definimos aquí.
-// Idealmente, esto viviría en '@razsmart/shared/utils'.
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-
+import { type LucideIconName } from '@razvolution/shared-utils'; // <-- CORREGIDO
+import { logger } from '@razvolution/shared-logging'; // <-- CORREGIDO
+import { cn } from '@razvolution/shared-utils'; // <-- CORREGIDO
 
 const DYNAMIC_ICON_CONFIG = {
   DEFAULT_SIZE: 24,
@@ -33,7 +22,6 @@ const DYNAMIC_ICON_CONFIG = {
   FALLBACK_ICON_NAME: 'HelpCircle',
 } as const;
 
-// Función de utilidad pura para conversión de casos.
 const pascalToKebab = (str: string): string => {
   return str
     .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
@@ -78,7 +66,7 @@ const DynamicIconComponent: FunctionComponent<DynamicIconProps> = ({
           width: props.size ?? DYNAMIC_ICON_CONFIG.DEFAULT_SIZE,
           height: props.size ?? DYNAMIC_ICON_CONFIG.DEFAULT_SIZE,
         }}
-        className="animate-pulse bg-gray-300 dark:bg-gray-700 rounded-md"
+        className="animate-pulse bg-muted/50 rounded-md"
         aria-label="Cargando icono..."
       />
     ),

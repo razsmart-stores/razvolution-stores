@@ -7,24 +7,24 @@
  * @version 2.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import * as React from "react";
+import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
+import * as React from 'react';
 
 // --- PASO 1 y 2: Nivelación de Importaciones e Inyección de Observabilidad ---
-import { logger } from "@razvolution/shared-logging";
-import { cn } from "@razvolution/shared-utils";
-import { DynamicIcon } from "./DynamicIcon";
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
+import { DynamicIcon } from './DynamicIcon';
 
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
 >(({ className, ...props }, ref) => {
-  logger.trace("[RadioGroup] Renderizando.");
+  logger.trace('[RadioGroup] Renderizando.');
   return (
     <RadioGroupPrimitive.Root
-      className={cn("grid gap-2", className)}
+      className={cn('grid gap-2', className)}
       {...props}
       ref={ref}
     />
@@ -36,12 +36,12 @@ const RadioGroupItem = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>
 >(({ className, ...props }, ref) => {
-  logger.trace("[RadioGroupItem] Renderizando.");
+  logger.trace('[RadioGroupItem] Renderizando.');
   return (
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        "aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        'aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
       {...props}

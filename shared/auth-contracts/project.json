@@ -1,5 +1,5 @@
 {
-  "name": "auth-contracts",
+  "name": "@razvolution/shared-auth-contracts",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "shared/auth-contracts/src",
   "projectType": "library",

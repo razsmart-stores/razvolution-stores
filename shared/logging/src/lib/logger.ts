@@ -2,93 +2,133 @@
 /**
  * @file logger.ts
  * @description SSoT para el Logger Soberano del Protocolo Heimdall.
- *              v36.0.0 (Decoupled & Testable): Se desacopla el logger del 'useWorkspaceStore'
- *              para eliminar dependencias de UI, simplificar el testing y mejorar la pureza
- *              arquitectónica. El workspaceId ahora se obtiene bajo demanda en el momento del envío.
- * @version 36.0.0
- * @author RaZ Podestá - MetaShark Tech
+ *              Esta versión implementa Inversión de Control (IoC) y cumple con
+ *              la regla de estrictez 'noPropertyAccessFromIndexSignature'.
+ * @version 61.1.0 (Strict Compliance)
+ * @author IA Arquitecto
  */
-import { createId } from "@paralleldrive/cuid2";
-import { useWorkspaceStore } from "@razvolution/shared-utils";
+import { createId } from '@paralleldrive/cuid2';
 import type {
   HeimdallEvent,
   EventStatus,
   EventIdentifier,
-} from "./heimdall.contracts";
+  Json,
+  HeimdallBatchPayload,
+} from './heimdall.contracts';
 
-const isBrowser = typeof window !== "undefined";
-const BATCH_INTERVAL_MS = 15000;
+// --- Almacén de Contexto Global y API de Inyección ---
+let globalHeimdallContext: Record<string, Json | undefined> = {};
+
+/**
+ * @function setGlobalHeimdallContext
+ * @description API pública y soberana para que la capa de aplicación inyecte o
+ *              actualice el contexto global que se adjuntará a todos los eventos
+ *              de telemetría de Heimdall.
+ * @param {Record<string, Json | undefined>} newContext - El objeto de contexto a fusionar.
+ */
+export function setGlobalHeimdallContext(
+  newContext: Record<string, Json | undefined>
+) {
+  globalHeimdallContext = { ...globalHeimdallContext, ...newContext };
+}
+
+// --- Constantes y Configuración Soberana ---
+const IS_PRODUCTION = process.env['NODE_ENV'] === 'production';
+const IS_BROWSER = typeof window !== 'undefined';
+
 const MAX_BATCH_SIZE = 50;
-const TELEMETRY_QUEUE_KEY = "heimdall_queue_v1";
+const TELEMETRY_QUEUE_KEY = 'heimdall_queue_v1';
+const BATCH_SEQUENCE_KEY = 'heimdall_batch_sequence_v1';
 
 const tasks = new Map<
   string,
   { name: string; startTime: number; event: EventIdentifier }
 >();
 
-const getCurrentPath = (): string | undefined => {
-  if (isBrowser) return window.location.pathname;
-  return undefined;
+// --- Lógica Pura y de Utilidad ---
+const getCurrentPath = (): string | undefined =>
+  IS_BROWSER ? window.location.pathname : undefined;
+
+const getSampleRate = (): number => {
+  const rateStr =
+    typeof process !== 'undefined'
+      ? process.env['NEXT_PUBLIC_HEIMDALL_SAMPLE_RATE']
+      : undefined;
+  if (typeof rateStr === 'string') {
+    const rate = parseFloat(rateStr);
+    return Math.max(0, Math.min(1, rate));
+  }
+  return 1.0;
+};
+const SAMPLE_RATE = getSampleRate();
+const shouldSample = (isSampleable: boolean): boolean => {
+  if (!isSampleable || SAMPLE_RATE === 1.0) return false;
+  return Math.random() > SAMPLE_RATE;
 };
 
+// --- Motor de Encolado y Envío (Flush) ---
 export async function flushTelemetryQueue(isUnloading = false): Promise<void> {
-  if (!isBrowser) return;
-
-  const queueJson = localStorage.getItem(TELEMETRY_QUEUE_KEY);
-  if (!queueJson) return;
+  if (!IS_BROWSER) return;
 
   let eventsToFlush: HeimdallEvent[] = [];
   try {
+    const queueJson = localStorage.getItem(TELEMETRY_QUEUE_KEY);
+    if (!queueJson) return;
     const parsedQueue = JSON.parse(queueJson);
-    if (!Array.isArray(parsedQueue) || parsedQueue.length === 0) {
-      return;
-    }
+    if (!Array.isArray(parsedQueue) || parsedQueue.length === 0) return;
     eventsToFlush = parsedQueue;
   } catch (error) {
-    console.error(
-      "[Heimdall Emitter] Cola de telemetría corrupta. Purgando localStorage.",
-      error
-    );
+    console.error('[Heimdall] Cola de telemetría corrupta. Purgando.', error);
     localStorage.removeItem(TELEMETRY_QUEUE_KEY);
     return;
   }
 
+  if (eventsToFlush.length === 0) return;
+
   localStorage.setItem(TELEMETRY_QUEUE_KEY, JSON.stringify([]));
 
-  // --- [ARQUITECTURA SOBERANA] ---
-  // El contexto (workspaceId) se obtiene aquí, en el momento del envío,
-  // directamente del estado síncrono de la tienda. El logger permanece puro.
-  const { activeWorkspaceId } = useWorkspaceStore.getState();
-  // --- [FIN DE ARQUITECTURA SOBERANA] ---
+  const currentSequence = parseInt(
+    localStorage.getItem(BATCH_SEQUENCE_KEY) || '0',
+    10
+  );
+  const nextSequence = currentSequence + 1;
 
-  const payload = { events: eventsToFlush };
+  const payload: HeimdallBatchPayload = {
+    batchId: createId(),
+    batchSequence: currentSequence,
+    eventCount: eventsToFlush.length,
+    events: eventsToFlush,
+  };
 
   try {
+    // --- [INICIO DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v61.1.0] ---
+    // Se utiliza la notación de corchetes para cumplir con la regla 'noPropertyAccessFromIndexSignature'.
+    const headers = {
+      'Content-Type': 'application/json',
+      'x-workspace-id': String(globalHeimdallContext['workspaceId'] || ''),
+    };
+    // --- [FIN DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v61.1.0] ---
+
     if (isUnloading && navigator.sendBeacon) {
-      const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-      if (!navigator.sendBeacon("/api/telemetry/ingest", blob)) {
-        throw new Error("navigator.sendBeacon devolvió 'false'.");
-      }
+      const blob = new Blob([JSON.stringify(payload)], {
+        type: 'application/json',
+      });
+      navigator.sendBeacon('/api/telemetry/ingest', blob);
     } else {
-      const response = await fetch("/api/telemetry/ingest", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-workspace-id": activeWorkspaceId || "", // Se inyecta el header aquí.
-        },
+      const response = await fetch('/api/telemetry/ingest', {
+        method: 'POST',
+        headers,
         body: JSON.stringify(payload),
         keepalive: true,
       });
       if (!response.ok)
-        throw new Error(
-          `El servidor de telemetría respondió con estado ${response.status}`
-        );
+        throw new Error(`El servidor respondió con estado ${response.status}`);
     }
+    localStorage.setItem(BATCH_SEQUENCE_KEY, nextSequence.toString());
   } catch (error) {
-    console.warn(
-      "[Heimdall Emitter] Fallo al enviar lote. Re-encolando eventos para reintento.",
-      { error }
-    );
+    console.warn('[Heimdall] Fallo al enviar lote. Re-encolando eventos.', {
+      error,
+    });
     const currentQueueJson = localStorage.getItem(TELEMETRY_QUEUE_KEY);
     const currentQueue: HeimdallEvent[] = currentQueueJson
       ? JSON.parse(currentQueueJson)
@@ -98,53 +138,61 @@ export async function flushTelemetryQueue(isUnloading = false): Promise<void> {
   }
 }
 
-if (isBrowser) {
-  setInterval(() => {
-    flushTelemetryQueue(false);
-  }, BATCH_INTERVAL_MS);
-  window.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") {
-      flushTelemetryQueue(true);
-    }
-  });
-}
+// --- Interfaz del Logger y sus Implementaciones ---
+
+type LogPayload = { [key: string]: Json };
+type LogContext = LogPayload & { traceId?: string };
+
+type UnstampedHeimdallEvent = Omit<
+  HeimdallEvent,
+  'eventId' | 'timestamp' | 'context'
+> & {
+  context?: Omit<HeimdallEvent['context'], 'runtime' | 'path'> &
+    Partial<Pick<HeimdallEvent['context'], 'runtime' | 'path'>>;
+};
 
 function _createAndQueueEvent(
-  event: Omit<HeimdallEvent, "eventId" | "timestamp" | "context">
+  event: UnstampedHeimdallEvent,
+  isSampleable = false
 ): void {
+  if (IS_PRODUCTION && shouldSample(isSampleable)) return;
+
+  const { context: providedContext, ...restOfEvent } = event;
+
   const fullEvent: HeimdallEvent = {
-    ...event,
+    ...restOfEvent,
     eventId: createId(),
     timestamp: new Date().toISOString(),
     context: {
-      runtime: isBrowser ? "browser" : "server",
+      ...globalHeimdallContext,
+      ...providedContext,
+      runtime: IS_BROWSER ? 'browser' : 'server',
       path: getCurrentPath(),
     },
   };
-  if (isBrowser) {
+
+  if (IS_BROWSER) {
     try {
       const queue: HeimdallEvent[] = JSON.parse(
-        localStorage.getItem(TELEMETRY_QUEUE_KEY) || "[]"
+        localStorage.getItem(TELEMETRY_QUEUE_KEY) || '[]'
       );
       queue.push(fullEvent);
       localStorage.setItem(TELEMETRY_QUEUE_KEY, JSON.stringify(queue));
       if (queue.length >= MAX_BATCH_SIZE) flushTelemetryQueue(false);
     } catch (error) {
-      console.warn(
-        "[Heimdall Emitter] Fallo al escribir en la cola de localStorage.",
-        { error }
-      );
+      console.warn('[Heimdall] Fallo al escribir en la cola de localStorage.', {
+        error,
+      });
     }
   }
 }
-type LogContext = Record<string, unknown> & { traceId?: string };
 
 interface Logger {
   track: (
     eventName: string,
     data: {
       status: EventStatus;
-      payload?: Record<string, unknown>;
+      payload?: Json;
       duration?: number;
       traceId: string;
     }
@@ -152,192 +200,266 @@ interface Logger {
   startTask: (
     event: EventIdentifier,
     title: string,
-    context?: Record<string, unknown>
+    context?: LogPayload
   ) => string;
   taskStep: (
     taskId: string,
     stepName: string,
     status: EventStatus,
-    payload?: Record<string, unknown> | null
+    payload?: Json | null
   ) => void;
-  endTask: (taskId: string, finalStatus: "SUCCESS" | "FAILURE") => void;
-  startGroup: (label: string, context?: Record<string, unknown>) => string;
-  endGroup: (groupId: string) => void;
+  endTask: (taskId: string, finalStatus: 'SUCCESS' | 'FAILURE') => void;
   success: (message: string, context?: LogContext) => void;
   info: (message: string, context?: LogContext) => void;
   warn: (message: string, context?: LogContext) => void;
   error: (message: string, context?: LogContext) => void;
   trace: (message: string, context?: LogContext) => void;
-  startTrace: (traceName: string, context?: Record<string, unknown>) => string;
-  traceEvent: (
-    traceId: string,
-    eventName: string,
-    payload?: Record<string, unknown>
-  ) => void;
+  startTrace: (traceName: string, context?: LogPayload) => string;
+  traceEvent: (traceId: string, eventName: string, payload?: Json) => void;
   endTrace: (
     traceId: string,
-    context?: Record<string, unknown> & { error?: boolean }
+    context?: LogContext & { error?: boolean }
   ) => void;
 }
 
-const createEvent = (
-    event: EventIdentifier,
-    title: string,
-    status: EventStatus,
-    context: Record<string, unknown> = {},
-    payload?: Record<string, unknown> | null,
-    duration?: number
-): HeimdallEvent => ({
-    event,
-    title,
-    traceId: context['traceId'] as string,
-    taskId: context['taskId'] as string,
-    stepName: context['stepName'] as string,
-    status,
-    eventId: createId(),
-    timestamp: new Date().toISOString(),
-    context: { ...context, runtime: isBrowser ? "browser" : "server" },
-    payload: payload || undefined,
-    duration,
-});
+const createLogger = (isProduction: boolean): Logger => {
+  if (!isProduction) {
+    const logStyle = (color: string) => `color: ${color}; font-weight: bold;`;
+    const timeStyle = 'color: gray; font-size: 0.8em;';
 
-const developmentLogger: Logger = (() => {
-  const STYLES = {
-      info: "color: #3b82f6;",
-      success: "color: #22c55e;",
-      warn: "color: #f59e0b;",
-      error: "color: #ef4444; font-weight: bold;",
-      trace: "color: #9ca3af;",
-      timestamp: "color: #64748b; font-weight: normal;",
-  };
-  const groups = new Map<string, { name: string; startTime: number }>();
-  const getTimestamp = (): string => new Date().toLocaleTimeString("en-US", { hour12: false });
-  return {
-    track: (eventName, data) => _createAndQueueEvent({ event: { domain: "LEGACY_TRACK", entity: eventName.toUpperCase().replace(/\s+/g, "_"), action: "EVENT" }, title: eventName, ...data }),
-    startTask: (event, title, context) => {
+    return {
+      track: (eventName, data) =>
+        console.log(
+          `%c[TRACK]%c ${eventName}`,
+          logStyle('purple'),
+          'color: inherit;',
+          data
+        ),
+      startTask: (event, title, context) => {
         const taskId = `task-${createId()}`;
-        tasks.set(taskId, { name: title, startTime: performance.now(), event });
-        const taskEvent = createEvent(event, title, "IN_PROGRESS", { ...context, taskId, traceId: taskId });
-        _createAndQueueEvent(taskEvent);
+        const startTime = performance.now();
+        tasks.set(taskId, { name: title, startTime, event });
+        console.groupCollapsed(
+          `%c▶ TASK-START%c: ${title}`,
+          logStyle('blue'),
+          'color: inherit;',
+          { taskId, ...context }
+        );
+        console.log(
+          `%c[${new Date().toISOString()}]%c`,
+          timeStyle,
+          'Detalles:',
+          { event, context }
+        );
+        console.groupEnd();
         return taskId;
-    },
-    taskStep: (taskId, stepName, status, payload) => {
-        const task = tasks.get(taskId);
-        if (!task) return;
-        const stepEvent = createEvent({ ...task.event, action: `STEP:${stepName}` }, stepName, status, { taskId, traceId: taskId, stepName }, payload);
-        _createAndQueueEvent(stepEvent);
-    },
-    endTask: (taskId, finalStatus) => {
+      },
+      taskStep: (taskId, stepName, status, payload) => {
+        const color =
+          status === 'SUCCESS'
+            ? 'green'
+            : status === 'FAILURE'
+            ? 'red'
+            : 'orange';
+        console.log(
+          `%c  - STEP%c: ${stepName} [${status}]`,
+          logStyle(color),
+          'color: inherit;',
+          { taskId, payload }
+        );
+      },
+      endTask: (taskId, finalStatus) => {
         const task = tasks.get(taskId);
         if (!task) return;
         const duration = performance.now() - task.startTime;
-        const endEvent = createEvent(task.event, task.name, finalStatus, { taskId, traceId: taskId }, undefined, duration);
-        _createAndQueueEvent(endEvent);
+        const color = finalStatus === 'SUCCESS' ? 'green' : 'red';
+        console.log(
+          `%c🏁 TASK-END%c: ${task.name} [${finalStatus}] - ${duration.toFixed(
+            2
+          )}ms`,
+          logStyle(color),
+          'color: inherit;',
+          { taskId }
+        );
         tasks.delete(taskId);
-    },
-    startGroup: (label, context) => {
-        const groupId = `group-${createId()}`;
-        groups.set(groupId, { name: label, startTime: performance.now() });
-        console.groupCollapsed(`▶ ${label}`, context || "");
-        return groupId;
-    },
-    endGroup: (groupId) => {
-        const group = groups.get(groupId);
-        if (group) {
-            const duration = (performance.now() - group.startTime).toFixed(2);
-            console.log(`Duración del Grupo: ${duration}ms`);
-            groups.delete(groupId);
-        }
+      },
+      success: (message, context) =>
+        console.log(
+          `%c[SUCCESS]%c ${message}`,
+          logStyle('green'),
+          'color: inherit;',
+          context || ''
+        ),
+      info: (message, context) =>
+        console.info(
+          `%c[INFO]%c ${message}`,
+          logStyle('cyan'),
+          'color: inherit;',
+          context || ''
+        ),
+      warn: (message, context) =>
+        console.warn(
+          `%c[WARN]%c ${message}`,
+          logStyle('orange'),
+          'color: inherit;',
+          context || ''
+        ),
+      error: (message, context) =>
+        console.error(
+          `%c[ERROR]%c ${message}`,
+          logStyle('red'),
+          'color: inherit;',
+          context || ''
+        ),
+      trace: (message, context) =>
+        console.log(
+          `%c[TRACE]%c ${message}`,
+          logStyle('gray'),
+          'color: inherit;',
+          context || ''
+        ),
+      startTrace: (traceName, context) => {
+        console.groupCollapsed(
+          `%c--- TRACE START: ${traceName} ---`,
+          'color: gray; font-style: italic;'
+        );
+        return createLogger(false).startTask(
+          { domain: 'TRACE', entity: traceName, action: 'EXECUTION' },
+          traceName,
+          context
+        );
+      },
+      traceEvent: (traceId, eventName, payload) => {
+        console.log(`%c  > Event: ${eventName}`, 'color: gray;', {
+          traceId,
+          payload,
+        });
+      },
+      endTrace: (traceId, context) => {
+        createLogger(false).endTask(
+          traceId,
+          context?.error ? 'FAILURE' : 'SUCCESS'
+        );
         console.groupEnd();
-    },
-    success: (message, context) => console.log(`%c[${getTimestamp()}] %c✅ ${message}`, STYLES.timestamp, STYLES.success, context || ""),
-    info: (message, context) => console.info(`%c[${getTimestamp()}] %cℹ️ ${message}`, STYLES.timestamp, STYLES.info, context || ""),
-    warn: (message, context) => console.warn(`%c[${getTimestamp()}] %c⚠️ ${message}`, STYLES.timestamp, STYLES.warn, context || ""),
-    error: (message, context) => console.error(`%c[${getTimestamp()}] %c❌ ${message}`, STYLES.timestamp, STYLES.error, context || ""),
-    trace: (message, context) => console.log(`%c[${getTimestamp()}] %c• ${message}`, STYLES.timestamp, STYLES.trace, context || ""),
-    startTrace: (traceName, context) => developmentLogger.startTask({ domain: "TRACE", entity: traceName, action: "EXECUTION" }, traceName, context),
-    traceEvent: (traceId, eventName, payload) => developmentLogger.taskStep(traceId, eventName, "IN_PROGRESS", payload),
-    endTrace: (traceId, context) => {
-        const task = tasks.get(traceId);
-        if (task) {
-            const duration = performance.now() - task.startTime;
-            const status: EventStatus = context?.['error'] ? "FAILURE" : "SUCCESS";
-            const endEvent = createEvent(task.event, task.name, status, { taskId: traceId, traceId: traceId }, context, duration);
-            _createAndQueueEvent(endEvent);
-            tasks.delete(traceId);
-        }
-    },
-  };
-})();
+      },
+    };
+  }
 
-const productionLogger: Logger = (() => {
-  const _logToServerConsole = (level: 'INFO' | 'SUCCESS' | 'WARN' | 'ERROR' | 'TRACE', message: string, context?: LogContext) => {
-      if (!isBrowser) {
-          const logObject = { timestamp: new Date().toISOString(), level, message, ...context };
-          switch (level) {
-              case 'ERROR': console.error(JSON.stringify(logObject)); break;
-              case 'WARN': console.warn(JSON.stringify(logObject)); break;
-              default: console.log(JSON.stringify(logObject)); break;
-          }
+  const _logToServerConsole = (
+    level: 'INFO' | 'SUCCESS' | 'WARN' | 'ERROR' | 'TRACE',
+    message: string,
+    context?: LogContext
+  ) => {
+    if (!IS_BROWSER) {
+      const logObject = {
+        timestamp: new Date().toISOString(),
+        level,
+        message,
+        ...globalHeimdallContext,
+        ...(context || {}),
+      };
+      switch (level) {
+        case 'ERROR':
+          console.error(JSON.stringify(logObject));
+          break;
+        case 'WARN':
+          console.warn(JSON.stringify(logObject));
+          break;
+        default:
+          console.log(JSON.stringify(logObject));
+          break;
       }
+    }
   };
   return {
-    track: (eventName, data) => _createAndQueueEvent({ event: { domain: "LEGACY_TRACK", entity: eventName.toUpperCase().replace(/\s+/g, "_"), action: "EVENT" }, title: eventName, ...data }),
+    track: (eventName, data) =>
+      _createAndQueueEvent(
+        {
+          event: {
+            domain: 'LEGACY_TRACK',
+            entity: eventName.toUpperCase().replace(/\s+/g, '_'),
+            action: 'EVENT',
+          },
+          title: eventName,
+          traceId: data.traceId,
+          status: data.status,
+          payload: data.payload,
+          duration: data.duration,
+          context: {},
+        },
+        true
+      ),
     startTask: (event, title, context) => {
-        const taskId = `task-${createId()}`;
-        tasks.set(taskId, { name: title, startTime: Date.now(), event });
-        const taskEvent = createEvent(event, title, "IN_PROGRESS", { ...context, taskId, traceId: taskId });
-        _createAndQueueEvent(taskEvent);
-        _logToServerConsole('INFO', `▶ TASK-START: ${title}`, { taskId, ...context });
-        return taskId;
+      const taskId = `task-${createId()}`;
+      tasks.set(taskId, { name: title, startTime: Date.now(), event });
+      _createAndQueueEvent({
+        event,
+        title,
+        status: 'IN_PROGRESS',
+        traceId: taskId,
+        taskId,
+        context,
+      });
+      _logToServerConsole('INFO', `▶ TASK-START: ${title}`, {
+        ...context,
+        taskId,
+      });
+      return taskId;
     },
     taskStep: (taskId, stepName, status, payload) => {
-        const task = tasks.get(taskId);
-        if (!task) return;
-        const stepEvent = createEvent({ ...task.event, action: `STEP:${stepName}` }, stepName, status, { taskId, traceId: taskId, stepName }, payload);
-        _createAndQueueEvent(stepEvent);
-        _logToServerConsole('TRACE', `➡️  STEP: ${stepName} [${status}]`, { taskId, payload });
+      const task = tasks.get(taskId);
+      if (!task) return;
+      _createAndQueueEvent({
+        event: { ...task.event, action: `STEP:${stepName}` },
+        title: stepName,
+        status,
+        traceId: taskId,
+        taskId,
+        stepName,
+        payload: payload || undefined,
+        context: {},
+      });
     },
     endTask: (taskId, finalStatus) => {
-        const task = tasks.get(taskId);
-        if (!task) return;
-        const duration = Date.now() - task.startTime;
-        const endEvent = createEvent(task.event, task.name, finalStatus, { taskId, traceId: taskId }, undefined, duration);
-        _createAndQueueEvent(endEvent);
-        _logToServerConsole(finalStatus === 'SUCCESS' ? 'INFO' : 'ERROR', `🏁 TASK-END: ${task.name} [${finalStatus}]`, { taskId, duration });
-        tasks.delete(taskId);
+      const task = tasks.get(taskId);
+      if (!task) return;
+      const duration = Date.now() - task.startTime;
+      _createAndQueueEvent({
+        event: task.event,
+        title: task.name,
+        status: finalStatus,
+        traceId: taskId,
+        taskId,
+        duration,
+        context: {},
+      });
+      _logToServerConsole(
+        finalStatus === 'SUCCESS' ? 'INFO' : 'ERROR',
+        `🏁 TASK-END: ${task.name} [${finalStatus}]`,
+        { taskId, duration }
+      );
+      tasks.delete(taskId);
     },
-    startGroup: (label, context) => {
-        const groupId = `group-${createId()}`;
-        _logToServerConsole('INFO', `▶ G-START: ${label}`, { groupId, ...context });
-        return groupId;
-    },
-    endGroup: (groupId) => {
-        _logToServerConsole('INFO', `◀ G-END`, { groupId });
-    },
-    success: (message, context) => _logToServerConsole('SUCCESS', message, context),
+    success: (message, context) =>
+      _logToServerConsole('SUCCESS', message, context),
     info: (message, context) => _logToServerConsole('INFO', message, context),
     warn: (message, context) => _logToServerConsole('WARN', message, context),
     error: (message, context) => _logToServerConsole('ERROR', message, context),
     trace: (message, context) => _logToServerConsole('TRACE', message, context),
-    startTrace: (traceName, context) => productionLogger.startTask({ domain: "TRACE", entity: traceName, action: "EXECUTION" }, traceName, context),
-    traceEvent: (traceId, eventName, payload) => {
-        productionLogger.taskStep(traceId, eventName, "IN_PROGRESS", payload);
-        _logToServerConsole('TRACE', `➡️ [${traceId}] ${eventName}`, payload);
-    },
-    endTrace: (traceId, context) => {
-        const task = tasks.get(traceId);
-        if (task) {
-            const duration = Date.now() - task.startTime;
-            const status: EventStatus = context?.['error'] ? "FAILURE" : "SUCCESS";
-            const endEvent = createEvent(task.event, task.name, status, { taskId: traceId, traceId: traceId }, context, duration);
-            _createAndQueueEvent(endEvent);
-            tasks.delete(traceId);
-            _logToServerConsole(status === 'SUCCESS' ? 'INFO' : 'ERROR', `🏁 T-END [${traceId}] (${task.name})`, { duration, ...context });
-        }
-    },
+    startTrace: (traceName, context) =>
+      createLogger(true).startTask(
+        { domain: 'TRACE', entity: traceName, action: 'EXECUTION' },
+        traceName,
+        context
+      ),
+    traceEvent: (traceId, eventName, payload) =>
+      createLogger(true).taskStep(traceId, eventName, 'IN_PROGRESS', payload),
+    endTrace: (traceId, context) =>
+      createLogger(true).endTask(
+        traceId,
+        context?.error ? 'FAILURE' : 'SUCCESS'
+      ),
   };
-})();
+};
 
-export const logger =
-  process.env['NODE_ENV'] !== 'production' ? developmentLogger : productionLogger;
+export const logger = createLogger(IS_PRODUCTION);

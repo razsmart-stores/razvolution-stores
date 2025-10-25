@@ -5,12 +5,12 @@
  * @version 1.0.0 (Creación Soberana)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import type { LoginFormData } from "@razvolution/shared-auth-contracts";
-import { LoginSchema } from "@razvolution/shared-auth-contracts";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import type { LoginFormData } from '@razvolution/shared-auth-contracts';
+import { LoginSchema } from '@razvolution/shared-auth-contracts';
 import {
   Button,
   Form,
@@ -20,14 +20,14 @@ import {
   FormLabel,
   FormMessage,
   Input,
-} from "@razvolution/shared-ui";
-import { OAuthButtons } from "./OAuthButtons";
-import { logger } from "@razvolution/shared-logging";
-import type { Dictionary } from "@razvolution/shared-i18n-contracts";
-import type { Locale } from "@razvolution/shared-utils";
+} from '@razvolution/shared-ui';
+import { OAuthButtons } from './OAuthButtons';
+import { logger } from '@razvolution/shared-logging';
+import type { Dictionary } from '@razvolution/shared-i18n-contracts';
+import type { Locale } from '@razvolution/shared-utils';
 
-type AuthFormContent = NonNullable<Dictionary["auth"]>;
-type OAuthButtonsContent = NonNullable<Dictionary["oAuthButtons"]>;
+type AuthFormContent = NonNullable<Dictionary['auth']>;
+type OAuthButtonsContent = NonNullable<Dictionary['oAuthButtons']>;
 
 interface LoginFormProps {
   content: AuthFormContent;
@@ -45,11 +45,11 @@ export function LoginForm({
   onSubmit,
   isPending,
 }: LoginFormProps) {
-  logger.trace("[LoginForm] Renderizando.");
+  logger.trace('[LoginForm] Renderizando.');
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: '', password: '' },
   });
 
   return (
@@ -113,7 +113,7 @@ export function LoginForm({
       </div>
       <OAuthButtons content={oAuthContent} />
       <p className="text-center text-sm text-muted-foreground">
-        {content.signUpPrompt}{" "}
+        {content.signUpPrompt}{' '}
         <button onClick={onSwitchView} className="underline">
           Regístrate
         </button>

@@ -1,10 +1,14 @@
-// PLANTILLA SOBERANA DEFINITIVA: [biblioteca]/tsconfig.lib.json
+// RUTA: features/community/tsconfig.lib.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": true,
-    "types": ["node"]
+    "types": ["node"],
+    // Se añade la propiedad 'jsx' para que TypeScript entienda cómo compilar
+    // los archivos .tsx de la biblioteca.
+    "jsx": "react-jsx"
   },
+  // Se asegura que los archivos .tsx estén incluidos en el proceso de build.
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": [
     "jest.config.ts",

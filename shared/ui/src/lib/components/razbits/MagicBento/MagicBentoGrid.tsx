@@ -6,21 +6,21 @@
  * @version 3.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import Link from "next/link";
-import React, { useRef } from "react";
-import type { z } from "zod";
+import Link from 'next/link';
+import React, { useRef } from 'react';
+import type { z } from 'zod';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v3.0.0] ---
-import { logger } from "@razvolution/shared-logging";
-import { cn } from "@razvolution/shared-utils";
-import { useBentoGridInteraction } from "./use-bento-grid-interaction";
-import { BentoCard } from "./BentoCard";
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
+import { useBentoGridInteraction } from './use-bento-grid-interaction';
+import { BentoCard } from './BentoCard';
 import {
   type BentoCardData,
   type MagicBentoConfigSchema,
-} from "./magic-bento.schema";
+} from './magic-bento.schema';
 // --- [FIN DE NIVELACIÓN SOBERANA v3.0.0] ---
 
 type BentoConfig = z.infer<typeof MagicBentoConfigSchema>;
@@ -36,7 +36,9 @@ export function MagicBentoGrid({
   config,
   className,
 }: MagicBentoGridProps): React.ReactElement {
-  logger.trace("[MagicBentoGrid] Renderizando componente de presentación puro v3.0.");
+  logger.trace(
+    '[MagicBentoGrid] Renderizando componente de presentación puro v3.0.'
+  );
   const gridRef = useRef<HTMLDivElement | null>(null);
 
   const { initializeCardInteractions } = useBentoGridInteraction(
@@ -53,7 +55,7 @@ export function MagicBentoGrid({
       )}
       style={
         {
-          "--glow-color-rgb": `var(--${config.glowColor}-rgb)`,
+          '--glow-color-rgb': `var(--${config.glowColor}-rgb)`,
         } as React.CSSProperties
       }
     >
@@ -65,8 +67,8 @@ export function MagicBentoGrid({
             cardRef={initializeCardInteractions}
             textAutoHide={config.textAutoHide}
             className={cn(
-              index === 0 && "lg:col-span-2 lg:row-span-2",
-              index === 3 && "lg:col-span-2"
+              index === 0 && 'lg:col-span-2 lg:row-span-2',
+              index === 3 && 'lg:col-span-2'
             )}
           />
         );

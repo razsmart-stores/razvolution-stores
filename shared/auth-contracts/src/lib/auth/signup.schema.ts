@@ -5,24 +5,24 @@
  * @version 1.0.0
  * @author RaZ Podestá - MetaShark Tech
  */
-import { z } from "zod";
+import { z } from 'zod';
 
 export const SignUpSchema = z
   .object({
     fullName: z
       .string()
-      .min(3, "El nombre completo debe tener al menos 3 caracteres."),
+      .min(3, 'El nombre completo debe tener al menos 3 caracteres.'),
     email: z
       .string()
-      .email("Por favor, introduce una dirección de email válida."),
+      .email('Por favor, introduce una dirección de email válida.'),
     password: z
       .string()
-      .min(8, "La contraseña debe tener al menos 8 caracteres."),
+      .min(8, 'La contraseña debe tener al menos 8 caracteres.'),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Las contraseñas no coinciden.",
-    path: ["confirmPassword"], // Asocia el error al campo de confirmación
+    message: 'Las contraseñas no coinciden.',
+    path: ['confirmPassword'], // Asocia el error al campo de confirmación
   });
 
 export type SignUpFormData = z.infer<typeof SignUpSchema>;

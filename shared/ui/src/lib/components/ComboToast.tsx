@@ -7,20 +7,20 @@
  * @version 3.0.0 (Sovereign Leveling & Contract Decoupling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { toast } from "sonner";
-import React from "react";
+import { toast } from 'sonner';
+import React from 'react';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v3.0.0] ---
 
 // Paso 1 y 2: Alineación Arquitectónica e Inyección de Observabilidad
-import { logger } from "@razvolution/shared-logging";
-import { Button } from "./Button";
-import { DynamicIcon } from "./DynamicIcon";
+import { logger } from '@razvolution/shared-logging';
+import { Button } from './Button';
+import { DynamicIcon } from './DynamicIcon';
 
 // Paso 4: Adherencia a Contratos (Seguridad de Tipos Absoluta)
-import type { LucideIconName } from "@razvolution/shared-utils";
+import type { LucideIconName } from '@razvolution/shared-utils';
 
 /**
  * @warning TIPO PLACEHOLDER: Este contrato debe ser movido a una biblioteca

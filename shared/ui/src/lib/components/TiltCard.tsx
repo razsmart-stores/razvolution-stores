@@ -7,20 +7,20 @@
  * @version 2.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import React from "react";
-import { Tilt } from "react-tilt";
+import React from 'react';
+import { Tilt } from 'react-tilt';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v2.0.0] ---
-import { logger } from "@razvolution/shared-logging";
-import { cn } from "@razvolution/shared-utils";
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
 // --- [FIN DE NIVELACIÓN SOBERANA v2.0.0] ---
 
 interface TiltCardProps {
   children: React.ReactNode;
   className?: string;
-  options?: React.ComponentProps<typeof Tilt>["options"];
+  options?: React.ComponentProps<typeof Tilt>['options'];
 }
 
 const defaultTiltOptions = {
@@ -28,7 +28,7 @@ const defaultTiltOptions = {
   scale: 1.02,
   speed: 500,
   glare: true,
-  "max-glare": 0.2,
+  'max-glare': 0.2,
 };
 
 export function TiltCard({
@@ -36,9 +36,9 @@ export function TiltCard({
   className,
   options = defaultTiltOptions,
 }: TiltCardProps) {
-  logger.trace("[TiltCard] Renderizando componente HOC v2.0.");
+  logger.trace('[TiltCard] Renderizando componente HOC v2.0.');
   return (
-    <Tilt options={options} className={cn("transform-style-3d", className)}>
+    <Tilt options={options} className={cn('transform-style-3d', className)}>
       {children}
     </Tilt>
   );

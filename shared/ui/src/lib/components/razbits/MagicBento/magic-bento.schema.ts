@@ -6,7 +6,7 @@
  * @version 2.1.0 (Navigable & Type-Safe)
  * @author RaZ Podestá - MetaShark Tech
  */
-import { z } from "zod";
+import { z } from 'zod';
 
 // Contrato para una única tarjeta dentro de la cuadrícula, ahora con capacidad de enlace.
 export const BentoCardSchema = z.object({
@@ -29,7 +29,7 @@ export const MagicBentoConfigSchema = z.object({
   spotlightRadius: z.number().default(300),
   particleCount: z.number().default(12),
   enableTilt: z.boolean().default(false),
-  glowColor: z.string().default("primary"), // Clave de color semántica
+  glowColor: z.string().default('primary'), // Clave de color semántica
   clickEffect: z.boolean().default(true),
   enableMagnetism: z.boolean().default(true),
 });

@@ -7,19 +7,19 @@
  * @version 7.0.0 (Sovereign Contract Compliance)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v7.0.0] ---
-import { logger } from "@razvolution/shared-logging";
-import type { Dictionary } from "@razvolution/shared-i18n-contracts";
-import { MagicBentoConfigSchema } from "./magic-bento.schema";
-import { MagicBentoGrid } from "./MagicBentoGrid";
+import { logger } from '@razvolution/shared-logging';
+import type { Dictionary } from '@razvolution/shared-i18n-contracts';
+import { MagicBentoConfigSchema } from './magic-bento.schema';
+import { MagicBentoGrid } from './MagicBentoGrid';
 // --- [FIN DE NIVELACIÓN SOBERANA v7.0.0] ---
 
 interface MagicBentoProps {
-  content?: Dictionary["magicBento"];
+  content?: Dictionary['magicBento'];
   className?: string;
 }
 
@@ -27,10 +27,10 @@ export function MagicBento({
   content,
   className,
 }: MagicBentoProps): React.ReactElement | null {
-  logger.info("[MagicBento] Renderizando orquestador v7.0.");
+  logger.info('[MagicBento] Renderizando orquestador v7.0.');
 
   if (!content) {
-    logger.warn("[MagicBento] No se proporcionó contenido. No se renderizará.");
+    logger.warn('[MagicBento] No se proporcionó contenido. No se renderizará.');
     return null;
   }
 

@@ -8,7 +8,11 @@
 // --- [INICIO DE CORRECCIÓN DE RESOLUCIÓN DE MÓDULO v6.1.0] ---
 // Se elimina la extensión '.js' para que el empaquetador (Webpack/Turbopack)
 // pueda resolver correctamente el módulo TypeScript (.ts) de origen.
-import { locales, defaultLocale, type Locale } from '../contracts/i18n.contracts';
+import {
+  locales,
+  defaultLocale,
+  type Locale,
+} from '../contracts/i18n.contracts';
 // --- [FIN DE CORRECCIÓN DE RESOLUCIÓN DE MÓDULO v6.1.0] ---
 
 /**
@@ -20,8 +24,7 @@ import { locales, defaultLocale, type Locale } from '../contracts/i18n.contracts
 export function pathnameHasLocale(pathname: string): boolean {
   // Se utiliza 'locales' directamente desde el contrato importado.
   return locales.some(
-    (locale) =>
-      pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 }
 
@@ -32,11 +35,11 @@ export function pathnameHasLocale(pathname: string): boolean {
  * @returns {Locale} El locale encontrado o el locale por defecto como fallback.
  */
 export function getCurrentLocaleFromPathname(pathname: string): Locale {
-  if (!pathname || pathname === "/") {
+  if (!pathname || pathname === '/') {
     return defaultLocale;
   }
 
-  const segments = pathname.split("/").filter(Boolean);
+  const segments = pathname.split('/').filter(Boolean);
   const potentialLocale = segments[0] as Locale;
 
   if (locales.includes(potentialLocale)) {

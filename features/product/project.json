@@ -1,6 +1,5 @@
-
 {
-  "name": "product",
+  "name": "@razvolution/features-product",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "features/product/src",
   "projectType": "library",

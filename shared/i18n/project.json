@@ -1,6 +1,5 @@
-
 {
-  "name": "i18n",
+  "name": "@razvolution/shared-i18n",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "shared/i18n/src",
   "projectType": "library",

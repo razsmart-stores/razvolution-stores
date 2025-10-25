@@ -2,7 +2,8 @@
 /**
  * @file logging.types.ts
  * @description SSoT atómica para los tipos de base de datos del dominio de Logging (Heimdall).
- * @version 1.0.0
+ *              Nivelado para un cumplimiento estricto de tipos.
+ * @version 1.1.0 (Strict Type Compliance)
  * @author IA Arquitecto
  */
 import type { Json } from '../database.types';
@@ -57,7 +58,7 @@ export type Database = {
           context: Json | null;
           created_at: string;
           duration_ms: number | null;
-          status: Database["public"]["Enums"]["task_status"];
+          status: Database['public']['Enums']['task_status'];
           task_id: string;
           task_name: string;
           timestamp: string;
@@ -68,7 +69,7 @@ export type Database = {
           context?: Json | null;
           created_at?: string;
           duration_ms?: number | null;
-          status: Database["public"]["Enums"]["task_status"];
+          status: Database['public']['Enums']['task_status'];
           task_id: string;
           task_name: string;
           timestamp: string;
@@ -79,7 +80,7 @@ export type Database = {
           context?: Json | null;
           created_at?: string;
           duration_ms?: number | null;
-          status?: Database["public"]["Enums"]["task_status"];
+          status?: Database['public']['Enums']['task_status'];
           task_id?: string;
           task_name?: string;
           timestamp?: string;
@@ -88,20 +89,24 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "task_health_summary_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'task_health_summary_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
     };
-    Views: {};
-    Functions: {};
+    // --- [INICIO DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v1.1.0] ---
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    // --- [FIN DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v1.1.0] ---
     Enums: {
-      task_status: "SUCCESS" | "FAILURE";
+      task_status: 'SUCCESS' | 'FAILURE';
     };
-    CompositeTypes: {};
+    // --- [INICIO DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v1.1.0] ---
+    CompositeTypes: Record<string, never>;
+    // --- [FIN DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v1.1.0] ---
   };
 };

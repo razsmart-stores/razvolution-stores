@@ -5,13 +5,13 @@
  * @version 1.0.0
  * @author RaZ Podestá - MetaShark Tech
  */
-import { z } from "zod";
+import { z } from 'zod';
 
 export const LoginSchema = z.object({
   email: z
     .string()
-    .email("Por favor, introduce una dirección de email válida."),
-  password: z.string().min(1, "La contraseña no puede estar vacía."),
+    .email('Por favor, introduce una dirección de email válida.'),
+  password: z.string().min(1, 'La contraseña no puede estar vacía.'),
 });
 
 export type LoginFormData = z.infer<typeof LoginSchema>;

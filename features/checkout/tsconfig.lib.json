@@ -1,11 +1,13 @@
+// RUTA: features/checkout/tsconfig.lib.json
 // PLANTILLA SOBERANA DEFINITIVA: [biblioteca]/tsconfig.lib.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": true,
-    "types": ["node"]
+    "types": ["node"],
+    "jsx": "react-jsx" // <-- Habilitar JSX
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"], // <-- Incluir .tsx
   "exclude": [
     "jest.config.ts",
     "src/**/*.spec.ts",

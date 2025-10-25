@@ -1,8 +1,8 @@
 {
   "graph": {
     "nodes": {
-      "workspace-contracts": {
-        "name": "workspace-contracts",
+      "@razvolution/shared-workspace-contracts": {
+        "name": "@razvolution/shared-workspace-contracts",
         "type": "lib",
         "data": {
           "root": "shared/workspace-contracts",
@@ -19,25 +19,14 @@
               "cache": true,
               "inputs": [
                 "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
                 {
                   "dependentTasksOutputFiles": "**/*.d.ts"
                 }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -97,7 +86,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects workspace-contracts --includeDependentProjects -- pnpm exec nx build-deps workspace-contracts"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-workspace-contracts --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-workspace-contracts"
               },
               "configurations": {},
               "parallelism": true
@@ -141,7 +130,7 @@
               "parallelism": true
             }
           },
-          "name": "workspace-contracts",
+          "name": "@razvolution/shared-workspace-contracts",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -162,8 +151,8 @@
           "implicitDependencies": []
         }
       },
-      "@razvolution/commerce-contracts": {
-        "name": "@razvolution/commerce-contracts",
+      "@razvolution/shared-commerce-contracts": {
+        "name": "@razvolution/shared-commerce-contracts",
         "type": "lib",
         "data": {
           "root": "shared/commerce-contracts",
@@ -180,27 +169,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -223,41 +199,28 @@
               "parallelism": true
             },
             "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/shared/commerce-contracts",
+                "main": "shared/commerce-contracts/src/index.ts",
+                "tsConfig": "shared/commerce-contracts/tsconfig.lib.json",
+                "assets": [
+                  "shared/commerce-contracts/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
               "dependsOn": [
                 "^build"
               ],
-              "options": {
-                "cwd": "shared/commerce-contracts",
-                "command": "tsc --build tsconfig.lib.json"
-              },
-              "cache": true,
               "inputs": [
                 "production",
                 "^production"
-              ],
-              "outputs": [
-                "{projectRoot}/dist"
-              ],
-              "syncGenerators": [
-                "@nx/js:typescript-sync"
-              ],
-              "metadata": {
-                "technologies": [
-                  "typescript"
-                ],
-                "description": "Builds the project with `tsc`.",
-                "help": {
-                  "command": "pnpm exec tsc --build --help",
-                  "example": {
-                    "args": [
-                      "--force"
-                    ]
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
+              ]
             },
             "build-deps": {
               "dependsOn": [
@@ -275,7 +238,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects @razvolution/commerce-contracts --includeDependentProjects -- pnpm exec nx build-deps @razvolution/commerce-contracts"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-commerce-contracts --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-commerce-contracts"
               },
               "configurations": {},
               "parallelism": true
@@ -363,7 +326,7 @@
               ]
             }
           },
-          "name": "@razvolution/commerce-contracts",
+          "name": "@razvolution/shared-commerce-contracts",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -372,25 +335,20 @@
           "metadata": {
             "targetGroups": {},
             "js": {
-              "packageName": "@razvolution/commerce-contracts",
+              "packageName": "@razvolution/shared-commerce-contracts",
               "packageVersion": "0.0.1",
-              "packageExports": {
-                "./package.json": "./package.json",
-                ".": {
-                  "types": "./dist/index.d.ts",
-                  "import": "./dist/index.js",
-                  "default": "./dist/index.js"
-                }
-              },
-              "packageMain": "./dist/index.js",
+              "packageMain": "./src/index.js",
               "isInPackageManagerWorkspaces": true
             }
           },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "shared/commerce-contracts/src",
+          "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "@razvolution/content-contracts": {
-        "name": "@razvolution/content-contracts",
+      "@razvolution/shared-content-contracts": {
+        "name": "@razvolution/shared-content-contracts",
         "type": "lib",
         "data": {
           "root": "shared/content-contracts",
@@ -407,27 +365,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -450,41 +395,28 @@
               "parallelism": true
             },
             "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/shared/content-contracts",
+                "main": "shared/content-contracts/src/index.ts",
+                "tsConfig": "shared/content-contracts/tsconfig.lib.json",
+                "assets": [
+                  "shared/content-contracts/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
               "dependsOn": [
                 "^build"
               ],
-              "options": {
-                "cwd": "shared/content-contracts",
-                "command": "tsc --build tsconfig.lib.json"
-              },
-              "cache": true,
               "inputs": [
                 "production",
                 "^production"
-              ],
-              "outputs": [
-                "{projectRoot}/dist"
-              ],
-              "syncGenerators": [
-                "@nx/js:typescript-sync"
-              ],
-              "metadata": {
-                "technologies": [
-                  "typescript"
-                ],
-                "description": "Builds the project with `tsc`.",
-                "help": {
-                  "command": "pnpm exec tsc --build --help",
-                  "example": {
-                    "args": [
-                      "--force"
-                    ]
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
+              ]
             },
             "build-deps": {
               "dependsOn": [
@@ -502,7 +434,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects @razvolution/content-contracts --includeDependentProjects -- pnpm exec nx build-deps @razvolution/content-contracts"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-content-contracts --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-content-contracts"
               },
               "configurations": {},
               "parallelism": true
@@ -590,7 +522,7 @@
               ]
             }
           },
-          "name": "@razvolution/content-contracts",
+          "name": "@razvolution/shared-content-contracts",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -599,7 +531,7 @@
           "metadata": {
             "targetGroups": {},
             "js": {
-              "packageName": "@razvolution/content-contracts",
+              "packageName": "@razvolution/shared-content-contracts",
               "packageVersion": "0.0.1",
               "packageExports": {
                 "./package.json": "./package.json",
@@ -613,11 +545,14 @@
               "isInPackageManagerWorkspaces": true
             }
           },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "shared/content-contracts/src",
+          "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "@razvolution/rewards-contracts": {
-        "name": "@razvolution/rewards-contracts",
+      "@razvolution/shared-rewards-contracts": {
+        "name": "@razvolution/shared-rewards-contracts",
         "type": "lib",
         "data": {
           "root": "shared/rewards-contracts",
@@ -715,27 +650,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -756,9 +678,33 @@
               "executor": "nx:run-commands",
               "configurations": {},
               "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/shared/rewards-contracts",
+                "main": "shared/rewards-contracts/src/index.ts",
+                "tsConfig": "shared/rewards-contracts/tsconfig.lib.json",
+                "assets": [
+                  "shared/rewards-contracts/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
             }
           },
-          "name": "@razvolution/rewards-contracts",
+          "name": "@razvolution/shared-rewards-contracts",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -781,11 +727,14 @@
               "isInPackageManagerWorkspaces": true
             }
           },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "shared/rewards-contracts/src",
+          "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "auth-contracts": {
-        "name": "auth-contracts",
+      "@razvolution/shared-auth-contracts": {
+        "name": "@razvolution/shared-auth-contracts",
         "type": "lib",
         "data": {
           "root": "shared/auth-contracts",
@@ -802,25 +751,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{workspaceRoot}/dist/out-tsc/**/*.d.ts",
-                "{workspaceRoot}/dist/out-tsc/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -882,7 +820,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects auth-contracts --includeDependentProjects -- pnpm exec nx build-deps auth-contracts"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-auth-contracts --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-auth-contracts"
               },
               "configurations": {},
               "parallelism": true
@@ -970,7 +908,7 @@
               ]
             }
           },
-          "name": "auth-contracts",
+          "name": "@razvolution/shared-auth-contracts",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -991,8 +929,8 @@
           "implicitDependencies": []
         }
       },
-      "i18n-contracts": {
-        "name": "i18n-contracts",
+      "@razvolution/shared-i18n-contracts": {
+        "name": "@razvolution/shared-i18n-contracts",
         "type": "lib",
         "data": {
           "root": "shared/i18n-contracts",
@@ -1009,27 +947,14 @@
               "cache": true,
               "inputs": [
                 "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
                 {
                   "dependentTasksOutputFiles": "**/*.d.ts"
                 }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -1091,7 +1016,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects i18n-contracts --includeDependentProjects -- pnpm exec nx build-deps i18n-contracts"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-i18n-contracts --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-i18n-contracts"
               },
               "configurations": {},
               "parallelism": true
@@ -1179,7 +1104,7 @@
               ]
             }
           },
-          "name": "i18n-contracts",
+          "name": "@razvolution/shared-i18n-contracts",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -1200,8 +1125,8 @@
           "implicitDependencies": []
         }
       },
-      "@razvolution/ai-contracts": {
-        "name": "@razvolution/ai-contracts",
+      "@razvolution/shared-ai-contracts": {
+        "name": "@razvolution/shared-ai-contracts",
         "type": "lib",
         "data": {
           "root": "shared/ai-contracts",
@@ -1218,27 +1143,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -1261,41 +1173,28 @@
               "parallelism": true
             },
             "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/shared/ai-contracts",
+                "main": "shared/ai-contracts/src/index.ts",
+                "tsConfig": "shared/ai-contracts/tsconfig.lib.json",
+                "assets": [
+                  "shared/ai-contracts/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
               "dependsOn": [
                 "^build"
               ],
-              "options": {
-                "cwd": "shared/ai-contracts",
-                "command": "tsc --build tsconfig.lib.json"
-              },
-              "cache": true,
               "inputs": [
                 "production",
                 "^production"
-              ],
-              "outputs": [
-                "{projectRoot}/dist"
-              ],
-              "syncGenerators": [
-                "@nx/js:typescript-sync"
-              ],
-              "metadata": {
-                "technologies": [
-                  "typescript"
-                ],
-                "description": "Builds the project with `tsc`.",
-                "help": {
-                  "command": "pnpm exec tsc --build --help",
-                  "example": {
-                    "args": [
-                      "--force"
-                    ]
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
+              ]
             },
             "build-deps": {
               "dependsOn": [
@@ -1313,7 +1212,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects @razvolution/ai-contracts --includeDependentProjects -- pnpm exec nx build-deps @razvolution/ai-contracts"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-ai-contracts --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-ai-contracts"
               },
               "configurations": {},
               "parallelism": true
@@ -1401,7 +1300,7 @@
               ]
             }
           },
-          "name": "@razvolution/ai-contracts",
+          "name": "@razvolution/shared-ai-contracts",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -1424,17 +1323,21 @@
               "isInPackageManagerWorkspaces": true
             }
           },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "shared/ai-contracts/src",
+          "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "@razvolution/community": {
-        "name": "@razvolution/community",
+      "@razvolution/features-community": {
+        "name": "@razvolution/features-community",
         "type": "lib",
         "data": {
           "root": "features/community",
           "targets": {
             "typecheck": {
               "dependsOn": [
+                "build",
                 "^typecheck"
               ],
               "options": {
@@ -1444,27 +1347,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -1483,6 +1373,51 @@
                 }
               },
               "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/features/community",
+                "main": "features/community/src/index.ts",
+                "tsConfig": "features/community/tsconfig.lib.json",
+                "assets": [
+                  "features/community/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/features-community --includeDependentProjects -- pnpm exec nx build-deps @razvolution/features-community"
+              },
               "configurations": {},
               "parallelism": true
             },
@@ -1578,7 +1513,7 @@
               "parallelism": true
             }
           },
-          "name": "@razvolution/community",
+          "name": "@razvolution/features-community",
           "tags": [
             "npm:public",
             "scope:feature",
@@ -1601,17 +1536,21 @@
               "isInPackageManagerWorkspaces": true
             }
           },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "features/community/src",
+          "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "@razvolution/marketing": {
-        "name": "@razvolution/marketing",
+      "@razvolution/features-marketing": {
+        "name": "@razvolution/features-marketing",
         "type": "lib",
         "data": {
           "root": "features/marketing",
           "targets": {
             "typecheck": {
               "dependsOn": [
+                "build",
                 "^typecheck"
               ],
               "options": {
@@ -1621,27 +1560,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -1660,6 +1586,51 @@
                 }
               },
               "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/features/marketing",
+                "main": "features/marketing/src/index.ts",
+                "tsConfig": "features/marketing/tsconfig.lib.json",
+                "assets": [
+                  "features/marketing/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/features-marketing --includeDependentProjects -- pnpm exec nx build-deps @razvolution/features-marketing"
+              },
               "configurations": {},
               "parallelism": true
             },
@@ -1755,7 +1726,7 @@
               "parallelism": true
             }
           },
-          "name": "@razvolution/marketing",
+          "name": "@razvolution/features-marketing",
           "tags": [
             "npm:public",
             "scope:feature",
@@ -1778,11 +1749,209 @@
               "isInPackageManagerWorkspaces": true
             }
           },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "features/marketing/src",
+          "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "data-access": {
-        "name": "data-access",
+      "@razvolution/features-workspace": {
+        "name": "@razvolution/features-workspace",
+        "type": "lib",
+        "data": {
+          "root": "features/workspace",
+          "targets": {
+            "typecheck": {
+              "dependsOn": [
+                "build",
+                "^typecheck"
+              ],
+              "options": {
+                "cwd": "features/workspace",
+                "command": "tsc --build --emitDeclarationOnly"
+              },
+              "cache": true,
+              "inputs": [
+                "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
+              ],
+              "outputs": [],
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "metadata": {
+                "technologies": [
+                  "typescript"
+                ],
+                "description": "Runs type-checking for the project.",
+                "help": {
+                  "command": "pnpm exec tsc --build --help",
+                  "example": {
+                    "args": [
+                      "--force"
+                    ]
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/features/workspace",
+                "main": "features/workspace/src/index.ts",
+                "tsConfig": "features/workspace/tsconfig.lib.json",
+                "assets": [
+                  "features/workspace/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/features-workspace --includeDependentProjects -- pnpm exec nx build-deps @razvolution/features-workspace"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "lint": {
+              "cache": true,
+              "options": {
+                "cwd": "features/workspace",
+                "command": "eslint ."
+              },
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/eslint.config.mjs",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": [
+                    "eslint"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "metadata": {
+                "technologies": [
+                  "eslint"
+                ],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "pnpm exec eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "options": {
+                "cwd": "features/workspace",
+                "env": {
+                  "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
+                },
+                "command": "jest"
+              },
+              "metadata": {
+                "technologies": [
+                  "jest"
+                ],
+                "description": "Run Jest Tests",
+                "help": {
+                  "command": "pnpm exec jest --help",
+                  "example": {
+                    "options": {
+                      "coverage": true
+                    }
+                  }
+                }
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}\\jest.preset.js",
+                {
+                  "externalDependencies": [
+                    "jest"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{workspaceRoot}\\coverage\\features\\workspace"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ]
+            }
+          },
+          "name": "@razvolution/features-workspace",
+          "tags": [
+            "npm:private",
+            "scope:feature",
+            "type:workspace"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@razvolution/features-workspace",
+              "packageVersion": "0.0.1",
+              "packageMain": "./src/index.js",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "features/workspace/src",
+          "projectType": "library",
+          "implicitDependencies": []
+        }
+      },
+      "@razvolution/shared-data-access": {
+        "name": "@razvolution/shared-data-access",
         "type": "lib",
         "data": {
           "root": "shared/data-access",
@@ -1799,27 +1968,14 @@
               "cache": true,
               "inputs": [
                 "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
                 {
                   "dependentTasksOutputFiles": "**/*.d.ts"
                 }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{workspaceRoot}/dist/out-tsc/**/*.d.ts",
-                "{workspaceRoot}/dist/out-tsc/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -1881,7 +2037,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects data-access --includeDependentProjects -- pnpm exec nx build-deps data-access"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-data-access --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-data-access"
               },
               "configurations": {},
               "parallelism": true
@@ -1969,7 +2125,7 @@
               ]
             }
           },
-          "name": "data-access",
+          "name": "@razvolution/shared-data-access",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -1990,14 +2146,15 @@
           "implicitDependencies": []
         }
       },
-      "@razvolution/checkout": {
-        "name": "@razvolution/checkout",
+      "@razvolution/features-checkout": {
+        "name": "@razvolution/features-checkout",
         "type": "lib",
         "data": {
           "root": "features/checkout",
           "targets": {
             "typecheck": {
               "dependsOn": [
+                "build",
                 "^typecheck"
               ],
               "options": {
@@ -2007,27 +2164,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -2046,6 +2190,51 @@
                 }
               },
               "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/features/checkout",
+                "main": "features/checkout/src/index.ts",
+                "tsConfig": "features/checkout/tsconfig.lib.json",
+                "assets": [
+                  "features/checkout/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/features-checkout --includeDependentProjects -- pnpm exec nx build-deps @razvolution/features-checkout"
+              },
               "configurations": {},
               "parallelism": true
             },
@@ -2141,7 +2330,7 @@
               "parallelism": true
             }
           },
-          "name": "@razvolution/checkout",
+          "name": "@razvolution/features-checkout",
           "tags": [
             "npm:public",
             "scope:feature",
@@ -2164,11 +2353,14 @@
               "isInPackageManagerWorkspaces": true
             }
           },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "features/checkout/src",
+          "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "test-utils": {
-        "name": "test-utils",
+      "@razvolution/shared-test-utils": {
+        "name": "@razvolution/shared-test-utils",
         "type": "lib",
         "data": {
           "root": "shared/test-utils",
@@ -2185,25 +2377,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{workspaceRoot}/dist/out-tsc/**/*.d.ts",
-                "{workspaceRoot}/dist/out-tsc/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -2265,7 +2446,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects test-utils --includeDependentProjects -- pnpm exec nx build-deps test-utils"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-test-utils --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-test-utils"
               },
               "configurations": {},
               "parallelism": true
@@ -2353,7 +2534,7 @@
               ]
             }
           },
-          "name": "test-utils",
+          "name": "@razvolution/shared-test-utils",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -2374,14 +2555,15 @@
           "implicitDependencies": []
         }
       },
-      "@razvolution/ai-chat": {
-        "name": "@razvolution/ai-chat",
+      "@razvolution/features-ai-chat": {
+        "name": "@razvolution/features-ai-chat",
         "type": "lib",
         "data": {
           "root": "features/ai-chat",
           "targets": {
             "typecheck": {
               "dependsOn": [
+                "build",
                 "^typecheck"
               ],
               "options": {
@@ -2391,27 +2573,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -2430,6 +2599,51 @@
                 }
               },
               "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/features/ai-chat",
+                "main": "features/ai-chat/src/index.ts",
+                "tsConfig": "features/ai-chat/tsconfig.lib.json",
+                "assets": [
+                  "features/ai-chat/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/features-ai-chat --includeDependentProjects -- pnpm exec nx build-deps @razvolution/features-ai-chat"
+              },
               "configurations": {},
               "parallelism": true
             },
@@ -2525,7 +2739,7 @@
               "parallelism": true
             }
           },
-          "name": "@razvolution/ai-chat",
+          "name": "@razvolution/features-ai-chat",
           "tags": [
             "npm:public",
             "scope:feature",
@@ -2548,47 +2762,38 @@
               "isInPackageManagerWorkspaces": true
             }
           },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "features/ai-chat/src",
+          "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "@razvolution/rewards": {
-        "name": "@razvolution/rewards",
+      "@razvolution/features-product": {
+        "name": "@razvolution/features-product",
         "type": "lib",
         "data": {
-          "root": "features/rewards",
+          "root": "features/product",
           "targets": {
             "typecheck": {
               "dependsOn": [
+                "build",
                 "^typecheck"
               ],
               "options": {
-                "cwd": "features/rewards",
+                "cwd": "features/product",
                 "command": "tsc --build --emitDeclarationOnly"
               },
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -2607,6 +2812,254 @@
                 }
               },
               "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/features/product",
+                "main": "features/product/src/index.ts",
+                "tsConfig": "features/product/tsconfig.lib.json",
+                "assets": [
+                  "features/product/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/features-product --includeDependentProjects -- pnpm exec nx build-deps @razvolution/features-product"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "lint": {
+              "cache": true,
+              "options": {
+                "cwd": "features/product",
+                "command": "eslint ."
+              },
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/eslint.config.mjs",
+                "{workspaceRoot}/features/product/eslint.config.mjs",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": [
+                    "eslint"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "metadata": {
+                "technologies": [
+                  "eslint"
+                ],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "pnpm exec eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "options": {
+                "cwd": "features/product",
+                "env": {
+                  "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
+                },
+                "command": "jest"
+              },
+              "metadata": {
+                "technologies": [
+                  "jest"
+                ],
+                "description": "Run Jest Tests",
+                "help": {
+                  "command": "pnpm exec jest --help",
+                  "example": {
+                    "options": {
+                      "coverage": true
+                    }
+                  }
+                }
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}\\jest.preset.js",
+                {
+                  "externalDependencies": [
+                    "jest"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{projectRoot}\\test-output\\jest\\coverage"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ]
+            },
+            "nx-release-publish": {
+              "executor": "@nx/js:release-publish",
+              "dependsOn": [
+                "^nx-release-publish"
+              ],
+              "options": {},
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "name": "@razvolution/features-product",
+          "tags": [
+            "npm:public",
+            "scope:feature",
+            "type:commerce"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@razvolution/product",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "features/product/src",
+          "projectType": "library",
+          "implicitDependencies": []
+        }
+      },
+      "@razvolution/features-rewards": {
+        "name": "@razvolution/features-rewards",
+        "type": "lib",
+        "data": {
+          "root": "features/rewards",
+          "targets": {
+            "typecheck": {
+              "dependsOn": [
+                "build",
+                "^typecheck"
+              ],
+              "options": {
+                "cwd": "features/rewards",
+                "command": "tsc --build --emitDeclarationOnly"
+              },
+              "cache": true,
+              "inputs": [
+                "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
+              ],
+              "outputs": [],
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "metadata": {
+                "technologies": [
+                  "typescript"
+                ],
+                "description": "Runs type-checking for the project.",
+                "help": {
+                  "command": "pnpm exec tsc --build --help",
+                  "example": {
+                    "args": [
+                      "--force"
+                    ]
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/features/rewards",
+                "main": "features/rewards/src/index.ts",
+                "tsConfig": "features/rewards/tsconfig.lib.json",
+                "assets": [
+                  "features/rewards/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/features-rewards --includeDependentProjects -- pnpm exec nx build-deps @razvolution/features-rewards"
+              },
               "configurations": {},
               "parallelism": true
             },
@@ -2702,7 +3155,7 @@
               "parallelism": true
             }
           },
-          "name": "@razvolution/rewards",
+          "name": "@razvolution/features-rewards",
           "tags": [
             "npm:public",
             "scope:feature",
@@ -2725,47 +3178,38 @@
               "isInPackageManagerWorkspaces": true
             }
           },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "features/rewards/src",
+          "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "product": {
-        "name": "product",
+      "@razvolution/shared-db-types": {
+        "name": "@razvolution/shared-db-types",
         "type": "lib",
         "data": {
-          "root": "features/product",
+          "root": "shared/db-types",
           "targets": {
             "typecheck": {
               "dependsOn": [
+                "build",
                 "^typecheck"
               ],
               "options": {
-                "cwd": "features/product",
+                "cwd": "shared/db-types",
                 "command": "tsc --build --emitDeclarationOnly"
               },
               "cache": true,
               "inputs": [
                 "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
                 {
                   "dependentTasksOutputFiles": "**/*.d.ts"
                 }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -2787,17 +3231,59 @@
               "configurations": {},
               "parallelism": true
             },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/shared/db-types",
+                "main": "shared/db-types/src/index.ts",
+                "tsConfig": "shared/db-types/tsconfig.lib.json",
+                "assets": []
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/shared-db-types --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-db-types"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
             "lint": {
               "cache": true,
               "options": {
-                "cwd": "features/product",
+                "cwd": "shared/db-types",
                 "command": "eslint ."
               },
               "inputs": [
                 "default",
                 "^default",
                 "{workspaceRoot}/eslint.config.mjs",
-                "{workspaceRoot}/features/product/eslint.config.mjs",
                 "{workspaceRoot}/tools/eslint-rules/**/*",
                 {
                   "externalDependencies": [
@@ -2825,98 +3311,31 @@
               "executor": "nx:run-commands",
               "configurations": {},
               "parallelism": true
-            },
-            "test": {
-              "options": {
-                "cwd": "features/product",
-                "env": {
-                  "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
-                },
-                "command": "jest"
-              },
-              "metadata": {
-                "technologies": [
-                  "jest"
-                ],
-                "description": "Run Jest Tests",
-                "help": {
-                  "command": "pnpm exec jest --help",
-                  "example": {
-                    "options": {
-                      "coverage": true
-                    }
-                  }
-                }
-              },
-              "cache": true,
-              "inputs": [
-                "default",
-                "^production",
-                "{workspaceRoot}\\jest.preset.js",
-                {
-                  "externalDependencies": [
-                    "jest"
-                  ]
-                }
-              ],
-              "outputs": [
-                "{projectRoot}\\test-output\\jest\\coverage"
-              ],
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true,
-              "dependsOn": [
-                "^build"
-              ]
-            },
-            "build": {
-              "executor": "@nx/js:tsc",
-              "outputs": [
-                "{options.outputPath}"
-              ],
-              "options": {
-                "outputPath": "dist/features/product",
-                "main": "features/product/src/index.ts",
-                "tsConfig": "features/product/tsconfig.lib.json",
-                "assets": [
-                  "features/product/*.md"
-                ]
-              },
-              "configurations": {},
-              "parallelism": true,
-              "cache": true,
-              "dependsOn": [
-                "^build"
-              ],
-              "inputs": [
-                "production",
-                "^production"
-              ]
             }
           },
-          "name": "product",
+          "name": "@razvolution/shared-db-types",
           "tags": [
             "npm:private",
-            "scope:feature",
-            "type:commerce"
+            "scope:shared",
+            "type:contract"
           ],
           "metadata": {
             "targetGroups": {},
             "js": {
-              "packageName": "@razvolution/product",
+              "packageName": "@razvolution/shared-db-types",
               "packageVersion": "0.0.1",
               "packageMain": "./src/index.js",
               "isInPackageManagerWorkspaces": true
             }
           },
           "$schema": "../../node_modules/nx/schemas/project-schema.json",
-          "sourceRoot": "features/product/src",
+          "sourceRoot": "shared/db-types/src",
           "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "@razvolution/payments": {
-        "name": "@razvolution/payments",
+      "@razvolution/shared-payments": {
+        "name": "@razvolution/shared-payments",
         "type": "lib",
         "data": {
           "root": "shared/payments",
@@ -2933,27 +3352,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -2976,41 +3382,28 @@
               "parallelism": true
             },
             "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/shared/payments",
+                "main": "shared/payments/src/index.ts",
+                "tsConfig": "shared/payments/tsconfig.lib.json",
+                "assets": [
+                  "shared/payments/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
               "dependsOn": [
                 "^build"
               ],
-              "options": {
-                "cwd": "shared/payments",
-                "command": "tsc --build tsconfig.lib.json"
-              },
-              "cache": true,
               "inputs": [
                 "production",
                 "^production"
-              ],
-              "outputs": [
-                "{projectRoot}/dist"
-              ],
-              "syncGenerators": [
-                "@nx/js:typescript-sync"
-              ],
-              "metadata": {
-                "technologies": [
-                  "typescript"
-                ],
-                "description": "Builds the project with `tsc`.",
-                "help": {
-                  "command": "pnpm exec tsc --build --help",
-                  "example": {
-                    "args": [
-                      "--force"
-                    ]
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
+              ]
             },
             "build-deps": {
               "dependsOn": [
@@ -3028,7 +3421,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects @razvolution/payments --includeDependentProjects -- pnpm exec nx build-deps @razvolution/payments"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-payments --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-payments"
               },
               "configurations": {},
               "parallelism": true
@@ -3116,7 +3509,7 @@
               ]
             }
           },
-          "name": "@razvolution/payments",
+          "name": "@razvolution/shared-payments",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -3125,25 +3518,20 @@
           "metadata": {
             "targetGroups": {},
             "js": {
-              "packageName": "@razvolution/payments",
+              "packageName": "@razvolution/shared-payments",
               "packageVersion": "0.0.1",
-              "packageExports": {
-                "./package.json": "./package.json",
-                ".": {
-                  "types": "./dist/index.d.ts",
-                  "import": "./dist/index.js",
-                  "default": "./dist/index.js"
-                }
-              },
-              "packageMain": "./dist/index.js",
+              "packageMain": "./src/index.js",
               "isInPackageManagerWorkspaces": true
             }
           },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "shared/payments/src",
+          "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "@razvolution/shipping": {
-        "name": "@razvolution/shipping",
+      "@razvolution/shared-shipping": {
+        "name": "@razvolution/shared-shipping",
         "type": "lib",
         "data": {
           "root": "shared/shipping",
@@ -3160,27 +3548,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -3203,41 +3578,28 @@
               "parallelism": true
             },
             "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/shared/shipping",
+                "main": "shared/shipping/src/index.ts",
+                "tsConfig": "shared/shipping/tsconfig.lib.json",
+                "assets": [
+                  "shared/shipping/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
               "dependsOn": [
                 "^build"
               ],
-              "options": {
-                "cwd": "shared/shipping",
-                "command": "tsc --build tsconfig.lib.json"
-              },
-              "cache": true,
               "inputs": [
                 "production",
                 "^production"
-              ],
-              "outputs": [
-                "{projectRoot}/dist"
-              ],
-              "syncGenerators": [
-                "@nx/js:typescript-sync"
-              ],
-              "metadata": {
-                "technologies": [
-                  "typescript"
-                ],
-                "description": "Builds the project with `tsc`.",
-                "help": {
-                  "command": "pnpm exec tsc --build --help",
-                  "example": {
-                    "args": [
-                      "--force"
-                    ]
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
+              ]
             },
             "build-deps": {
               "dependsOn": [
@@ -3255,7 +3617,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects @razvolution/shipping --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shipping"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-shipping --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-shipping"
               },
               "configurations": {},
               "parallelism": true
@@ -3343,7 +3705,7 @@
               ]
             }
           },
-          "name": "@razvolution/shipping",
+          "name": "@razvolution/shared-shipping",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -3354,184 +3716,18 @@
             "js": {
               "packageName": "@razvolution/shipping",
               "packageVersion": "0.0.1",
-              "packageExports": {
-                "./package.json": "./package.json",
-                ".": {
-                  "types": "./dist/index.d.ts",
-                  "import": "./dist/index.js",
-                  "default": "./dist/index.js"
-                }
-              },
-              "packageMain": "./dist/index.js",
-              "isInPackageManagerWorkspaces": true
-            }
-          },
-          "implicitDependencies": []
-        }
-      },
-      "db-types": {
-        "name": "db-types",
-        "type": "lib",
-        "data": {
-          "root": "shared/db-types",
-          "targets": {
-            "typecheck": {
-              "dependsOn": [
-                "build",
-                "^typecheck"
-              ],
-              "options": {
-                "cwd": "shared/db-types",
-                "command": "tsc --build --emitDeclarationOnly"
-              },
-              "cache": true,
-              "inputs": [
-                "production",
-                {
-                  "dependentTasksOutputFiles": "**/*.d.ts"
-                }
-              ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo"
-              ],
-              "syncGenerators": [
-                "@nx/js:typescript-sync"
-              ],
-              "metadata": {
-                "technologies": [
-                  "typescript"
-                ],
-                "description": "Runs type-checking for the project.",
-                "help": {
-                  "command": "pnpm exec tsc --build --help",
-                  "example": {
-                    "args": [
-                      "--force"
-                    ]
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
-            },
-            "build": {
-              "executor": "@nx/js:tsc",
-              "outputs": [
-                "{options.outputPath}"
-              ],
-              "options": {
-                "outputPath": "dist/shared/db-types",
-                "main": "shared/db-types/src/index.ts",
-                "tsConfig": "shared/db-types/tsconfig.lib.json",
-                "assets": []
-              },
-              "configurations": {},
-              "parallelism": true,
-              "cache": true,
-              "dependsOn": [
-                "^build"
-              ],
-              "inputs": [
-                "production",
-                "^production"
-              ]
-            },
-            "build-deps": {
-              "dependsOn": [
-                "^build"
-              ],
-              "configurations": {},
-              "options": {},
-              "parallelism": true,
-              "executor": "nx:noop"
-            },
-            "watch-deps": {
-              "continuous": true,
-              "dependsOn": [
-                "build-deps"
-              ],
-              "executor": "nx:run-commands",
-              "options": {
-                "command": "pnpm exec nx watch --projects db-types --includeDependentProjects -- pnpm exec nx build-deps db-types"
-              },
-              "configurations": {},
-              "parallelism": true
-            },
-            "lint": {
-              "cache": true,
-              "options": {
-                "cwd": "shared/db-types",
-                "command": "eslint ."
-              },
-              "inputs": [
-                "default",
-                "^default",
-                "{workspaceRoot}/eslint.config.mjs",
-                "{workspaceRoot}/tools/eslint-rules/**/*",
-                {
-                  "externalDependencies": [
-                    "eslint"
-                  ]
-                }
-              ],
-              "outputs": [
-                "{options.outputFile}"
-              ],
-              "metadata": {
-                "technologies": [
-                  "eslint"
-                ],
-                "description": "Runs ESLint on project",
-                "help": {
-                  "command": "pnpm exec eslint --help",
-                  "example": {
-                    "options": {
-                      "max-warnings": 0
-                    }
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
-            }
-          },
-          "name": "db-types",
-          "tags": [
-            "npm:private",
-            "scope:shared",
-            "type:contract"
-          ],
-          "metadata": {
-            "targetGroups": {},
-            "js": {
-              "packageName": "@razvolution/shared-db-types",
-              "packageVersion": "0.0.1",
               "packageMain": "./src/index.js",
               "isInPackageManagerWorkspaces": true
             }
           },
           "$schema": "../../node_modules/nx/schemas/project-schema.json",
-          "sourceRoot": "shared/db-types/src",
+          "sourceRoot": "shared/shipping/src",
           "projectType": "library",
           "implicitDependencies": []
         }
       },
-      "supabase": {
-        "name": "supabase",
+      "@razvolution/shared-supabase": {
+        "name": "@razvolution/shared-supabase",
         "type": "lib",
         "data": {
           "root": "shared/supabase",
@@ -3548,27 +3744,14 @@
               "cache": true,
               "inputs": [
                 "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
                 {
                   "dependentTasksOutputFiles": "**/*.d.ts"
                 }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{workspaceRoot}/dist/out-tsc/**/*.d.ts",
-                "{workspaceRoot}/dist/out-tsc/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -3630,7 +3813,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects supabase --includeDependentProjects -- pnpm exec nx build-deps supabase"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-supabase --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-supabase"
               },
               "configurations": {},
               "parallelism": true
@@ -3715,7 +3898,7 @@
               ]
             }
           },
-          "name": "supabase",
+          "name": "@razvolution/shared-supabase",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -3726,6 +3909,10 @@
             "js": {
               "packageName": "@razvolution/shared-supabase",
               "packageVersion": "0.0.1",
+              "packageExports": {
+                ".": "./src/index.js",
+                "./server": "./src/lib/server.ts"
+              },
               "packageMain": "./src/index.js",
               "isInPackageManagerWorkspaces": true
             }
@@ -3736,235 +3923,8 @@
           "implicitDependencies": []
         }
       },
-      "@razvolution/shopify": {
-        "name": "@razvolution/shopify",
-        "type": "lib",
-        "data": {
-          "root": "shared/shopify",
-          "targets": {
-            "typecheck": {
-              "dependsOn": [
-                "build",
-                "^typecheck"
-              ],
-              "options": {
-                "cwd": "shared/shopify",
-                "command": "tsc --build --emitDeclarationOnly"
-              },
-              "cache": true,
-              "inputs": [
-                "production",
-                "^production"
-              ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
-              "syncGenerators": [
-                "@nx/js:typescript-sync"
-              ],
-              "metadata": {
-                "technologies": [
-                  "typescript"
-                ],
-                "description": "Runs type-checking for the project.",
-                "help": {
-                  "command": "pnpm exec tsc --build --help",
-                  "example": {
-                    "args": [
-                      "--force"
-                    ]
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
-            },
-            "build": {
-              "dependsOn": [
-                "^build"
-              ],
-              "options": {
-                "cwd": "shared/shopify",
-                "command": "tsc --build tsconfig.lib.json"
-              },
-              "cache": true,
-              "inputs": [
-                "production",
-                "^production"
-              ],
-              "outputs": [
-                "{projectRoot}/dist"
-              ],
-              "syncGenerators": [
-                "@nx/js:typescript-sync"
-              ],
-              "metadata": {
-                "technologies": [
-                  "typescript"
-                ],
-                "description": "Builds the project with `tsc`.",
-                "help": {
-                  "command": "pnpm exec tsc --build --help",
-                  "example": {
-                    "args": [
-                      "--force"
-                    ]
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
-            },
-            "build-deps": {
-              "dependsOn": [
-                "^build"
-              ],
-              "configurations": {},
-              "options": {},
-              "parallelism": true,
-              "executor": "nx:noop"
-            },
-            "watch-deps": {
-              "continuous": true,
-              "dependsOn": [
-                "build-deps"
-              ],
-              "executor": "nx:run-commands",
-              "options": {
-                "command": "pnpm exec nx watch --projects @razvolution/shopify --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shopify"
-              },
-              "configurations": {},
-              "parallelism": true
-            },
-            "lint": {
-              "cache": true,
-              "options": {
-                "cwd": "shared/shopify",
-                "command": "eslint ."
-              },
-              "inputs": [
-                "default",
-                "^default",
-                "{workspaceRoot}/eslint.config.mjs",
-                "{workspaceRoot}/shared/shopify/eslint.config.mjs",
-                "{workspaceRoot}/tools/eslint-rules/**/*",
-                {
-                  "externalDependencies": [
-                    "eslint"
-                  ]
-                }
-              ],
-              "outputs": [
-                "{options.outputFile}"
-              ],
-              "metadata": {
-                "technologies": [
-                  "eslint"
-                ],
-                "description": "Runs ESLint on project",
-                "help": {
-                  "command": "pnpm exec eslint --help",
-                  "example": {
-                    "options": {
-                      "max-warnings": 0
-                    }
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
-            },
-            "test": {
-              "options": {
-                "cwd": "shared/shopify",
-                "env": {
-                  "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
-                },
-                "command": "jest"
-              },
-              "metadata": {
-                "technologies": [
-                  "jest"
-                ],
-                "description": "Run Jest Tests",
-                "help": {
-                  "command": "pnpm exec jest --help",
-                  "example": {
-                    "options": {
-                      "coverage": true
-                    }
-                  }
-                }
-              },
-              "cache": true,
-              "inputs": [
-                "default",
-                "^production",
-                "{workspaceRoot}\\jest.preset.js",
-                {
-                  "externalDependencies": [
-                    "jest"
-                  ]
-                }
-              ],
-              "outputs": [
-                "{projectRoot}\\test-output\\jest\\coverage"
-              ],
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true,
-              "dependsOn": [
-                "^build"
-              ]
-            }
-          },
-          "name": "@razvolution/shopify",
-          "tags": [
-            "npm:private",
-            "scope:shared",
-            "type:data-access"
-          ],
-          "metadata": {
-            "targetGroups": {},
-            "js": {
-              "packageName": "@razvolution/shopify",
-              "packageVersion": "0.0.1",
-              "packageExports": {
-                "./package.json": "./package.json",
-                ".": {
-                  "types": "./dist/index.d.ts",
-                  "import": "./dist/index.js",
-                  "default": "./dist/index.js"
-                }
-              },
-              "packageMain": "./dist/index.js",
-              "isInPackageManagerWorkspaces": true
-            }
-          },
-          "implicitDependencies": []
-        }
-      },
-      "logging": {
-        "name": "logging",
+      "@razvolution/shared-logging": {
+        "name": "@razvolution/shared-logging",
         "type": "lib",
         "data": {
           "root": "shared/logging",
@@ -3981,25 +3941,14 @@
               "cache": true,
               "inputs": [
                 "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
                 {
                   "dependentTasksOutputFiles": "**/*.d.ts"
                 }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -4061,7 +4010,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects logging --includeDependentProjects -- pnpm exec nx build-deps logging"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-logging --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-logging"
               },
               "configurations": {},
               "parallelism": true
@@ -4149,7 +4098,7 @@
               ]
             }
           },
-          "name": "logging",
+          "name": "@razvolution/shared-logging",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -4160,7 +4109,7 @@
             "js": {
               "packageName": "@razvolution/shared-logging",
               "packageVersion": "0.0.1",
-              "packageMain": "./src/index.js",
+              "packageMain": "./dist/index.js",
               "isInPackageManagerWorkspaces": true
             }
           },
@@ -4170,44 +4119,32 @@
           "implicitDependencies": []
         }
       },
-      "@razvolution/cart": {
-        "name": "@razvolution/cart",
+      "@razvolution/shared-shopify": {
+        "name": "@razvolution/shared-shopify",
         "type": "lib",
         "data": {
-          "root": "features/cart",
+          "root": "shared/shopify",
           "targets": {
             "typecheck": {
               "dependsOn": [
+                "build",
                 "^typecheck"
               ],
               "options": {
-                "cwd": "features/cart",
+                "cwd": "shared/shopify",
                 "command": "tsc --build --emitDeclarationOnly"
               },
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -4226,6 +4163,443 @@
                 }
               },
               "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/shared/shopify",
+                "main": "shared/shopify/src/index.ts",
+                "tsConfig": "shared/shopify/tsconfig.lib.json",
+                "assets": [
+                  "shared/shopify/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/shared-shopify --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-shopify"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "lint": {
+              "cache": true,
+              "options": {
+                "cwd": "shared/shopify",
+                "command": "eslint ."
+              },
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/eslint.config.mjs",
+                "{workspaceRoot}/shared/shopify/eslint.config.mjs",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": [
+                    "eslint"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "metadata": {
+                "technologies": [
+                  "eslint"
+                ],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "pnpm exec eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "options": {
+                "cwd": "shared/shopify",
+                "env": {
+                  "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
+                },
+                "command": "jest"
+              },
+              "metadata": {
+                "technologies": [
+                  "jest"
+                ],
+                "description": "Run Jest Tests",
+                "help": {
+                  "command": "pnpm exec jest --help",
+                  "example": {
+                    "options": {
+                      "coverage": true
+                    }
+                  }
+                }
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}\\jest.preset.js",
+                {
+                  "externalDependencies": [
+                    "jest"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{projectRoot}\\test-output\\jest\\coverage"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ]
+            }
+          },
+          "name": "@razvolution/shared-shopify",
+          "tags": [
+            "npm:private",
+            "scope:shared",
+            "type:data-access"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@razvolution/shared-shopify",
+              "packageVersion": "0.0.1",
+              "packageMain": "./src/index.js",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "shared/shopify/src",
+          "projectType": "library",
+          "implicitDependencies": []
+        }
+      },
+      "@razvolution/features-auth": {
+        "name": "@razvolution/features-auth",
+        "type": "lib",
+        "data": {
+          "root": "features/auth",
+          "targets": {
+            "typecheck": {
+              "dependsOn": [
+                "build",
+                "^typecheck"
+              ],
+              "options": {
+                "cwd": "features/auth",
+                "command": "tsc --build --emitDeclarationOnly"
+              },
+              "cache": true,
+              "inputs": [
+                "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
+              ],
+              "outputs": [],
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "metadata": {
+                "technologies": [
+                  "typescript"
+                ],
+                "description": "Runs type-checking for the project.",
+                "help": {
+                  "command": "pnpm exec tsc --build --help",
+                  "example": {
+                    "args": [
+                      "--force"
+                    ]
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/features/auth",
+                "main": "features/auth/src/index.ts",
+                "tsConfig": "features/auth/tsconfig.lib.json",
+                "assets": [
+                  "features/auth/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/features-auth --includeDependentProjects -- pnpm exec nx build-deps @razvolution/features-auth"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "lint": {
+              "cache": true,
+              "options": {
+                "cwd": "features/auth",
+                "command": "eslint ."
+              },
+              "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/eslint.config.mjs",
+                "{workspaceRoot}/features/auth/eslint.config.mjs",
+                "{workspaceRoot}/tools/eslint-rules/**/*",
+                {
+                  "externalDependencies": [
+                    "eslint"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{options.outputFile}"
+              ],
+              "metadata": {
+                "technologies": [
+                  "eslint"
+                ],
+                "description": "Runs ESLint on project",
+                "help": {
+                  "command": "pnpm exec eslint --help",
+                  "example": {
+                    "options": {
+                      "max-warnings": 0
+                    }
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "test": {
+              "options": {
+                "cwd": "features/auth",
+                "env": {
+                  "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
+                },
+                "command": "jest"
+              },
+              "metadata": {
+                "technologies": [
+                  "jest"
+                ],
+                "description": "Run Jest Tests",
+                "help": {
+                  "command": "pnpm exec jest --help",
+                  "example": {
+                    "options": {
+                      "coverage": true
+                    }
+                  }
+                }
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production",
+                "{workspaceRoot}\\jest.preset.js",
+                {
+                  "externalDependencies": [
+                    "jest"
+                  ]
+                }
+              ],
+              "outputs": [
+                "{workspaceRoot}\\coverage\\features\\auth"
+              ],
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": [
+                "^build"
+              ]
+            }
+          },
+          "name": "@razvolution/features-auth",
+          "tags": [
+            "npm:private",
+            "scope:feature",
+            "type:auth"
+          ],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@razvolution/features-auth",
+              "packageVersion": "0.0.1",
+              "packageMain": "./src/index.js",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "features/auth/src",
+          "projectType": "library",
+          "implicitDependencies": []
+        }
+      },
+      "@razvolution/features-cart": {
+        "name": "@razvolution/features-cart",
+        "type": "lib",
+        "data": {
+          "root": "features/cart",
+          "targets": {
+            "typecheck": {
+              "dependsOn": [
+                "build",
+                "^typecheck"
+              ],
+              "options": {
+                "cwd": "features/cart",
+                "command": "tsc --build --emitDeclarationOnly"
+              },
+              "cache": true,
+              "inputs": [
+                "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
+              ],
+              "outputs": [],
+              "syncGenerators": [
+                "@nx/js:typescript-sync"
+              ],
+              "metadata": {
+                "technologies": [
+                  "typescript"
+                ],
+                "description": "Runs type-checking for the project.",
+                "help": {
+                  "command": "pnpm exec tsc --build --help",
+                  "example": {
+                    "args": [
+                      "--force"
+                    ]
+                  }
+                }
+              },
+              "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/features/cart",
+                "main": "features/cart/src/index.ts",
+                "tsConfig": "features/cart/tsconfig.lib.json",
+                "assets": [
+                  "features/cart/*.md"
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/features-cart --includeDependentProjects -- pnpm exec nx build-deps @razvolution/features-cart"
+              },
               "configurations": {},
               "parallelism": true
             },
@@ -4321,7 +4695,7 @@
               "parallelism": true
             }
           },
-          "name": "@razvolution/cart",
+          "name": "@razvolution/features-cart",
           "tags": [
             "npm:public",
             "scope:feature",
@@ -4344,6 +4718,9 @@
               "isInPackageManagerWorkspaces": true
             }
           },
+          "$schema": "../../node_modules/nx/schemas/project-schema.json",
+          "sourceRoot": "features/cart/src",
+          "projectType": "library",
           "implicitDependencies": []
         }
       },
@@ -4365,27 +4742,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -4573,217 +4937,8 @@
           "implicitDependencies": []
         }
       },
-      "auth": {
-        "name": "auth",
-        "type": "lib",
-        "data": {
-          "root": "features/auth",
-          "targets": {
-            "typecheck": {
-              "dependsOn": [
-                "build",
-                "^typecheck"
-              ],
-              "options": {
-                "cwd": "features/auth",
-                "command": "tsc --build --emitDeclarationOnly"
-              },
-              "cache": true,
-              "inputs": [
-                "production",
-                {
-                  "dependentTasksOutputFiles": "**/*.d.ts"
-                }
-              ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{workspaceRoot}/dist/out-tsc/**/*.d.ts",
-                "{workspaceRoot}/dist/out-tsc/tsconfig.tsbuildinfo"
-              ],
-              "syncGenerators": [
-                "@nx/js:typescript-sync"
-              ],
-              "metadata": {
-                "technologies": [
-                  "typescript"
-                ],
-                "description": "Runs type-checking for the project.",
-                "help": {
-                  "command": "pnpm exec tsc --build --help",
-                  "example": {
-                    "args": [
-                      "--force"
-                    ]
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
-            },
-            "build": {
-              "executor": "@nx/js:tsc",
-              "outputs": [
-                "{options.outputPath}"
-              ],
-              "options": {
-                "outputPath": "dist/features/auth",
-                "main": "features/auth/src/index.ts",
-                "tsConfig": "features/auth/tsconfig.lib.json",
-                "assets": [
-                  "features/auth/*.md"
-                ]
-              },
-              "configurations": {},
-              "parallelism": true,
-              "cache": true,
-              "dependsOn": [
-                "^build"
-              ],
-              "inputs": [
-                "production",
-                "^production"
-              ]
-            },
-            "build-deps": {
-              "dependsOn": [
-                "^build"
-              ],
-              "configurations": {},
-              "options": {},
-              "parallelism": true,
-              "executor": "nx:noop"
-            },
-            "watch-deps": {
-              "continuous": true,
-              "dependsOn": [
-                "build-deps"
-              ],
-              "executor": "nx:run-commands",
-              "options": {
-                "command": "pnpm exec nx watch --projects auth --includeDependentProjects -- pnpm exec nx build-deps auth"
-              },
-              "configurations": {},
-              "parallelism": true
-            },
-            "lint": {
-              "cache": true,
-              "options": {
-                "cwd": "features/auth",
-                "command": "eslint ."
-              },
-              "inputs": [
-                "default",
-                "^default",
-                "{workspaceRoot}/eslint.config.mjs",
-                "{workspaceRoot}/features/auth/eslint.config.mjs",
-                "{workspaceRoot}/tools/eslint-rules/**/*",
-                {
-                  "externalDependencies": [
-                    "eslint"
-                  ]
-                }
-              ],
-              "outputs": [
-                "{options.outputFile}"
-              ],
-              "metadata": {
-                "technologies": [
-                  "eslint"
-                ],
-                "description": "Runs ESLint on project",
-                "help": {
-                  "command": "pnpm exec eslint --help",
-                  "example": {
-                    "options": {
-                      "max-warnings": 0
-                    }
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
-            },
-            "test": {
-              "options": {
-                "cwd": "features/auth",
-                "env": {
-                  "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
-                },
-                "command": "jest"
-              },
-              "metadata": {
-                "technologies": [
-                  "jest"
-                ],
-                "description": "Run Jest Tests",
-                "help": {
-                  "command": "pnpm exec jest --help",
-                  "example": {
-                    "options": {
-                      "coverage": true
-                    }
-                  }
-                }
-              },
-              "cache": true,
-              "inputs": [
-                "default",
-                "^production",
-                "{workspaceRoot}\\jest.preset.js",
-                {
-                  "externalDependencies": [
-                    "jest"
-                  ]
-                }
-              ],
-              "outputs": [
-                "{workspaceRoot}\\coverage\\features\\auth"
-              ],
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true,
-              "dependsOn": [
-                "^build"
-              ]
-            }
-          },
-          "name": "auth",
-          "tags": [
-            "npm:private",
-            "scope:feature",
-            "type:auth"
-          ],
-          "metadata": {
-            "targetGroups": {},
-            "js": {
-              "packageName": "@razvolution/features-auth",
-              "packageVersion": "0.0.1",
-              "packageMain": "./src/index.js",
-              "isInPackageManagerWorkspaces": true
-            }
-          },
-          "$schema": "../../node_modules/nx/schemas/project-schema.json",
-          "sourceRoot": "features/auth/src",
-          "projectType": "library",
-          "implicitDependencies": []
-        }
-      },
-      "utils": {
-        "name": "utils",
+      "@razvolution/shared-utils": {
+        "name": "@razvolution/shared-utils",
         "type": "lib",
         "data": {
           "root": "shared/utils",
@@ -4800,25 +4955,14 @@
               "cache": true,
               "inputs": [
                 "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
                 {
                   "dependentTasksOutputFiles": "**/*.d.ts"
                 }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -4880,7 +5024,7 @@
               ],
               "executor": "nx:run-commands",
               "options": {
-                "command": "pnpm exec nx watch --projects utils --includeDependentProjects -- pnpm exec nx build-deps utils"
+                "command": "pnpm exec nx watch --projects @razvolution/shared-utils --includeDependentProjects -- pnpm exec nx build-deps @razvolution/shared-utils"
               },
               "configurations": {},
               "parallelism": true
@@ -4968,7 +5112,7 @@
               ]
             }
           },
-          "name": "utils",
+          "name": "@razvolution/shared-utils",
           "tags": [
             "npm:private",
             "scope:shared",
@@ -4989,12 +5133,12 @@
           "implicitDependencies": []
         }
       },
-      "i18n": {
-        "name": "i18n",
+      "@razvolution/shared-i18n": {
+        "name": "@razvolution/shared-i18n",
         "type": "lib",
         "data": {
           "root": "shared/i18n",
-          "name": "i18n",
+          "name": "@razvolution/shared-i18n",
           "$schema": "../../node_modules/nx/schemas/project-schema.json",
           "sourceRoot": "shared/i18n/src",
           "projectType": "library",
@@ -5035,65 +5179,12 @@
           "implicitDependencies": []
         }
       },
-      "store": {
-        "name": "store",
+      "apps-store": {
+        "name": "apps-store",
         "type": "app",
         "data": {
           "root": "apps/store",
           "targets": {
-            "typecheck": {
-              "dependsOn": [
-                "^typecheck"
-              ],
-              "options": {
-                "cwd": "apps/store",
-                "command": "echo \"The 'typecheck' target is disabled because one or more project references set 'noEmit: true' in their tsconfig. Remove this property to resolve this issue.\""
-              },
-              "cache": true,
-              "inputs": [
-                "production",
-                {
-                  "dependentTasksOutputFiles": "**/*.d.ts"
-                }
-              ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{workspaceRoot}/dist/out-tsc/**/*.d.ts",
-                "{workspaceRoot}/dist/out-tsc/tsconfig.tsbuildinfo"
-              ],
-              "syncGenerators": [
-                "@nx/js:typescript-sync"
-              ],
-              "metadata": {
-                "technologies": [
-                  "typescript"
-                ],
-                "description": "Runs type-checking for the project.",
-                "help": {
-                  "command": "pnpm exec tsc --build --help",
-                  "example": {
-                    "args": [
-                      "--force"
-                    ]
-                  }
-                }
-              },
-              "executor": "nx:run-commands",
-              "configurations": {},
-              "parallelism": true
-            },
             "lint": {
               "executor": "@nx/eslint:lint",
               "options": {},
@@ -5121,16 +5212,16 @@
               "executor": "@nx/next:server",
               "defaultConfiguration": "development",
               "options": {
-                "buildTarget": "store:build",
+                "buildTarget": "apps-store:build",
                 "dev": true
               },
               "configurations": {
                 "development": {
-                  "buildTarget": "store:build:development",
+                  "buildTarget": "apps-store:build:development",
                   "dev": true
                 },
                 "production": {
-                  "buildTarget": "store:build:production",
+                  "buildTarget": "apps-store:build:production",
                   "dev": false
                 }
               },
@@ -5152,7 +5243,7 @@
               ]
             }
           },
-          "name": "store",
+          "name": "apps-store",
           "tags": [
             "npm:private",
             "scope:app",
@@ -5190,25 +5281,14 @@
               "cache": true,
               "inputs": [
                 "production",
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
                 {
                   "dependentTasksOutputFiles": "**/*.d.ts"
                 }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -5379,14 +5459,15 @@
           "implicitDependencies": []
         }
       },
-      "tools": {
-        "name": "tools",
+      "@razvolution/tools": {
+        "name": "@razvolution/tools",
         "type": "lib",
         "data": {
           "root": "tools",
           "targets": {
             "typecheck": {
               "dependsOn": [
+                "build",
                 "^typecheck"
               ],
               "options": {
@@ -5396,27 +5477,14 @@
               "cache": true,
               "inputs": [
                 "production",
-                "^production"
+                "!{workspaceRoot}/node_modules",
+                "!{workspaceRoot}/tmp",
+                "!{workspaceRoot}/dist",
+                {
+                  "dependentTasksOutputFiles": "**/*.d.ts"
+                }
               ],
-              "outputs": [
-                "{projectRoot}/**/*.js",
-                "{projectRoot}/**/*.cjs",
-                "{projectRoot}/**/*.mjs",
-                "{projectRoot}/**/*.jsx",
-                "{projectRoot}/**/*.js.map",
-                "{projectRoot}/**/*.jsx.map",
-                "{projectRoot}/**/*.d.ts",
-                "{projectRoot}/**/*.d.cts",
-                "{projectRoot}/**/*.d.mts",
-                "{projectRoot}/**/*.d.ts.map",
-                "{projectRoot}/**/*.d.cts.map",
-                "{projectRoot}/**/*.d.mts.map",
-                "{projectRoot}/tsconfig.tsbuildinfo",
-                "{projectRoot}/dist/**/*.d.ts",
-                "{projectRoot}/dist/tsconfig.lib.tsbuildinfo",
-                "{projectRoot}/out-tsc/jest/**/*.d.ts",
-                "{projectRoot}/out-tsc/jest/tsconfig.tsbuildinfo"
-              ],
+              "outputs": [],
               "syncGenerators": [
                 "@nx/js:typescript-sync"
               ],
@@ -5435,6 +5503,57 @@
                 }
               },
               "executor": "nx:run-commands",
+              "configurations": {},
+              "parallelism": true
+            },
+            "build": {
+              "executor": "@nx/js:tsc",
+              "outputs": [
+                "{options.outputPath}"
+              ],
+              "options": {
+                "outputPath": "dist/tools",
+                "main": "tools/src/index.ts",
+                "tsConfig": "tools/tsconfig.lib.json",
+                "generatePackageJson": true,
+                "assets": [
+                  "tools/generators.json",
+                  {
+                    "input": "./tools/src/generators",
+                    "glob": "**/schema.json",
+                    "output": "./generators"
+                  }
+                ]
+              },
+              "configurations": {},
+              "parallelism": true,
+              "cache": true,
+              "dependsOn": [
+                "^build"
+              ],
+              "inputs": [
+                "production",
+                "^production"
+              ]
+            },
+            "build-deps": {
+              "dependsOn": [
+                "^build"
+              ],
+              "configurations": {},
+              "options": {},
+              "parallelism": true,
+              "executor": "nx:noop"
+            },
+            "watch-deps": {
+              "continuous": true,
+              "dependsOn": [
+                "build-deps"
+              ],
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm exec nx watch --projects @razvolution/tools --includeDependentProjects -- pnpm exec nx build-deps @razvolution/tools"
+              },
               "configurations": {},
               "parallelism": true
             },
@@ -5519,38 +5638,9 @@
               "dependsOn": [
                 "^build"
               ]
-            },
-            "build": {
-              "executor": "@nx/js:tsc",
-              "outputs": [
-                "{options.outputPath}"
-              ],
-              "options": {
-                "outputPath": "dist/tools",
-                "main": "tools/src/index.ts",
-                "tsConfig": "tools/tsconfig.lib.json",
-                "assets": [
-                  "tools/*.md",
-                  {
-                    "input": "./tools",
-                    "glob": "generators.json",
-                    "output": "."
-                  }
-                ]
-              },
-              "configurations": {},
-              "parallelism": true,
-              "cache": true,
-              "dependsOn": [
-                "^build"
-              ],
-              "inputs": [
-                "production",
-                "^production"
-              ]
             }
           },
-          "name": "tools",
+          "name": "@razvolution/tools",
           "tags": [
             "npm:private"
           ],
@@ -5598,6 +5688,20 @@
               "configurations": {},
               "parallelism": true,
               "continuous": true
+            },
+            "generate-icons": {
+              "executor": "nx:run-commands",
+              "options": {
+                "command": "pnpm nx g @razvolution/tools:generate-icons"
+              },
+              "dependsOn": [
+                {
+                  "target": "build",
+                  "project": "tools"
+                }
+              ],
+              "configurations": {},
+              "parallelism": true
             }
           },
           "implicitDependencies": []
@@ -5605,183 +5709,263 @@
       }
     },
     "dependencies": {
-      "workspace-contracts": [
+      "@razvolution/shared-workspace-contracts": [
         {
-          "source": "workspace-contracts",
-          "target": "db-types",
+          "source": "@razvolution/shared-workspace-contracts",
+          "target": "@razvolution/shared-db-types",
           "type": "static"
         }
       ],
-      "@razvolution/commerce-contracts": [],
-      "@razvolution/content-contracts": [],
-      "@razvolution/rewards-contracts": [],
-      "auth-contracts": [],
-      "i18n-contracts": [],
-      "@razvolution/ai-contracts": [],
-      "@razvolution/community": [],
-      "@razvolution/marketing": [],
-      "data-access": [
+      "@razvolution/shared-commerce-contracts": [],
+      "@razvolution/shared-content-contracts": [],
+      "@razvolution/shared-rewards-contracts": [],
+      "@razvolution/shared-auth-contracts": [],
+      "@razvolution/shared-i18n-contracts": [],
+      "@razvolution/shared-ai-contracts": [],
+      "@razvolution/features-community": [],
+      "@razvolution/features-marketing": [
         {
-          "source": "data-access",
-          "target": "auth-contracts",
+          "source": "@razvolution/features-marketing",
+          "target": "@razvolution/shared-logging",
           "type": "static"
         },
         {
-          "source": "data-access",
-          "target": "logging",
-          "type": "static"
-        },
-        {
-          "source": "data-access",
-          "target": "supabase",
-          "type": "static"
-        },
-        {
-          "source": "data-access",
-          "target": "utils",
-          "type": "static"
-        }
-      ],
-      "@razvolution/checkout": [],
-      "test-utils": [],
-      "@razvolution/ai-chat": [],
-      "@razvolution/rewards": [],
-      "product": [
-        {
-          "source": "product",
-          "target": "logging",
-          "type": "static"
-        },
-        {
-          "source": "product",
+          "source": "@razvolution/features-marketing",
           "target": "@razvolution/shared-ui",
           "type": "static"
         },
         {
-          "source": "product",
-          "target": "utils",
+          "source": "@razvolution/features-marketing",
+          "target": "@razvolution/shared-utils",
           "type": "static"
         }
       ],
-      "@razvolution/payments": [],
-      "@razvolution/shipping": [],
-      "db-types": [],
-      "supabase": [
+      "@razvolution/features-workspace": [
         {
-          "source": "supabase",
-          "target": "db-types",
+          "source": "@razvolution/features-workspace",
+          "target": "@razvolution/shared-utils",
+          "type": "static"
+        }
+      ],
+      "@razvolution/shared-data-access": [
+        {
+          "source": "@razvolution/shared-data-access",
+          "target": "@razvolution/shared-auth-contracts",
           "type": "static"
         },
         {
-          "source": "supabase",
-          "target": "logging",
-          "type": "static"
-        }
-      ],
-      "@razvolution/shopify": [],
-      "logging": [
-        {
-          "source": "logging",
-          "target": "db-types",
+          "source": "@razvolution/shared-data-access",
+          "target": "@razvolution/shared-logging",
           "type": "static"
         },
         {
-          "source": "logging",
-          "target": "utils",
+          "source": "@razvolution/shared-data-access",
+          "target": "@razvolution/shared-supabase",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/shared-data-access",
+          "target": "@razvolution/shared-utils",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/shared-data-access",
+          "target": "@razvolution/shared-payments",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/shared-data-access",
+          "target": "@razvolution/shared-shopify",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/shared-data-access",
+          "target": "@razvolution/shared-db-types",
           "type": "static"
         }
       ],
-      "@razvolution/cart": [],
+      "@razvolution/features-checkout": [],
+      "@razvolution/shared-test-utils": [],
+      "@razvolution/features-ai-chat": [],
+      "@razvolution/features-product": [
+        {
+          "source": "@razvolution/features-product",
+          "target": "@razvolution/shared-logging",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/features-product",
+          "target": "@razvolution/shared-ui",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/features-product",
+          "target": "@razvolution/shared-utils",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/features-product",
+          "target": "@razvolution/shared-commerce-contracts",
+          "type": "static"
+        }
+      ],
+      "@razvolution/features-rewards": [],
+      "@razvolution/shared-db-types": [],
+      "@razvolution/shared-payments": [],
+      "@razvolution/shared-shipping": [
+        {
+          "source": "@razvolution/shared-shipping",
+          "target": "@razvolution/shared-logging",
+          "type": "static"
+        }
+      ],
+      "@razvolution/shared-supabase": [
+        {
+          "source": "@razvolution/shared-supabase",
+          "target": "@razvolution/shared-db-types",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/shared-supabase",
+          "target": "@razvolution/shared-logging",
+          "type": "static"
+        }
+      ],
+      "@razvolution/shared-logging": [
+        {
+          "source": "@razvolution/shared-logging",
+          "target": "@razvolution/shared-db-types",
+          "type": "static"
+        }
+      ],
+      "@razvolution/shared-shopify": [
+        {
+          "source": "@razvolution/shared-shopify",
+          "target": "@razvolution/shared-logging",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/shared-shopify",
+          "target": "@razvolution/shared-commerce-contracts",
+          "type": "static"
+        }
+      ],
+      "@razvolution/features-auth": [
+        {
+          "source": "@razvolution/features-auth",
+          "target": "@razvolution/shared-supabase",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/features-auth",
+          "target": "@razvolution/shared-ui",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/features-auth",
+          "target": "@razvolution/shared-utils",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/features-auth",
+          "target": "@razvolution/shared-i18n-contracts",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/features-auth",
+          "target": "@razvolution/features-workspace",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/features-auth",
+          "target": "@razvolution/shared-logging",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/features-auth",
+          "target": "@razvolution/shared-auth-contracts",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/features-auth",
+          "target": "@razvolution/shared-data-access",
+          "type": "static"
+        },
+        {
+          "source": "@razvolution/features-auth",
+          "target": "@razvolution/shared-db-types",
+          "type": "static"
+        }
+      ],
+      "@razvolution/features-cart": [],
       "@razvolution/shared-config": [],
-      "auth": [
+      "@razvolution/shared-utils": [],
+      "@razvolution/shared-i18n": [],
+      "apps-store": [
         {
-          "source": "auth",
-          "target": "supabase",
+          "source": "apps-store",
+          "target": "@razvolution/features-auth",
           "type": "static"
         },
         {
-          "source": "auth",
+          "source": "apps-store",
+          "target": "@razvolution/shared-db-types",
+          "type": "static"
+        },
+        {
+          "source": "apps-store",
+          "target": "@razvolution/shared-i18n-contracts",
+          "type": "static"
+        },
+        {
+          "source": "apps-store",
+          "target": "@razvolution/shared-logging",
+          "type": "static"
+        },
+        {
+          "source": "apps-store",
+          "target": "@razvolution/shared-supabase",
+          "type": "static"
+        },
+        {
+          "source": "apps-store",
           "target": "@razvolution/shared-ui",
           "type": "static"
         },
         {
-          "source": "auth",
-          "target": "utils",
+          "source": "apps-store",
+          "target": "@razvolution/shared-utils",
           "type": "static"
         },
         {
-          "source": "auth",
-          "target": "i18n-contracts",
+          "source": "apps-store",
+          "target": "@razvolution/shared-data-access",
           "type": "static"
         },
         {
-          "source": "auth",
-          "target": "logging",
-          "type": "static"
-        },
-        {
-          "source": "auth",
-          "target": "db-types",
-          "type": "static"
-        }
-      ],
-      "utils": [],
-      "i18n": [],
-      "store": [
-        {
-          "source": "store",
-          "target": "auth",
-          "type": "static"
-        },
-        {
-          "source": "store",
-          "target": "db-types",
-          "type": "static"
-        },
-        {
-          "source": "store",
-          "target": "i18n-contracts",
-          "type": "static"
-        },
-        {
-          "source": "store",
-          "target": "logging",
-          "type": "static"
-        },
-        {
-          "source": "store",
-          "target": "supabase",
-          "type": "static"
-        },
-        {
-          "source": "store",
-          "target": "utils",
-          "type": "static"
-        },
-        {
-          "source": "store",
-          "target": "@razvolution/shared-ui",
+          "source": "apps-store",
+          "target": "@razvolution/features-workspace",
           "type": "static"
         }
       ],
       "@razvolution/shared-ui": [
         {
           "source": "@razvolution/shared-ui",
-          "target": "utils",
+          "target": "@razvolution/shared-utils",
           "type": "static"
         },
         {
           "source": "@razvolution/shared-ui",
-          "target": "logging",
+          "target": "@razvolution/shared-logging",
           "type": "static"
         },
         {
           "source": "@razvolution/shared-ui",
-          "target": "i18n-contracts",
+          "target": "@razvolution/shared-i18n-contracts",
           "type": "static"
         }
       ],
-      "tools": [],
+      "@razvolution/tools": [],
       "@razvolution/source": []
     }
   }

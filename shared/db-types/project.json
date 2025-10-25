@@ -1,6 +1,5 @@
-
 {
-  "name": "db-types",
+  "name": "@razvolution/shared-db-types",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "shared/db-types/src",
   "projectType": "library",

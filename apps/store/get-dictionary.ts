@@ -12,13 +12,17 @@ import type { Locale } from '@razvolution/shared-utils';
 // --- [FIN DE ALINEACIÓN SOBERANA] ---
 
 const dictionaries = {
-  'en-US': () => import('./dictionaries/en-US.json').then((module) => module.default),
-  'es-ES': () => import('./dictionaries/es-ES.json').then((module) => module.default),
-  'it-IT': () => import('./dictionaries/en-US.json').then((module) => module.default),
-  'pt-BR': () => import('./dictionaries/en-US.json').then((module) => module.default),
+  'en-US': () =>
+    import('./dictionaries/en-US.json').then((module) => module.default),
+  'es-ES': () =>
+    import('./dictionaries/es-ES.json').then((module) => module.default),
+  'it-IT': () =>
+    import('./dictionaries/en-US.json').then((module) => module.default),
+  'pt-BR': () =>
+    import('./dictionaries/en-US.json').then((module) => module.default),
 };
 
 export const getDictionary = async (locale: Locale) => {
-    const loader = dictionaries[locale] || dictionaries['en-US'];
-    return loader();
+  const loader = dictionaries[locale] || dictionaries['en-US'];
+  return loader();
 };

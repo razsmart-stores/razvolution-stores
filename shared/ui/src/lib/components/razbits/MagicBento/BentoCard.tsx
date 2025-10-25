@@ -7,17 +7,17 @@
  * @version 3.1.0 (Canonical Class Compliance)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
 // --- [PASO 5: HIGIENE Y DOCUMENTACIÓN] ---
 // Se elimina la importación innecesaria de React.
-import React from "react";
+import React from 'react';
 
 // --- [PASO 1: NIVELACIÓN DE IMPORTACIONES (ARQUITECTURA)] ---
-import { logger } from "@razvolution/shared-logging";
-import { cn } from "@razvolution/shared-utils";
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
 // --- [PASO 4: ADHERENCIA A CONTRATOS (SEGURIDAD DE TIPOS)] ---
-import type { BentoCardData } from "./magic-bento.schema";
+import type { BentoCardData } from './magic-bento.schema';
 
 interface BentoCardProps {
   card: BentoCardData;
@@ -51,16 +51,16 @@ export function BentoCard({
       <div className="card-content flex flex-col relative z-10 transition-opacity duration-300">
         <h3
           className={cn(
-            "card-title font-bold text-lg text-foreground m-0 mb-1",
-            textAutoHide && "group-hover:opacity-0"
+            'card-title font-bold text-lg text-foreground m-0 mb-1',
+            textAutoHide && 'group-hover:opacity-0'
           )}
         >
           {card.title}
         </h3>
         <p
           className={cn(
-            "card-description text-sm text-muted-foreground leading-snug",
-            textAutoHide && "group-hover:opacity-0"
+            'card-description text-sm text-muted-foreground leading-snug',
+            textAutoHide && 'group-hover:opacity-0'
           )}
         >
           {card.description}
@@ -74,10 +74,10 @@ export function BentoCard({
         // --- [FIN DE CORRECCIÓN CANÓNICA v3.1.0] ---
         style={
           {
-            "--glow-x": "50%",
-            "--glow-y": "50%",
-            "--glow-intensity": 0,
-            "--glow-radius": "400px",
+            '--glow-x': '50%',
+            '--glow-y': '50%',
+            '--glow-intensity': 0,
+            '--glow-radius': '400px',
           } as React.CSSProperties
         }
       />

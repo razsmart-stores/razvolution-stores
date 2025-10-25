@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/shared-content-contracts",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/content-contracts/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:contract"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/content-contracts",
+        "main": "shared/content-contracts/src/index.ts",
+        "tsConfig": "shared/content-contracts/tsconfig.lib.json",
+        "assets": ["shared/content-contracts/*.md"]
+      }
+    }
+  }
+}

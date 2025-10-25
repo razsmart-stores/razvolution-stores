@@ -13,7 +13,7 @@ import { z } from 'zod';
 export const ForgotPasswordSchema = z.object({
   email: z
     .string()
-    .email("Por favor, introduce una dirección de email válida."),
+    .email('Por favor, introduce una dirección de email válida.'),
 });
 
 /**

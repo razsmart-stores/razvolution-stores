@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/features-cart",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "features/cart/src",
+  "projectType": "library",
+  "tags": ["scope:feature", "type:commerce"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/features/cart",
+        "main": "features/cart/src/index.ts",
+        "tsConfig": "features/cart/tsconfig.lib.json",
+        "assets": ["features/cart/*.md"]
+      }
+    }
+  }
+}

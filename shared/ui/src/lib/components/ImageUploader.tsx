@@ -8,19 +8,19 @@
  * @version 3.0.0 (Sovereign Leveling & Canonical Styling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useState, useCallback, useEffect } from "react";
-import { useDropzone, type Accept } from "react-dropzone";
-import { toast } from "sonner";
+import Image from 'next/image';
+import { useState, useCallback, useEffect } from 'react';
+import { useDropzone, type Accept } from 'react-dropzone';
+import { toast } from 'sonner';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v3.0.0] ---
 
 // Pasos 1, 2, 3 y 4: Alineación, Observabilidad, Theming y Contratos
-import { logger } from "@razvolution/shared-logging";
-import { cn, type ActionResult } from "@razvolution/shared-utils";
-import { DynamicIcon } from "./DynamicIcon";
+import { logger } from '@razvolution/shared-logging';
+import { cn, type ActionResult } from '@razvolution/shared-utils';
+import { DynamicIcon } from './DynamicIcon';
 
 // --- [FIN DE NIVELACIÓN SOBERANA v3.0.0] ---
 
@@ -42,16 +42,16 @@ export function ImageUploader({
   onUpload,
   onUploadSuccess,
   acceptedFileTypes = {
-    "image/png": [".png"],
-    "image/jpeg": [".jpg", ".jpeg"],
-    "image/svg+xml": [".svg"],
+    'image/png': ['.png'],
+    'image/jpeg': ['.jpg', '.jpeg'],
+    'image/svg+xml': ['.svg'],
   },
   maxFiles = 1,
   content,
   className,
 }: ImageUploaderProps) {
   // Paso 2: Inyección de Observabilidad
-  logger.trace("[ImageUploader] Renderizando v3.0.");
+  logger.trace('[ImageUploader] Renderizando v3.0.');
 
   const [preview, setPreview] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,13 +64,13 @@ export function ImageUploader({
       const previewUrl = URL.createObjectURL(file);
       setPreview(previewUrl);
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
       const result = await onUpload(formData);
       if (result.success) {
         onUploadSuccess(result.data.path);
-        toast.success("Archivo subido con éxito.");
+        toast.success('Archivo subido con éxito.');
       } else {
-        toast.error(result.error || "Ocurrió un error al subir el archivo.");
+        toast.error(result.error || 'Ocurrió un error al subir el archivo.');
         setPreview(null);
         URL.revokeObjectURL(previewUrl);
       }
@@ -94,16 +94,16 @@ export function ImageUploader({
   }, [preview]);
 
   return (
-    <div className={cn("w-full", className)}>
+    <div className={cn('w-full', className)}>
       <div
         {...getRootProps()}
         // --- [INICIO DE CORRECCIÓN CANÓNICA v3.0.0] ---
         className={cn(
-          "relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors",
+          'relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors',
           isDragActive
-            ? "border-primary bg-primary/10"
-            : "border-muted-foreground/30 hover:border-primary/50",
-          preview && "p-0! border-solid! border-primary!"
+            ? 'border-primary bg-primary/10'
+            : 'border-muted-foreground/30 hover:border-primary/50',
+          preview && 'p-0! border-solid! border-primary!'
         )}
         // --- [FIN DE CORRECCIÓN CANÓNICA v3.0.0] ---
       >
@@ -111,7 +111,7 @@ export function ImageUploader({
         {preview ? (
           // --- [INICIO DE CORRECCIÓN CANÓNICA v3.0.0] ---
           <div className="relative w-full aspect-2/1 max-h-24">
-          {/* --- [FIN DE CORRECCIÓN CANÓNICA v3.0.0] --- */}
+            {/* --- [FIN DE CORRECCIÓN CANÓNICA v3.0.0] --- */}
             <Image
               src={preview}
               alt="Vista previa del archivo subido"
@@ -137,8 +137,8 @@ export function ImageUploader({
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center rounded-lg">
             <p className="font-bold text-primary animate-pulse">
               {isLoading
-                ? content.loadingText || "Cargando..."
-                : content.activeDragText || "¡Suelta el archivo!"}
+                ? content.loadingText || 'Cargando...'
+                : content.activeDragText || '¡Suelta el archivo!'}
             </p>
           </div>
         )}

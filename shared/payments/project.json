@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/shared-payments",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/payments/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:data-access"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/payments",
+        "main": "shared/payments/src/index.ts",
+        "tsConfig": "shared/payments/tsconfig.lib.json",
+        "assets": ["shared/payments/*.md"]
+      }
+    }
+  }
+}

@@ -7,15 +7,15 @@
  * @version 2.0.0 (Sovereign & Type-Safe)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { gsap } from "gsap";
-import { useRef, useEffect, useCallback } from "react";
-import type { z } from "zod";
+import { gsap } from 'gsap';
+import { useRef, useEffect, useCallback } from 'react';
+import type { z } from 'zod';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v2.0.0] ---
-import { logger } from "@razvolution/shared-logging";
-import type { MagicBentoConfigSchema } from "./magic-bento.schema";
+import { logger } from '@razvolution/shared-logging';
+import type { MagicBentoConfigSchema } from './magic-bento.schema';
 // --- [FIN DE NIVELACIÓN SOBERANA v2.0.0] ---
 
 type BentoConfig = z.infer<typeof MagicBentoConfigSchema>;
@@ -31,8 +31,8 @@ export const useBentoGridInteraction = (
       isMobile.current = window.innerWidth <= 768;
     };
     checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const shouldDisableAnimations = config.disableAnimations || isMobile.current;
@@ -41,12 +41,17 @@ export const useBentoGridInteraction = (
     const grid = gridRef.current;
 
     // Guardián de seguridad para evitar aserciones no nulas (!) y mejorar robustez.
-    if (!grid || shouldDisableAnimations || !config.enableSpotlight || !config.spotlightRadius) {
+    if (
+      !grid ||
+      shouldDisableAnimations ||
+      !config.enableSpotlight ||
+      !config.spotlightRadius
+    ) {
       return;
     }
 
-    logger.trace("[Bento] Inicializando Spotlight Effect");
-    const spotlight = document.createElement("div");
+    logger.trace('[Bento] Inicializando Spotlight Effect');
+    const spotlight = document.createElement('div');
     spotlight.style.cssText = `
       position: fixed; left: 0; top: 0;
       width: ${config.spotlightRadius * 2}px;
@@ -63,7 +68,7 @@ export const useBentoGridInteraction = (
         x: e.clientX,
         y: e.clientY,
         duration: 0.4,
-        ease: "power3.out",
+        ease: 'power3.out',
         opacity: 1,
       });
     };
@@ -72,12 +77,12 @@ export const useBentoGridInteraction = (
       gsap.to(spotlight, { opacity: 0, duration: 0.3 });
     };
 
-    document.body.addEventListener("mousemove", onMouseMove);
-    document.body.addEventListener("mouseleave", onMouseLeave);
+    document.body.addEventListener('mousemove', onMouseMove);
+    document.body.addEventListener('mouseleave', onMouseLeave);
 
     return () => {
-      document.body.removeEventListener("mousemove", onMouseMove);
-      document.body.removeEventListener("mouseleave", onMouseLeave);
+      document.body.removeEventListener('mousemove', onMouseMove);
+      document.body.removeEventListener('mouseleave', onMouseLeave);
       if (spotlight.parentNode) {
         spotlight.parentNode.removeChild(spotlight);
       }

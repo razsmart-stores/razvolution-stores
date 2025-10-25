@@ -5,14 +5,14 @@
  * @version 1.1.0 (Functional Completion)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import {
   SignUpSchema,
   type SignUpFormData,
-} from "@razvolution/shared-auth-contracts";
+} from '@razvolution/shared-auth-contracts';
 import {
   Button,
   Form,
@@ -22,15 +22,15 @@ import {
   FormLabel,
   FormMessage,
   Input,
-} from "@razvolution/shared-ui";
-import type { Dictionary } from "@razvolution/shared-i18n-contracts";
-import { logger } from "@razvolution/shared-logging";
-import type { Locale } from "@razvolution/shared-utils";
+} from '@razvolution/shared-ui';
+import type { Dictionary } from '@razvolution/shared-i18n-contracts';
+import { logger } from '@razvolution/shared-logging';
+import type { Locale } from '@razvolution/shared-utils';
 
-import { OAuthButtons } from "./OAuthButtons";
+import { OAuthButtons } from './OAuthButtons';
 
-type AuthFormContent = NonNullable<Dictionary["auth"]>;
-type OAuthButtonsContent = NonNullable<Dictionary["oAuthButtons"]>;
+type AuthFormContent = NonNullable<Dictionary['auth']>;
+type OAuthButtonsContent = NonNullable<Dictionary['oAuthButtons']>;
 
 interface SignUpFormProps {
   content: AuthFormContent;
@@ -49,15 +49,15 @@ export function SignUpForm({
   onSubmit,
   isPending,
 }: SignUpFormProps) {
-  logger.trace("[SignUpForm] Renderizando v1.1 (Completo).");
+  logger.trace('[SignUpForm] Renderizando v1.1 (Completo).');
 
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
-      fullName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      fullName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
     },
   });
 
@@ -76,10 +76,7 @@ export function SignUpForm({
               <FormItem>
                 <FormLabel>{content.fullNameLabel}</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder={content.fullNamePlaceholder}
-                    {...field}
-                  />
+                  <Input placeholder={content.fullNamePlaceholder} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -155,11 +152,8 @@ export function SignUpForm({
       </div>
       <OAuthButtons content={oAuthContent} />
       <p className="text-center text-sm text-muted-foreground">
-        {content.loginPrompt}{" "}
-        <button
-          onClick={onSwitchView}
-          className="underline hover:text-primary"
-        >
+        {content.loginPrompt}{' '}
+        <button onClick={onSwitchView} className="underline hover:text-primary">
           Inicia sesión
         </button>
       </p>

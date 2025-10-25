@@ -1,17 +1,26 @@
-
 {
   "name": "@razvolution/product",
-  "version": "0.0.1",
-  "private": true,
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
-  "dependencies": {
-    "react": "18.3.1",
-    "tslib": "^2.3.0",
-    "next": "14.2.3",
-    "@razvolution/shared-logging": "workspace:*",
-    "@razvolution/shared-ui": "workspace:*",
-    "@razvolution/shared-utils": "workspace:*"
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "features/product/src",
+  "projectType": "library",
+  "tags": [
+    "scope:feature",
+    "type:commerce"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/features/product",
+        "main": "features/product/src/index.ts",
+        "tsConfig": "features/product/tsconfig.lib.json",
+        "assets": [
+          "features/product/*.md"
+        ]
+      }
+    }
   }
 }

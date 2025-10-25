@@ -6,7 +6,6 @@
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "tslib": "^2.3.0",
     "react": "18.3.1",
     "@razvolution/shared-utils": "workspace:*",
     "@radix-ui/react-accordion": "^1.1.2",
@@ -29,7 +28,6 @@
     "next": "14.2.3",
     "@radix-ui/react-label": "^2.1.0",
     "react-hook-form": "^7.52.2",
-    "clsx": "^2.1.1",
     "react-dropzone": "^14.3.8",
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/react-popover": "^1.1.15",

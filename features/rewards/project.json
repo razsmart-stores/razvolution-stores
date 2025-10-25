@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/features-rewards",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "features/rewards/src",
+  "projectType": "library",
+  "tags": ["scope:feature", "type:engagement"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/features/rewards",
+        "main": "features/rewards/src/index.ts",
+        "tsConfig": "features/rewards/tsconfig.lib.json",
+        "assets": ["features/rewards/*.md"]
+      }
+    }
+  }
+}

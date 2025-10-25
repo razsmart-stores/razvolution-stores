@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/features-workspace",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "features/workspace/src",
+  "projectType": "library",
+  "tags": ["scope:feature", "type:workspace"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/features/workspace",
+        "main": "features/workspace/src/index.ts",
+        "tsConfig": "features/workspace/tsconfig.lib.json",
+        "assets": ["features/workspace/*.md"]
+      }
+    }
+  }
+}

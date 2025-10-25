@@ -6,10 +6,10 @@
  * @version 4.1.0 (Sovereign Leveling & Code Hygiene)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v4.1.0] ---
 // Se corrigen las importaciones para usar los alias soberanos del monorepo
@@ -22,9 +22,9 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@razvolution/shared-ui";
-import { defaultLocale, type Locale } from "@razvolution/shared-utils";
-import { logger } from "@razvolution/shared-logging";
+} from '@razvolution/shared-ui';
+import { defaultLocale, type Locale } from '@razvolution/shared-utils';
+import { logger } from '@razvolution/shared-logging';
 
 // NOTA: El tipo 'SelectLanguagePageContent' no existe en los contratos actuales.
 // Se asume que será parte de `Dictionary` en `@razvolution/shared-i18n-contracts`.
@@ -43,7 +43,9 @@ interface LanguageSelectorClientProps {
 export function LanguageSelectorClient({
   content,
 }: LanguageSelectorClientProps) {
-  logger.info("[LanguageSelectorClient] Renderizando v4.1 (Sovereign & Clean).");
+  logger.info(
+    '[LanguageSelectorClient] Renderizando v4.1 (Sovereign & Clean).'
+  );
   const router = useRouter();
   const searchParams = useSearchParams();
   const [countdown, setCountdown] = useState(5);
@@ -56,9 +58,9 @@ export function LanguageSelectorClient({
     if (countdown <= 0) {
       clearInterval(timer);
       logger.warn(
-        "[LanguageSelector] Tiempo agotado. Redirigiendo al locale por defecto."
+        '[LanguageSelector] Tiempo agotado. Redirigiendo al locale por defecto.'
       );
-      const returnUrl = searchParams.get("returnUrl") || "/";
+      const returnUrl = searchParams.get('returnUrl') || '/';
       router.replace(`/${defaultLocale}${returnUrl}`);
     }
 
@@ -66,7 +68,7 @@ export function LanguageSelectorClient({
   }, [countdown, router, searchParams]);
 
   const handleLanguageSelect = (locale: Locale) => {
-    const returnUrl = searchParams.get("returnUrl") || "/";
+    const returnUrl = searchParams.get('returnUrl') || '/';
     router.replace(`/${locale}${returnUrl}`);
   };
 

@@ -7,16 +7,16 @@
  * @version 3.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import React, { forwardRef } from "react";
+import React, { forwardRef } from 'react';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v3.0.0] ---
 
 // Pasos 1, 2, 3 y 4: Alineación, Observabilidad, Theming y Contratos
-import { logger } from "@razvolution/shared-logging";
-import { cn, type LucideIconName } from "@razvolution/shared-utils";
-import { DynamicIcon } from "./DynamicIcon";
+import { logger } from '@razvolution/shared-logging';
+import { cn, type LucideIconName } from '@razvolution/shared-utils';
+import { DynamicIcon } from './DynamicIcon';
 
 // --- [FIN DE NIVELACIÓN SOBERANA v3.0.0] ---
 
@@ -37,7 +37,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     logger.trace(`[FormInput] Renderizando v3.0 para input: ${id || name}`);
 
     return (
-      <div className={cn("relative", containerClassName)}>
+      <div className={cn('relative', containerClassName)}>
         <label
           htmlFor={id || name}
           className="absolute left-3 -top-2.5 bg-background px-1 text-xs text-muted-foreground"
@@ -49,8 +49,8 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             <DynamicIcon
               name={icon}
               className={cn(
-                "h-5 w-5",
-                error ? "text-destructive" : "text-muted-foreground"
+                'h-5 w-5',
+                error ? 'text-destructive' : 'text-muted-foreground'
               )}
               aria-hidden="true"
             />
@@ -61,10 +61,10 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             ref={ref}
             // Paso 3: Cumplimiento de Theming
             className={cn(
-              "block w-full rounded-md border-0 bg-background/50 py-3 pl-10 pr-3 text-foreground ring-1 ring-inset transition-all duration-150 placeholder:text-muted-foreground/50 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6",
+              'block w-full rounded-md border-0 bg-background/50 py-3 pl-10 pr-3 text-foreground ring-1 ring-inset transition-all duration-150 placeholder:text-muted-foreground/50 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6',
               error
-                ? "ring-destructive focus:ring-destructive"
-                : "ring-input focus:ring-primary",
+                ? 'ring-destructive focus:ring-destructive'
+                : 'ring-input focus:ring-primary',
               className
             )}
             {...props}
@@ -78,4 +78,4 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
   }
 );
 
-FormInput.displayName = "FormInput";
+FormInput.displayName = 'FormInput';

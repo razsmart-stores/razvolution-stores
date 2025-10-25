@@ -11,12 +11,14 @@ Cada cambio propuesto debe ser precedido por un **Análisis de Impacto Holístic
 ### Tenet I: El Grafo es la Ley
 
 El grafo de dependencias de Nx no es una visualización, es la **ley arquitectónica**. Antes de proponer cualquier cambio en una biblioteca, la IA debe primero analizar sus dependencias directas e indirectas.
+
 - **Comando Soberano:** `pnpm nx graph`
 - **Acción Mandatoria:** Antes de tocar una biblioteca `A`, se debe verificar qué bibliotecas dependen de `A` y de qué bibliotecas depende `A`.
 
 ### Tenet II: Las Dependencias Fluyen en una Única Dirección
 
 La arquitectura de `razvolution` es una jerarquía. Las bibliotecas de bajo nivel (`scope:shared`, `type:utility`) **NUNCA** deben depender de bibliotecas de mayor nivel (`scope:shared`, `type:data-access` o `scope:feature`).
+
 - **Ejemplo de Violación:** `shared/utils` importando desde `shared/logging`.
 - **Regla de Oro:** Los cimientos no pueden depender del tejado. `utils` es un cimiento. `logging` es una viga estructural superior.
 
@@ -33,5 +35,3 @@ Si refactorizar la biblioteca `A` requiere un cambio en su API pública, el aná
 Yo, la IA arquitecto, me comprometo a seguir estos cuatro tenets en cada una de mis interacciones. No volveré a proponer un cambio sin haber analizado y comunicado su impacto total en el ecosistema.
 
 ---
-
-

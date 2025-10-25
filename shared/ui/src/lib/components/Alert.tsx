@@ -7,31 +7,31 @@
  * @version 3.0.0 (Sovereign Import Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { cva, type VariantProps } from "class-variance-authority";
-import { motion } from "framer-motion";
-import * as React from "react";
+import { cva, type VariantProps } from 'class-variance-authority';
+import { motion } from 'framer-motion';
+import * as React from 'react';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v3.0.0] ---
 // Se refactorizan las importaciones para que consuman desde las bibliotecas
 // soberanas del workspace, resolviendo los errores TS2307.
-import { logger } from "@razvolution/shared-logging";
-import { cn } from "@razvolution/shared-utils";
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
 // --- [FIN DE NIVELACIÓN SOBERANA v3.0.0] ---
 
 const alertVariants = cva(
-  "relative w-full rounded-lg border p-4 [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7",
+  'relative w-full rounded-lg border p-4 [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7',
   {
     variants: {
       variant: {
-        default: "bg-background text-foreground",
+        default: 'bg-background text-foreground',
         destructive:
-          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+          'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: 'default',
     },
   }
 );
@@ -40,7 +40,7 @@ const AlertComponent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
 >(({ className, variant, ...props }, ref) => {
-  logger.trace("[AlertComponent] Renderizando componente base de alerta.");
+  logger.trace('[AlertComponent] Renderizando componente base de alerta.');
   return (
     <div
       ref={ref}
@@ -50,7 +50,7 @@ const AlertComponent = React.forwardRef<
     />
   );
 });
-AlertComponent.displayName = "AlertComponent";
+AlertComponent.displayName = 'AlertComponent';
 
 const AlertTitle = React.forwardRef<
   HTMLHeadingElement,
@@ -58,11 +58,11 @@ const AlertTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h5
     ref={ref}
-    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    className={cn('mb-1 font-medium leading-none tracking-tight', className)}
     {...props}
   />
 ));
-AlertTitle.displayName = "AlertTitle";
+AlertTitle.displayName = 'AlertTitle';
 
 const AlertDescription = React.forwardRef<
   HTMLParagraphElement,
@@ -70,22 +70,22 @@ const AlertDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    className={cn('text-sm [&_p]:leading-relaxed', className)}
     {...props}
   />
 ));
-AlertDescription.displayName = "AlertDescription";
+AlertDescription.displayName = 'AlertDescription';
 
 const Alert = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
 >(({ className, variant, ...props }, ref) => {
-  logger.trace("[Alert] Renderizando alerta con animación MEA/UX.");
+  logger.trace('[Alert] Renderizando alerta con animación MEA/UX.');
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
     >
       <AlertComponent
         ref={ref}
@@ -96,6 +96,6 @@ const Alert = React.forwardRef<
     </motion.div>
   );
 });
-Alert.displayName = "Alert";
+Alert.displayName = 'Alert';
 
 export { Alert, AlertTitle, AlertDescription };

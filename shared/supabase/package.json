@@ -1,16 +1,23 @@
-
 {
   "name": "@razvolution/shared-supabase",
   "version": "0.0.1",
   "private": true,
   "type": "commonjs",
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
-    ".": "./src/index.js",
-    "./server": "./src/lib/server.ts"
+    "./server": {
+      "types": "./src/lib/server.ts",
+      "default": "./src/lib/server.ts"
+    },
+    "./package.json": "./package.json"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.57.4",
+    "next": "14.2.3",
+    "server-only": "^0.0.1",
+    "chalk": "^5.6.2",
     "@razvolution/shared-db-types": "workspace:*",
     "@razvolution/shared-logging": "workspace:*"
   }

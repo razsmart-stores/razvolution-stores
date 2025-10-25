@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/shared-shipping",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/shipping/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:data-access"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/shipping",
+        "main": "shared/shipping/src/index.ts",
+        "tsConfig": "shared/shipping/tsconfig.lib.json",
+        "assets": ["shared/shipping/*.md"]
+      }
+    }
+  }
+}

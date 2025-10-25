@@ -1,12 +1,11 @@
-// RUTA: shared/logging/tsconfig.json
 {
   "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true
+  },
   "files": [],
   "include": [],
   "references": [
-    {
-      "path": "../utils"
-    },
     {
       "path": "../db-types"
     },

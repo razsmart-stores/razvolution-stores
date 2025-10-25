@@ -7,7 +7,7 @@
  * @version 4.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
 import {
   AnimatePresence,
@@ -17,7 +17,7 @@ import {
   useTransform,
   type MotionValue,
   type SpringOptions,
-} from "framer-motion";
+} from 'framer-motion';
 import {
   Children,
   cloneElement,
@@ -27,15 +27,15 @@ import {
   useState,
   type ReactElement,
   type ReactNode,
-} from "react";
-import type { z } from "zod";
+} from 'react';
+import type { z } from 'zod';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v4.0.0] ---
 
 // Pasos 1, 2 y 3: Alineación Arquitectónica, Observabilidad y Theming
-import { logger } from "@razvolution/shared-logging";
-import { cn } from "@razvolution/shared-utils";
-import { DockConfigSchema } from "./dock.schema";
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
+import { DockConfigSchema } from './dock.schema';
 
 // --- [FIN DE NIVELACIÓN SOBERANA v4.0.0] ---
 
@@ -84,14 +84,14 @@ interface DockIconProps extends CommonDockChildProps {
 
 function DockLabel({
   children,
-  className = "",
+  className = '',
   isHovered,
 }: DockLabelProps): ReactElement {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (!isHovered) return;
-    const unsubscribe = isHovered.on("change", (latest) =>
+    const unsubscribe = isHovered.on('change', (latest) =>
       setIsVisible(latest === 1)
     );
     return () => unsubscribe();
@@ -118,10 +118,7 @@ function DockLabel({
   );
 }
 
-function DockIcon({
-  children,
-  className = "",
-}: DockIconProps): ReactElement {
+function DockIcon({ children, className = '' }: DockIconProps): ReactElement {
   return (
     <div className={cn(`flex items-center justify-center`, className)}>
       {children}
@@ -131,7 +128,7 @@ function DockIcon({
 
 function DockItem({
   children,
-  className = "",
+  className = '',
   onClick,
   mouseX,
   spring,
@@ -187,12 +184,12 @@ function DockItem({
 
 export function Dock({
   items,
-  className = "",
+  className = '',
   config,
   spring = { mass: 0.1, stiffness: 150, damping: 12 },
 }: DockProps): ReactElement {
   // Paso 2: Inyección de Observabilidad
-  logger.info("[Dock] Renderizando componente naturalizado v4.0.");
+  logger.info('[Dock] Renderizando componente naturalizado v4.0.');
 
   const validatedConfig = DockConfigSchema.parse(config || {});
   const { magnification, distance, panelHeight, dockHeight, baseItemSize } =
@@ -210,7 +207,7 @@ export function Dock({
 
   return (
     <motion.div
-      style={{ height, scrollbarWidth: "none" }}
+      style={{ height, scrollbarWidth: 'none' }}
       className="mx-2 flex max-w-full items-center"
     >
       <motion.div

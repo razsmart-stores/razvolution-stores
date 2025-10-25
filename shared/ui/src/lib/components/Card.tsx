@@ -6,8 +6,8 @@
  * @version 1.2.0 (A11y & Explicit Children Fix)
  * @author RaZ Podestá - MetaShark Tech
  */
-import * as React from "react";
-import { twMerge } from "tailwind-merge";
+import * as React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 const Card = React.forwardRef<
   HTMLDivElement,
@@ -16,13 +16,13 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={twMerge(
-      "rounded-xl border border-white/10 bg-background/50 shadow-md text-foreground",
+      'rounded-xl border border-white/10 bg-background/50 shadow-md text-foreground',
       className
     )}
     {...props}
   />
 ));
-Card.displayName = "Card";
+Card.displayName = 'Card';
 
 const CardHeader = React.forwardRef<
   HTMLDivElement,
@@ -30,11 +30,11 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={twMerge("flex flex-col space-y-1.5 p-6", className)}
+    className={twMerge('flex flex-col space-y-1.5 p-6', className)}
     {...props}
   />
 ));
-CardHeader.displayName = "CardHeader";
+CardHeader.displayName = 'CardHeader';
 
 // --- [INICIO DE REFACTORIZACIÓN DE ÉLITE: A11y & Type Fix] ---
 const CardTitle = React.forwardRef<
@@ -44,7 +44,7 @@ const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={twMerge(
-      "text-lg font-semibold leading-none tracking-tight",
+      'text-lg font-semibold leading-none tracking-tight',
       className
     )}
     {...props}
@@ -52,7 +52,7 @@ const CardTitle = React.forwardRef<
     {children}
   </h3>
 ));
-CardTitle.displayName = "CardTitle";
+CardTitle.displayName = 'CardTitle';
 
 const CardDescription = React.forwardRef<
   HTMLParagraphElement,
@@ -60,23 +60,23 @@ const CardDescription = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <p
     ref={ref}
-    className={twMerge("text-sm text-muted-foreground", className)}
+    className={twMerge('text-sm text-muted-foreground', className)}
     {...props}
   >
     {children}
   </p>
 ));
-CardDescription.displayName = "CardDescription";
+CardDescription.displayName = 'CardDescription';
 
 const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...props }, ref) => (
-  <div ref={ref} className={twMerge("p-6 pt-0", className)} {...props}>
+  <div ref={ref} className={twMerge('p-6 pt-0', className)} {...props}>
     {children}
   </div>
 ));
-CardContent.displayName = "CardContent";
+CardContent.displayName = 'CardContent';
 
 const CardFooter = React.forwardRef<
   HTMLDivElement,
@@ -84,13 +84,13 @@ const CardFooter = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <div
     ref={ref}
-    className={twMerge("flex items-center p-6 pt-0", className)}
+    className={twMerge('flex items-center p-6 pt-0', className)}
     {...props}
   >
     {children}
   </div>
 ));
-CardFooter.displayName = "CardFooter";
+CardFooter.displayName = 'CardFooter';
 // --- [FIN DE REFACTORIZACIÓN DE ÉLITE] ---
 
 export {

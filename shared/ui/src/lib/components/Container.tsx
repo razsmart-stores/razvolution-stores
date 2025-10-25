@@ -6,16 +6,16 @@
  * @version 4.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { motion, type Variants } from "framer-motion";
-import React from "react";
+import { motion, type Variants } from 'framer-motion';
+import React from 'react';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v4.0.0] ---
 
 // Paso 1 y 2: Alineación Arquitectónica e Inyección de Observabilidad
-import { logger } from "@razvolution/shared-logging";
-import { cn } from "@razvolution/shared-utils";
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
 
 // --- [FIN DE NIVELACIÓN SOBERANA v4.0.0] ---
 
@@ -64,12 +64,12 @@ export function Container({
   className,
 }: ContainerProps): React.ReactElement {
   // Paso 2: Inyección de Observabilidad
-  logger.trace("[Container] Renderizando v4.0 (Sovereign & MEA Engine).");
+  logger.trace('[Container] Renderizando v4.0 (Sovereign & MEA Engine).');
 
   return (
     <motion.div
       // Paso 3: Cumplimiento de Theming
-      className={cn("w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", className)}
+      className={cn('w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8', className)}
       variants={containerVariants}
       initial="hidden"
       animate="visible"

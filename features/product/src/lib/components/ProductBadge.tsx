@@ -1,28 +1,34 @@
-// RUTA: components/ui/ProductBadge.tsx
+// RUTA: features/product/src/lib/components/ProductBadge.tsx
 /**
  * @file ProductBadge.tsx
- * @description Componente de UI de élite para mostrar una insignia informativa
- *              (título y precio) superpuesta en imágenes o tarjetas. Inyectado
- *              con MEA/UX para una presentación dinámica y contextual.
- * @version 1.0.0 (Elite & Semantic Rename)
- * @author RaZ Podestá - MetaShark Tech
+ * @description Componente de UI de élite para mostrar una insignia informativa.
+ *              Nivelado para alinearse con la arquitectura soberana del monorepo y
+ *              consumir dependencias desde sus fuentes de verdad canónicas.
+ * @version 2.0.0 (Sovereign Architectural Alignment)
+ * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { motion, type Variants } from "framer-motion";
-import React from "react";
+import { motion, type Variants } from 'framer-motion';
+import React from 'react';
 
-import { logger } from "@/shared/lib/logging";
-import { cn } from "@/shared/lib/utils/cn";
+// --- [INICIO DE REFACTORIZACIÓN SOBERANA v2.0.0] ---
+// Se corrigen las importaciones para utilizar los alias soberanos del monorepo
+// definidos en `tsconfig.base.json`, resolviendo los errores TS2307.
 
-import { Price } from "./Price"; // Consume nuestro componente de precio de élite
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
+
+// Se importa el componente `Price` desde su SSoT en la biblioteca de UI.
+import { Price } from '@razvolution/shared-ui';
+// --- [FIN DE REFACTORIZACIÓN SOBERANA v2.0.0] ---
 
 interface ProductBadgeProps {
   title: string;
   amount: string | number;
   currencyCode: string;
   locale: string;
-  position?: "bottom" | "center";
+  position?: 'bottom' | 'center';
   className?: string;
 }
 
@@ -31,17 +37,17 @@ export function ProductBadge({
   amount,
   currencyCode,
   locale,
-  position = "bottom",
+  position = 'bottom',
   className,
 }: ProductBadgeProps): React.ReactElement {
-  logger.trace("[ProductBadge] Renderizando v1.0 (Elite & Semantic Rename).");
+  logger.trace('[ProductBadge] Renderizando v2.0 (Sovereign Alignment).');
 
   const variants: Variants = {
     hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
+      transition: { duration: 0.5, ease: 'easeOut' },
     },
   };
 
@@ -52,8 +58,8 @@ export function ProductBadge({
       whileInView="visible"
       viewport={{ once: true, amount: 0.5 }}
       className={cn(
-        "absolute bottom-0 left-0 flex w-full px-4 pb-4",
-        { "lg:px-20 lg:pb-[35%]": position === "center" },
+        'absolute bottom-0 left-0 flex w-full px-4 pb-4',
+        { 'lg:px-20 lg:pb-[35%]': position === 'center' },
         className
       )}
     >

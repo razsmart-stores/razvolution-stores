@@ -27,6 +27,9 @@
       "path": "../../shared/logging/tsconfig.lib.json"
     },
     {
+      "path": "../workspace/tsconfig.lib.json"
+    },
+    {
       "path": "../../shared/i18n-contracts/tsconfig.lib.json"
     },
     {

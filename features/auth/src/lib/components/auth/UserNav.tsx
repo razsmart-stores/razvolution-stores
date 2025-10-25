@@ -6,7 +6,7 @@
  * @version 14.0.0 (Framework-Agnostic & Inversion of Control)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
 import { useMemo, useEffect } from 'react';
 import type { User } from '@supabase/supabase-js';
@@ -16,7 +16,10 @@ import { logger } from '@razvolution/shared-logging';
 import type { Locale } from '@razvolution/shared-utils';
 
 // Componentes de UI de marcado de posición
-const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ children, ...props }) => <button {...props}>{children}</button>;
+const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
+  children,
+  ...props
+}) => <button {...props}>{children}</button>;
 
 type NavContent = NonNullable<Dictionary['userNav']>;
 type Profile = Tables<'profiles'> | null;
@@ -33,10 +36,22 @@ interface UserNavProps {
   // --- [FIN DE INVERSIÓN DE CONTROL] ---
 }
 
-export function UserNav({ user, profile, navContent, onLoginClick, onLogout }: UserNavProps) {
-  const traceId = useMemo(() => logger.startTrace('UserNav_Client_Lifecycle_v14.0'), []);
+export function UserNav({
+  user,
+  profile,
+  navContent,
+  onLoginClick,
+  onLogout,
+}: UserNavProps) {
+  const traceId = useMemo(
+    () => logger.startTrace('UserNav_Client_Lifecycle_v14.0'),
+    []
+  );
   useEffect(() => {
-    logger.info('[UserNav] Componente puro montado.', { traceId, hasUser: !!user });
+    logger.info('[UserNav] Componente puro montado.', {
+      traceId,
+      hasUser: !!user,
+    });
     return () => logger.endTrace(traceId);
   }, [traceId, user]);
 
@@ -46,9 +61,9 @@ export function UserNav({ user, profile, navContent, onLoginClick, onLogout }: U
 
   return (
     <div className="flex items-center gap-4">
-       <span className="text-sm font-medium">
+      <span className="text-sm font-medium">
         {profile?.full_name || user.email}
-       </span>
+      </span>
       <Button onClick={onLogout} title={navContent.logoutButton}>
         {navContent.logoutButton}
       </Button>

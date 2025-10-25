@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/features-ai-chat",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "features/ai-chat/src",
+  "projectType": "library",
+  "tags": ["scope:feature", "type:ai"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/features/ai-chat",
+        "main": "features/ai-chat/src/index.ts",
+        "tsConfig": "features/ai-chat/tsconfig.lib.json",
+        "assets": ["features/ai-chat/*.md"]
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@
  * @version 4.0.0
  * @author RaZ Podestá - MetaShark Tech
  */
-import { z } from "zod";
+import { z } from 'zod';
 
 // --- [INICIO DE REFACTORIZACIÓN SOBERANA v4.0.0] ---
 // La importación externa ilegal ha sido eliminada.
@@ -35,7 +35,6 @@ export type AssembledTheme = z.infer<typeof AssembledThemeSchema>;
 
 // --- [FIN DE REFACTORIZACIÓN SOBERANA v4.0.0] ---
 
-
 /**
  * @function generateCssVariablesFromTheme
  * @description Genera una cadena de variables CSS a partir de un objeto de tema ensamblado.
@@ -43,18 +42,18 @@ export type AssembledTheme = z.infer<typeof AssembledThemeSchema>;
  * @returns {string} Una cadena de texto con las reglas CSS.
  */
 export function generateCssVariablesFromTheme(theme: AssembledTheme): string {
-  let cssString = "";
+  let cssString = '';
 
-  const processObject = (obj: Record<string, unknown>, prefix = "") => {
+  const processObject = (obj: Record<string, unknown>, prefix = '') => {
     for (const [key, value] of Object.entries(obj)) {
-      if (typeof value === "string") {
+      if (typeof value === 'string') {
         cssString += `${prefix}${key}: ${value};`;
       }
     }
   };
 
   if (theme.colors) {
-    processObject(theme.colors, "--");
+    processObject(theme.colors, '--');
   }
   if (theme.fonts) {
     processObject(theme.fonts);
@@ -73,12 +72,12 @@ export function generateCssVariablesFromTheme(theme: AssembledTheme): string {
  * @returns {Record<string, string>} Un objeto que mapea prefijos a nombres.
  */
 export function parseThemeNetString(netString: string): Record<string, string> {
-  const parts = netString.split(".");
+  const parts = netString.split('.');
   const themePlan: Record<string, string> = {};
   parts.forEach((part) => {
-    const [prefix, ...nameParts] = part.split("-");
+    const [prefix, ...nameParts] = part.split('-');
     if (prefix && nameParts.length > 0) {
-      themePlan[prefix] = nameParts.join("-");
+      themePlan[prefix] = nameParts.join('-');
     }
   });
   return themePlan;

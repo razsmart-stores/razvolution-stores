@@ -1,5 +1,5 @@
 {
-  "name": "i18n-contracts",
+  "name": "@razvolution/shared-i18n-contracts",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "shared/i18n-contracts/src",
   "projectType": "library",

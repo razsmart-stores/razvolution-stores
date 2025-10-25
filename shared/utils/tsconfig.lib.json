@@ -1,11 +1,15 @@
-// PLANTILLA SOBERANA DEFINITIVA: [biblioteca]/tsconfig.lib.json
+// RUTA: shared/utils/tsconfig.lib.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    // La opción "outDir" es gestionada por el ejecutor de build de Nx (@nx/js:tsc).
+    // No es necesario especificarla aquí para evitar conflictos.
     "declaration": true,
     "types": ["node"]
   },
+  // Incluye únicamente el código fuente de producción.
   "include": ["src/**/*.ts", "src/**/*.tsx"],
+  // Excluye rigurosamente cualquier archivo que no sea de producción.
   "exclude": [
     "jest.config.ts",
     "src/**/*.spec.ts",

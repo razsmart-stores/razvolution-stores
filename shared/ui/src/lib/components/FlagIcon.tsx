@@ -7,15 +7,15 @@
  * @version 4.0.0 (Sovereign Leveling & Resilient Placeholders)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { type SVGProps } from "react";
+import { type SVGProps } from 'react';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v4.0.0] ---
 
 // Pasos 1, 2 y 4: Alineación, Observabilidad y Contratos
-import { logger } from "@razvolution/shared-logging";
-import { defaultLocale, type Locale } from "@razvolution/shared-utils";
+import { logger } from '@razvolution/shared-logging';
+import { defaultLocale, type Locale } from '@razvolution/shared-utils';
 
 // --- INICIO DE ZONA DE MARCADORES DE POSICIÓN (PLACEHOLDERS) ---
 /**
@@ -51,10 +51,10 @@ const localeToFlagMap: Record<
   Locale,
   React.ComponentType<SVGProps<SVGSVGElement>>
 > = {
-  "it-IT": IT,
-  "es-ES": ES,
-  "en-US": US,
-  "pt-BR": BR,
+  'it-IT': IT,
+  'es-ES': ES,
+  'en-US': US,
+  'pt-BR': BR,
 };
 
 export function FlagIcon({
@@ -77,7 +77,9 @@ export function FlagIcon({
     logger.error(
       `[FlagIcon] Error crítico: No se encontró componente de bandera para el locale de fallback: ${validLocale}.`
     );
-    return <div className="w-5 h-5 bg-red-500" title="Error de icono de bandera" />;
+    return (
+      <div className="w-5 h-5 bg-red-500" title="Error de icono de bandera" />
+    );
   }
 
   return <FlagComponent {...props} />;

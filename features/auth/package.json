@@ -11,7 +11,8 @@
     "@razvolution/shared-supabase": "workspace:*",
     "@razvolution/shared-ui": "workspace:*",
     "@razvolution/shared-utils": "workspace:*",
-    "@razvolution/shared-i18n-contracts": "workspace:*"
+    "@razvolution/shared-i18n-contracts": "workspace:*",
+    "@razvolution/features-workspace": "workspace:*"
   },
   "devDependencies": {}
 }

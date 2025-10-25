@@ -8,10 +8,16 @@
   ],
   "references": [
     {
-      "path": "../../shared/ui"
+      "path": "../../features/workspace"
+    },
+    {
+      "path": "../../shared/data-access"
     },
     {
       "path": "../../shared/utils"
+    },
+    {
+      "path": "../../shared/ui"
     },
     {
       "path": "../../shared/supabase"

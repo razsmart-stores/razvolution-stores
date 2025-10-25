@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/features-community",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "features/community/src",
+  "projectType": "library",
+  "tags": ["scope:feature", "type:content"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/features/community",
+        "main": "features/community/src/index.ts",
+        "tsConfig": "features/community/tsconfig.lib.json",
+        "assets": ["features/community/*.md"]
+      }
+    }
+  }
+}

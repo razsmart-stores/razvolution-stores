@@ -2,53 +2,28 @@
 /**
  * @file ProductCard.tsx
  * @description Aparato de presentación soberano para una tarjeta de producto.
- *              Nivelado para cumplir con las convenciones canónicas de Tailwind CSS.
- * @version 2.2.0 (Tailwind Canonical Class Compliance)
+ *              Nivelado para consumir contratos de datos desde la SSoT.
+ * @version 3.0.0 (Sovereign Contract Compliance)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { useMemo, useEffect } from "react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useMemo, useEffect } from 'react';
 
-// --- [IMPORTACIONES SOBERANAS DEL MONOREPO] ---
-import { logger } from "@razvolution/shared-logging";
-import { DynamicIcon, TiltCard } from "@razvolution/shared-ui";
-import { cn, type Locale } from "@razvolution/shared-utils";
+// --- [INICIO DE CORRECCIÓN SOBERANA v3.0.0] ---
+import { logger } from '@razvolution/shared-logging';
+import { DynamicIcon, TiltCard } from '@razvolution/shared-ui';
+import { cn, type Locale } from '@razvolution/shared-utils';
+// Se importan los contratos desde la Única Fuente de Verdad.
+import type {
+  Product,
+  StorePageContent,
+} from '@razvolution/shared-commerce-contracts';
+// --- [FIN DE CORRECCIÓN SOBERANA v3.0.0] ---
 
-// --- [CONTRATOS DE DATOS LOCALES - Placeholder Arquitectónico] ---
-/**
- * @typedef Product
- * @description Contrato de datos temporal para la entidad 'Product'.
- * @warning ESTE TIPO SERÁ REEMPLAZADO por una importación desde
- *          '@razvolution/shared-commerce-contracts'.
- */
-type Product = {
-  slug: string;
-  isBestseller?: boolean;
-  imageUrl: string;
-  name: string;
-  categorization: {
-    primary: string;
-  };
-  rating?: number;
-  currency: string;
-  price: number;
-};
-
-/**
- * @typedef StorePageContent
- * @description Contrato de contenido i18n temporal.
- * @warning ESTE TIPO SERÁ REEMPLAZADO por una importación desde
- *          '@razvolution/shared-i18n-contracts'.
- */
-type StorePageContent = {
-  bestsellerLabel: string;
-  addToCartButton: string;
-};
-
-// --- [SUB-APARATO ATÓMICO: StarRating] ---
+// --- SUB-APARATO ATÓMICO: StarRating (Sin cambios) ---
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="flex items-center gap-0.5">
     {[...Array(5)].map((_, i) => (
@@ -56,30 +31,25 @@ const StarRating = ({ rating }: { rating: number }) => (
         key={i}
         name="Star"
         className={cn(
-          "h-4 w-4",
+          'h-4 w-4',
           i < Math.floor(rating)
-            ? "text-yellow-400"
-            : "text-muted-foreground/30"
+            ? 'text-yellow-400'
+            : 'text-muted-foreground/30'
         )}
-        fill={i < Math.floor(rating) ? "currentColor" : "none"}
+        fill={i < Math.floor(rating) ? 'currentColor' : 'none'}
       />
     ))}
   </div>
 );
 
-// --- [CONTRATO DE PROPS DEL APARATO PRINCIPAL] ---
 interface ProductCardProps {
   product: Product;
   locale: Locale;
   content: StorePageContent;
 }
 
-// --- [APARATO SOBERANO: ProductCard] ---
 export function ProductCard({ product, locale, content }: ProductCardProps) {
-  const traceId = useMemo(
-    () => logger.startTrace("ProductCard_Lifecycle"),
-    []
-  );
+  const traceId = useMemo(() => logger.startTrace('ProductCard_Lifecycle'), []);
   useEffect(() => {
     logger.info(`[ProductCard] Componente montado para: ${product.name}`, {
       traceId,
@@ -110,7 +80,6 @@ export function ProductCard({ product, locale, content }: ProductCardProps) {
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         </div>
-        {/* --- [INICIO DE REFACTORIZACIÓN CANÓNICA v2.2.0] --- */}
         <div className="p-4 grow flex flex-col text-center border-t border-border">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
             {product.categorization.primary}
@@ -118,7 +87,6 @@ export function ProductCard({ product, locale, content }: ProductCardProps) {
           <h3 className="text-md font-bold text-foreground grow">
             {product.name}
           </h3>
-          {/* --- [FIN DE REFACTORIZACIÓN CANÓNICA v2.2.0] --- */}
           {product.rating && (
             <div className="flex justify-center my-2">
               <StarRating rating={product.rating} />
@@ -126,7 +94,7 @@ export function ProductCard({ product, locale, content }: ProductCardProps) {
           )}
           <p className="mt-2 text-xl font-semibold text-primary">
             {new Intl.NumberFormat(locale, {
-              style: "currency",
+              style: 'currency',
               currency: product.currency,
             }).format(product.price)}
           </p>

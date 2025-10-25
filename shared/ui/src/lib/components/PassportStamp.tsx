@@ -6,12 +6,12 @@
  * @version 3.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
-import { motion, type Variants } from "framer-motion";
-import React from "react";
+'use client';
+import { motion, type Variants } from 'framer-motion';
+import React from 'react';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v3.0.0] ---
-import { logger } from "@razvolution/shared-logging";
+import { logger } from '@razvolution/shared-logging';
 // --- [FIN DE NIVELACIÓN SOBERANA v3.0.0] ---
 
 interface PassportStampProps {
@@ -25,7 +25,7 @@ const stampVariants: Variants = {
     opacity: 1,
     rotate: -12,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 200,
       damping: 10,
       delay: 0.1,
@@ -36,7 +36,7 @@ const stampVariants: Variants = {
 export function PassportStamp({
   label,
 }: PassportStampProps): React.ReactElement {
-  logger.trace("[PassportStamp] Renderizando animación de sello MEA/UX v3.0.");
+  logger.trace('[PassportStamp] Renderizando animación de sello MEA/UX v3.0.');
 
   return (
     <motion.div

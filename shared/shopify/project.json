@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/shared-shopify",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/shopify/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:data-access"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/shopify",
+        "main": "shared/shopify/src/index.ts",
+        "tsConfig": "shared/shopify/tsconfig.lib.json",
+        "assets": ["shared/shopify/*.md"]
+      }
+    }
+  }
+}

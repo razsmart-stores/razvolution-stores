@@ -1,4 +1,4 @@
-// PLANTILLA SOBERANA DEFINITIVA: [biblioteca]/tsconfig.lib.json
+// RUTA: shared/shipping/tsconfig.lib.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {

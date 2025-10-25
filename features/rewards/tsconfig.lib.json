@@ -1,10 +1,15 @@
-// PLANTILLA SOBERANA DEFINITIVA: [biblioteca]/tsconfig.lib.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": true,
-    "types": ["node"]
+    "types": ["node"],
+    // --- [INICIO DE CORRECCIÓN SOBERANA] ---
+    // Se añade la propiedad "jsx" para que TypeScript pueda compilar
+    // correctamente los archivos .tsx, resolviendo el error TS7026.
+    "jsx": "react-jsx"
+    // --- [FIN DE CORRECCIÓN SOBERANA] ---
   },
+  // Se asegura de que los archivos .tsx estén incluidos en la compilación.
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": [
     "jest.config.ts",

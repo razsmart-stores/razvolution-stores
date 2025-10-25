@@ -3,6 +3,15 @@
   "include": [],
   "references": [
     {
+      "path": "../../shared/utils"
+    },
+    {
+      "path": "../../shared/ui"
+    },
+    {
+      "path": "../../shared/logging"
+    },
+    {
       "path": "./tsconfig.lib.json"
     },
     {

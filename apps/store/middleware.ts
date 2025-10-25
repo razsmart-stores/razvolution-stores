@@ -19,7 +19,9 @@ function getLocale(request: NextRequest): string | undefined {
   const negotiatorHeaders: Record<string, string> = {};
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
 
-  const languages = new Negotiator({ headers: negotiatorHeaders }).languages(locales as any);
+  const languages = new Negotiator({ headers: negotiatorHeaders }).languages(
+    locales as any
+  );
   return matchLocale(languages, locales as any, defaultLocale);
 }
 
@@ -32,9 +34,7 @@ export function middleware(request: NextRequest) {
 
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request);
-    return NextResponse.redirect(
-      new URL(`/${locale}${pathname}`, request.url)
-    );
+    return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url));
   }
 
   return NextResponse.next();

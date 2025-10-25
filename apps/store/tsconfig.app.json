@@ -12,10 +12,16 @@
   "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts"],
   "references": [
     {
-      "path": "../../shared/ui/tsconfig.lib.json"
+      "path": "../../features/workspace/tsconfig.lib.json"
+    },
+    {
+      "path": "../../shared/data-access/tsconfig.lib.json"
     },
     {
       "path": "../../shared/utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../shared/ui/tsconfig.lib.json"
     },
     {
       "path": "../../shared/supabase/tsconfig.lib.json"

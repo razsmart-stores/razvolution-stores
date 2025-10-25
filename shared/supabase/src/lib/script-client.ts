@@ -22,7 +22,8 @@ export function createScriptClient() {
   const supabaseServiceRoleKey = process.env['SUPABASE_SERVICE_ROLE_KEY'];
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
-    const errorMsg = 'CRÍTICO: Las variables de entorno de Supabase (URL y SERVICE_ROLE_KEY) no están definidas.';
+    const errorMsg =
+      'CRÍTICO: Las variables de entorno de Supabase (URL y SERVICE_ROLE_KEY) no están definidas.';
     console.error(chalk.red.bold(`[Supabase Script Client] ${errorMsg}`));
     throw new Error(errorMsg);
   }

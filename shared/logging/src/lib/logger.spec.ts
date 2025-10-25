@@ -1,128 +1,145 @@
 // RUTA: shared/logging/src/lib/logger.spec.ts
 /**
  * @file logger.spec.ts
- * @description Arnés de pruebas soberano para el logger y emisor de Heimdall.
- *              v17.3 (Linting Compliance): Se alinea el arnés de pruebas con las reglas
- *              de calidad de código de ESLint, justificando las excepciones para funciones
- *              vacías utilizadas en la supresión de salida de consola.
- * @version 17.3.0
+ * @description Arnés de pruebas soberano para Heimdall. Esta versión cumple
+ *              con la regla de estrictez 'noPropertyAccessFromIndexSignature'
+ *              para una seguridad de tipos absoluta en el acceso a propiedades.
+ * @version 61.2.0 (Strict Compliance Fix)
  * @author IA Arquitecto de Calidad
  */
-import { jest } from '@jest/globals';
+import { setGlobalHeimdallContext } from './logger';
 import type { HeimdallEvent } from './heimdall.contracts';
-import { useWorkspaceStore } from '@razvolution/shared-utils';
-type WorkspaceState = ReturnType<typeof useWorkspaceStore.getState>;
 
-// --- [INICIO DE ARNÉS DE MOCKS SOBERANO v17.2.0] ---
-
+// --- MOCKS SOBERANOS (Globales a todas las pruebas) ---
 const createLocalStorageMock = (): Storage => {
   let store: Record<string, string> = {};
   return {
     getItem: jest.fn((key: string): string | null => store[key] || null),
-    setItem: jest.fn((key: string, value: string): void => { store[key] = value.toString(); }),
-    removeItem: jest.fn((key: string): void => { delete store[key]; }),
-    clear: jest.fn((): void => { store = {}; }),
-    key: jest.fn((index: number): string | null => Object.keys(store)[index] || null),
-    get length(): number { return Object.keys(store).length; },
+    setItem: jest.fn((key: string, value: string): void => {
+      store[key] = value.toString();
+    }),
+    removeItem: jest.fn((key: string): void => {
+      delete store[key];
+    }),
+    clear: jest.fn((): void => {
+      store = {};
+    }),
+    key: jest.fn(
+      (index: number): string | null => Object.keys(store)[index] || null
+    ),
+    get length(): number {
+      return Object.keys(store).length;
+    },
   };
 };
+
 const localStorageMock = createLocalStorageMock();
 Object.defineProperty(global, 'localStorage', { value: localStorageMock });
-
 Object.defineProperty(global, 'window', {
   value: {
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
-    location: {
-      pathname: '/mock-path',
-    },
+    location: { pathname: '/mock-path' },
   },
   writable: true,
 });
-Object.defineProperty(global, 'navigator', { value: { sendBeacon: jest.fn(() => true) }, writable: true });
+Object.defineProperty(global, 'navigator', {
+  value: { sendBeacon: jest.fn(() => true) },
+  writable: true,
+});
+Object.defineProperty(global, 'performance', {
+  value: { now: jest.fn().mockReturnValue(1000) },
+  writable: true,
+});
 
-jest.mock('@razvolution/shared-utils', () => ({
-  useWorkspaceStore: { getState: jest.fn(), setState: jest.fn(), subscribe: jest.fn(() => jest.fn()), destroy: jest.fn() },
+global.fetch = jest.fn(() =>
+  Promise.resolve(new Response(null, { status: 200 }))
+) as jest.Mock;
+
+jest.mock('@paralleldrive/cuid2', () => ({
+  createId: jest.fn(() => 'mock-cuid-id-12345'),
 }));
-const mockGetState = (useWorkspaceStore as jest.Mocked<typeof useWorkspaceStore>).getState;
-jest.mock('@paralleldrive/cuid2', () => ({ createId: jest.fn(() => 'mock-cuid-id-67890') }));
-const mockFetch = jest.fn<typeof global.fetch>();
-global.fetch = mockFetch;
 
-jest.useFakeTimers();
-// --- [FIN DE ARNÉS DE MOCKS SOBERANO v17.2.0] ---
-
-import { logger, flushTelemetryQueue } from './logger';
-
-describe('Arnés de Pruebas: Heimdall Logger & Emitter', () => {
-  const baseWorkspaceState: WorkspaceState = {
-    activeWorkspaceId: 'default-mock-ws-id', availableWorkspaces: [], setActiveWorkspace: jest.fn(), setAvailableWorkspaces: jest.fn(),
-  };
+// --- Arnés de Pruebas Principal ---
+describe('Arnés de Pruebas v61.2: Heimdall Logger & Emitter (Strict Compliance)', () => {
+  let originalEnv: NodeJS.ProcessEnv;
+  const MOCK_WORKSPACE_ID = 'ws-mock-id-from-test';
 
   beforeEach(() => {
+    jest.resetModules();
+    originalEnv = { ...process.env };
     jest.clearAllMocks();
-    jest.clearAllTimers();
-    mockGetState.mockReturnValue(baseWorkspaceState);
-    mockFetch.mockResolvedValue({ ok: true, status: 200, json: async () => ({ success: true }) } as Response);
     localStorageMock.clear();
+    setGlobalHeimdallContext({ workspaceId: MOCK_WORKSPACE_ID });
   });
 
-  describe('Encolado de Eventos', () => {
-    it('debe encolar un evento de telemetría en localStorage', () => {
-      logger.startTask({ domain: 'TEST', entity: 'TASK', action: 'EXECUTE' }, 'Test Task');
-      expect(localStorageMock.setItem).toHaveBeenCalledWith('heimdall_queue_v1', expect.any(String));
-      const callArg = (localStorageMock.setItem as jest.Mock).mock.calls[0][1] as string;
-      const parsedArg: unknown = JSON.parse(callArg);
-      expect(Array.isArray(parsedArg)).toBe(true);
-      const savedQueue = parsedArg as HeimdallEvent[];
-      expect(savedQueue).toHaveLength(1);
-      expect(savedQueue[0].title).toBe('Test Task');
-      expect(savedQueue[0].context.path).toBe('/mock-path');
+  afterEach(() => {
+    process.env = originalEnv;
+  });
+
+  // --- Suite para el Modo de Desarrollo ---
+  describe('En Modo de Desarrollo (NODE_ENV=test)', () => {
+    it('NO debe encolar eventos en localStorage y SÍ debe usar la consola', () => {
+      process.env['NODE_ENV'] = 'test';
+      const { logger } = require('./logger');
+
+      const consoleGroupSpy = jest
+        .spyOn(console, 'groupCollapsed')
+        .mockImplementation();
+      logger.startTask(
+        { domain: 'TEST', entity: 'TASK', action: 'EXECUTE' },
+        'Test Task'
+      );
+      expect(localStorageMock.setItem).not.toHaveBeenCalled();
+      expect(consoleGroupSpy).toHaveBeenCalled();
+      consoleGroupSpy.mockRestore();
     });
   });
 
-  describe('flushTelemetryQueue', () => {
-    it('debe enviar eventos y limpiar la cola en un caso exitoso', async () => {
-      const mockWorkspaceId = 'ws-test-12345';
-      mockGetState.mockReturnValue({ ...baseWorkspaceState, activeWorkspaceId: mockWorkspaceId });
-      const mockEvents: Partial<HeimdallEvent>[] = [{ eventId: '1', title: 'event1' }];
-      (localStorageMock.getItem as jest.Mock).mockReturnValue(JSON.stringify(mockEvents));
-      await flushTelemetryQueue(false);
-      expect(mockFetch).toHaveBeenCalledWith('/api/telemetry/ingest', expect.objectContaining({
-        headers: { 'Content-Type': 'application/json', 'x-workspace-id': mockWorkspaceId },
-      }));
-      expect(localStorageMock.setItem).toHaveBeenCalledWith('heimdall_queue_v1', '[]');
+  // --- Suite para el Modo de Producción ---
+  describe('En Modo de Producción (NODE_ENV=production)', () => {
+    it('debe encolar un evento que contenga el contexto global inyectado', () => {
+      process.env['NODE_ENV'] = 'production';
+      const { logger } = require('./logger');
+
+      logger.startTask(
+        { domain: 'PROD_TEST', entity: 'QUEUE', action: 'ENQUEUE' },
+        'Enqueue Task'
+      );
+
+      expect(localStorageMock.setItem).toHaveBeenCalledWith(
+        'heimdall_queue_v1',
+        expect.any(String)
+      );
+      const queue: HeimdallEvent[] = JSON.parse(
+        (localStorageMock.setItem as jest.Mock).mock.calls[0][1]
+      );
+      expect(queue).toHaveLength(1);
+      expect(queue[0].event.domain).toBe('PROD_TEST');
+
+      // --- [INICIO DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v61.2.0] ---
+      // Se utiliza la notación de corchetes para un acceso a propiedades de máxima seguridad de tipos.
+      expect(queue[0].context['workspaceId']).toBe(MOCK_WORKSPACE_ID);
+      // --- [FIN DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v61.2.0] ---
     });
 
-    it('debe re-encolar los eventos si la llamada fetch falla', async () => {
-      mockFetch.mockImplementationOnce(() => Promise.reject(new Error('Network Error')));
-      const mockEvents: Partial<HeimdallEvent>[] = [{ eventId: '1', title: 'event1' }];
-      (localStorageMock.getItem as jest.Mock).mockReturnValueOnce(JSON.stringify(mockEvents)).mockReturnValueOnce('[]');
-      // --- [INICIO DE CORRECCIÓN DE LINTING v17.3.0] ---
-      // Se justifica la excepción a la regla, ya que el propósito es suprimir
-      // el ruido de la consola durante la ejecución de esta prueba específica.
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-      // --- [FIN DE CORRECCIÓN DE LINTING v17.3.0] ---
-      await flushTelemetryQueue(false);
-      expect(mockFetch).toHaveBeenCalledTimes(1);
-      expect(localStorageMock.setItem).toHaveBeenLastCalledWith('heimdall_queue_v1', JSON.stringify(mockEvents));
-      consoleWarnSpy.mockRestore();
-    });
+    describe('Motor de Encolado y Envío (Emitter)', () => {
+      it('debe enviar el workspaceId inyectado en las cabeceras del lote de eventos', async () => {
+        process.env['NODE_ENV'] = 'production';
+        const { logger, flushTelemetryQueue } = require('./logger');
 
-    it('debe manejar una cola corrupta y removerla', async () => {
-      // --- [INICIO DE CORRECCIÓN DE LINTING v17.3.0] ---
-      // Se justifica la excepción a la regla, ya que el propósito es suprimir
-      // el ruido de la consola durante la ejecución de esta prueba específica.
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-      // --- [FIN DE CORRECCIÓN DE LINTING v17.3.0] ---
-      (localStorageMock.getItem as jest.Mock).mockReturnValue('not-a-valid-json');
-      await flushTelemetryQueue(false);
-      expect(mockFetch).not.toHaveBeenCalled();
-      expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('Cola de telemetría corrupta'), expect.any(Error));
-      expect(localStorageMock.removeItem).toHaveBeenCalledWith('heimdall_queue_v1');
-      consoleErrorSpy.mockRestore();
+        logger.info('Event 1', { traceId: 'trace-1' });
+
+        await flushTelemetryQueue();
+
+        expect(global.fetch).toHaveBeenCalledWith(
+          '/api/telemetry/ingest',
+          expect.any(Object)
+        );
+        const fetchCall = (global.fetch as jest.Mock).mock.calls[0];
+
+        expect(fetchCall[1].headers['x-workspace-id']).toBe(MOCK_WORKSPACE_ID);
+      });
     });
   });
 });

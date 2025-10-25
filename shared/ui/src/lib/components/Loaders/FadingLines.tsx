@@ -7,7 +7,7 @@
  * @version 2.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
 import React from 'react';
 
@@ -26,7 +26,10 @@ import { logger } from '@razvolution/shared-logging';
  * @param {React.SVGProps<SVGSVGElement>} props - Props estándar de SVG para personalización.
  * @returns {React.ReactElement}
  */
-export function FadingLines({ className, ...props }: React.SVGProps<SVGSVGElement>): React.ReactElement {
+export function FadingLines({
+  className,
+  ...props
+}: React.SVGProps<SVGSVGElement>): React.ReactElement {
   // --- [PASO 2: INYECCIÓN DE OBSERVABILIDAD] ---
   logger.trace('[FadingLines] Renderizando componente v2.0.');
 

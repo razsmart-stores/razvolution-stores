@@ -2,27 +2,24 @@
 /**
  * @file UserNavClient.tsx
  * @description Componente de cliente puro para la interactividad de UserNav.
- *              Nivelado para una seguridad de tipos absoluta mediante la importación
- *              de contratos soberanos.
- * @version 2.0.0 (Sovereign Type Safety)
+ *              v2.1.0 (Sovereign Alias Alignment): Se corrige la importación de supabase.
+ * @version 2.1.0
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-// --- [INICIO DE CORRECCIÓN SOBERANA v2.0.0] ---
-// Se importan los tipos necesarios desde las bibliotecas soberanas para
-// eliminar los errores de tipo 'any' implícito.
 import type { User } from '@supabase/supabase-js';
+
+// --- [INICIO DE REFACTORIZACIÓN SOBERANA v2.1.0] ---
 import { createClient } from '@razvolution/shared-supabase';
+// --- [FIN DE REFACTORIZACIÓN SOBERANA v2.1.0] ---
+
 import type { Tables } from '@razvolution/shared-db-types';
 import type { Dictionary } from '@razvolution/shared-i18n-contracts';
-// --- [FIN DE CORRECCIÓN SOBERANA v2.0.0] ---
 
-
-// Se definen los tipos para las props, siguiendo las mejores prácticas.
 type NavContent = NonNullable<Dictionary['userNav']>;
 type Profile = Tables<'profiles'> | null;
 
@@ -32,7 +29,11 @@ interface UserNavClientProps {
   navContent: NavContent;
 }
 
-export function UserNavClient({ user, profile, navContent }: UserNavClientProps) {
+export function UserNavClient({
+  user,
+  profile,
+  navContent,
+}: UserNavClientProps) {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -43,7 +44,11 @@ export function UserNavClient({ user, profile, navContent }: UserNavClientProps)
   };
 
   if (!user) {
-    return <button onClick={() => router.push('/login')}>{navContent.loginButton}</button>;
+    return (
+      <button onClick={() => router.push('/login')}>
+        {navContent.loginButton}
+      </button>
+    );
   }
 
   return (

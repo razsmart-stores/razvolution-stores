@@ -5,7 +5,7 @@
  * @version 2.0.0 (Elite Export Compliance)
  * @author RaZ Podestá - MetaShark Tech
  */
-import { z } from "zod";
+import { z } from 'zod';
 
 // --- MEJORA ARQUITECTÓNICA: Se exporta el schema de configuración ---
 export const DockConfigSchema = z.object({

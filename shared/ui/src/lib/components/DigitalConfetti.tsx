@@ -7,15 +7,15 @@
  * @version 3.1.0 (Canonical Class Compliance)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { useWindowSize } from "@uidotdev/usehooks";
-import { useTheme } from "next-themes";
-import React, { useState, useEffect, useMemo } from "react";
-import ReactConfetti from "react-confetti";
+import { useWindowSize } from '@uidotdev/usehooks';
+import { useTheme } from 'next-themes';
+import React, { useState, useEffect, useMemo } from 'react';
+import ReactConfetti from 'react-confetti';
 
-import { useSound } from "../hooks/use-sound";
-import { logger } from "@razvolution/shared-logging";
+import { useSound } from '../hooks/use-sound';
+import { logger } from '@razvolution/shared-logging';
 
 interface DigitalConfettiProps {
   isActive: boolean;
@@ -27,7 +27,7 @@ interface DigitalConfettiProps {
 }
 
 const getCssVariableValue = (variable: string): string | null => {
-  if (typeof window === "undefined") return null;
+  if (typeof window === 'undefined') return null;
   return getComputedStyle(document.documentElement)
     .getPropertyValue(variable)
     .trim();
@@ -37,19 +37,19 @@ export function DigitalConfetti({
   isActive,
   onComplete,
   duration = 5000,
-  semanticColors = ["--primary", "--secondary", "--accent"],
+  semanticColors = ['--primary', '--secondary', '--accent'],
   particleCount = 200,
   playSound = true,
 }: DigitalConfettiProps): React.ReactElement | null {
-  logger.trace("[DigitalConfetti] Renderizando componente v3.1.");
+  logger.trace('[DigitalConfetti] Renderizando componente v3.1.');
 
   const { width, height } = useWindowSize();
   const { theme } = useTheme();
   const [isRunning, setIsRunning] = useState(false);
-  const playPopSound = useSound("/sounds/confetti-pop.mp3", 0.3);
+  const playPopSound = useSound('/sounds/confetti-pop.mp3', 0.3);
 
   const resolvedColors = useMemo(() => {
-    logger.trace("[DigitalConfetti] Resolviendo colores semánticos a HSL.");
+    logger.trace('[DigitalConfetti] Resolviendo colores semánticos a HSL.');
     return semanticColors
       .map((variable) => {
         const hslValue = getCssVariableValue(variable);
@@ -61,14 +61,14 @@ export function DigitalConfetti({
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isActive) {
-      logger.info("[DigitalConfetti] Activado. Iniciando celebración.");
+      logger.info('[DigitalConfetti] Activado. Iniciando celebración.');
       if (playSound) {
         playPopSound();
       }
       setIsRunning(true);
       timer = setTimeout(() => {
         logger.info(
-          "[DigitalConfetti] Duración completada. Finalizando animación."
+          '[DigitalConfetti] Duración completada. Finalizando animación.'
         );
         setIsRunning(false);
         if (onComplete) {

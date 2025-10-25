@@ -29,7 +29,9 @@ export function createServerClient(): SupabaseClient<Database> {
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     // Este error ahora ocurre dentro del contexto de la función, proveyendo
     // una garantía de tipos absoluta al compilador para el código que sigue.
-    throw new Error('CRÍTICO: Las variables de entorno de Supabase del servidor no están definidas.');
+    throw new Error(
+      'CRÍTICO: Las variables de entorno de Supabase del servidor no están definidas.'
+    );
   }
   // --- [FIN DE CORRECCIÓN DE SEGURIDAD DE TIPOS v12.0.0] ---
 

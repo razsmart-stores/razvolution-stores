@@ -9,7 +9,7 @@
 // El logger ha sido eliminado para cumplir con la jerarquía arquitectónica.
 
 const isObject = (item: unknown): item is Record<string, unknown> => {
-  return item !== null && typeof item === "object" && !Array.isArray(item);
+  return item !== null && typeof item === 'object' && !Array.isArray(item);
 };
 
 export function deepMerge<T extends object, U extends object>(

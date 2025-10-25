@@ -34,7 +34,9 @@ export const getCart = async (cartId: string): Promise<Cart | undefined> => {
  */
 export const createCart = async (): Promise<Cart> => {
   const newCartId = `cart_mock_${Date.now()}`;
-  logger.info('[Shopify SAL] Creando nuevo carrito (placeholder)...', { newCartId });
+  logger.info('[Shopify SAL] Creando nuevo carrito (placeholder)...', {
+    newCartId,
+  });
   return Promise.resolve({
     id: newCartId,
     lines: [],
@@ -47,8 +49,14 @@ export const createCart = async (): Promise<Cart> => {
  * @description Añade items a un carrito de compras.
  * @warning Esta es una implementación de marcador de posición.
  */
-export const addToCart = async (cartId: string, lines: { merchandiseId: string; quantity: number }[]): Promise<Cart> => {
-  logger.info('[Shopify SAL] Añadiendo items al carrito (placeholder)...', { cartId, lines });
+export const addToCart = async (
+  cartId: string,
+  lines: { merchandiseId: string; quantity: number }[]
+): Promise<Cart> => {
+  logger.info('[Shopify SAL] Añadiendo items al carrito (placeholder)...', {
+    cartId,
+    lines,
+  });
   return getCart(cartId) as Promise<Cart>; // Devuelve un carrito mock
 };
 
@@ -57,8 +65,14 @@ export const addToCart = async (cartId: string, lines: { merchandiseId: string; 
  * @description Elimina líneas de items de un carrito.
  * @warning Esta es una implementación de marcador de posición.
  */
-export const removeFromCart = async (cartId: string, lineIds: string[]): Promise<Cart> => {
-  logger.info('[Shopify SAL] Eliminando items del carrito (placeholder)...', { cartId, lineIds });
+export const removeFromCart = async (
+  cartId: string,
+  lineIds: string[]
+): Promise<Cart> => {
+  logger.info('[Shopify SAL] Eliminando items del carrito (placeholder)...', {
+    cartId,
+    lineIds,
+  });
   return getCart(cartId) as Promise<Cart>; // Devuelve un carrito mock
 };
 
@@ -67,7 +81,13 @@ export const removeFromCart = async (cartId: string, lineIds: string[]): Promise
  * @description Actualiza la cantidad de items en un carrito.
  * @warning Esta es una implementación de marcador de posición.
  */
-export const updateCart = async (cartId: string, lines: { id: string; merchandiseId: string; quantity: number }[]): Promise<Cart> => {
-  logger.info('[Shopify SAL] Actualizando items del carrito (placeholder)...', { cartId, lines });
+export const updateCart = async (
+  cartId: string,
+  lines: { id: string; merchandiseId: string; quantity: number }[]
+): Promise<Cart> => {
+  logger.info('[Shopify SAL] Actualizando items del carrito (placeholder)...', {
+    cartId,
+    lines,
+  });
   return getCart(cartId) as Promise<Cart>; // Devuelve un carrito mock
 };

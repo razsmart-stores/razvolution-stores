@@ -7,7 +7,7 @@
  * @version 3.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
 import React from 'react';
 
@@ -15,7 +15,13 @@ import React from 'react';
 // Se actualizan las importaciones para usar alias del workspace o rutas relativas locales.
 import { logger } from '@razvolution/shared-logging';
 import { cn } from '@razvolution/shared-utils';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './Card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from './Card';
 import { DynamicIcon } from './DynamicIcon';
 
 // --- [PASO 4: ADHERENCIA A CONTRATOS (SEGURIDAD DE TIPOS)] ---
@@ -41,25 +47,30 @@ interface EmptyStateProps {
  * @param {EmptyStateProps} props - Las propiedades del componente.
  * @returns {React.ReactElement}
  */
-export function EmptyState({ icon, title, description, actions, className }: EmptyStateProps): React.ReactElement {
+export function EmptyState({
+  icon,
+  title,
+  description,
+  actions,
+  className,
+}: EmptyStateProps): React.ReactElement {
   // --- [PASO 2: INYECCIÓN DE OBSERVABILIDAD] ---
   logger.trace(`[EmptyState] Renderizando estado vacío: "${title}"`);
 
   return (
     // --- [PASO 3: CUMPLIMIENTO DE THEMING] ---
-    <Card className={cn("w-full max-w-lg mx-auto border-dashed", className)}>
+    <Card className={cn('w-full max-w-lg mx-auto border-dashed', className)}>
       <CardHeader className="text-center">
         <div className="mx-auto bg-muted/50 p-4 rounded-full w-fit mb-4">
-          <DynamicIcon name={icon} className="h-10 w-10 text-muted-foreground" />
+          <DynamicIcon
+            name={icon}
+            className="h-10 w-10 text-muted-foreground"
+          />
         </div>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      {actions && (
-        <CardContent className="text-center">
-          {actions}
-        </CardContent>
-      )}
+      {actions && <CardContent className="text-center">{actions}</CardContent>}
     </Card>
   );
 }

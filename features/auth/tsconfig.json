@@ -17,6 +17,9 @@
       "path": "../../shared/logging"
     },
     {
+      "path": "../workspace"
+    },
+    {
       "path": "../../shared/i18n-contracts"
     },
     {

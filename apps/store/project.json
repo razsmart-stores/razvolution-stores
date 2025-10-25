@@ -1,6 +1,5 @@
-
 {
-  "name": "store",
+  "name": "apps-store",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/store",
   "projectType": "application",
@@ -24,16 +23,16 @@
       "executor": "@nx/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "store:build",
+        "buildTarget": "apps-store:build",
         "dev": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "store:build:development",
+          "buildTarget": "apps-store:build:development",
           "dev": true
         },
         "production": {
-          "buildTarget": "store:build:production",
+          "buildTarget": "apps-store:build:production",
           "dev": false
         }
       }

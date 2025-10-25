@@ -6,18 +6,18 @@
  * @version 2.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // --- PASO 1: Nivelación de Importaciones (Alineación Arquitectónica) ---
-import { logger } from "@razvolution/shared-logging";
-import { cn } from "@razvolution/shared-utils";
-import { Badge } from "./Badge";
-import { DynamicIcon } from "./DynamicIcon";
-import { Input, type InputProps } from "./Input";
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
+import { Badge } from './Badge';
+import { DynamicIcon } from './DynamicIcon';
+import { Input, type InputProps } from './Input';
 
-interface TagInputProps extends Omit<InputProps, "value" | "onChange"> {
+interface TagInputProps extends Omit<InputProps, 'value' | 'onChange'> {
   value: string[];
   onChange: (tags: string[]) => void;
 }
@@ -25,20 +25,20 @@ interface TagInputProps extends Omit<InputProps, "value" | "onChange"> {
 export const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
   ({ value, onChange, className, ...props }, ref) => {
     // --- PASO 2: Inyección de Observabilidad (Protocolo Heimdall) ---
-    logger.trace("[TagInput] Renderizando.");
-    const [inputValue, setInputValue] = useState("");
+    logger.trace('[TagInput] Renderizando.');
+    const [inputValue, setInputValue] = useState('');
 
     const handleAddTag = (tagToAdd: string) => {
       const newTag = tagToAdd.trim();
       if (newTag && !value.includes(newTag)) {
         onChange([...value, newTag]);
       }
-      setInputValue("");
+      setInputValue('');
     };
 
     // --- PASO 5: Higiene de Código (Tipado Explícito) ---
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter" || e.key === ",") {
+      if (e.key === 'Enter' || e.key === ',') {
         e.preventDefault();
         handleAddTag(inputValue);
       }
@@ -52,7 +52,7 @@ export const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
       <div>
         <div
           className={cn(
-            "flex flex-wrap gap-2 rounded-md border border-input bg-background p-2",
+            'flex flex-wrap gap-2 rounded-md border border-input bg-background p-2',
             className
           )}
         >
@@ -87,4 +87,4 @@ export const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
   }
 );
 
-TagInput.displayName = "TagInput";
+TagInput.displayName = 'TagInput';

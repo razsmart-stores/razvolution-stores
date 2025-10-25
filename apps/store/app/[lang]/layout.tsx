@@ -1,35 +1,42 @@
 // RUTA: apps/store/app/[lang]/layout.tsx
 /**
  * @file layout.tsx
- * @description Layout raíz soberano y orquestador de datos.
- * @version 7.0.0 (Server Module Consumption Fix)
+ * @description Layout raíz soberano, refactorizado para un manejo de datos robusto
+ *              y un cumplimiento estricto de la arquitectura.
+ * @version 15.0.0 (Robust Data Handling)
  * @author IA Arquitecto
  */
-
-// --- [INICIO DE CORRECCIÓN SOBERANA v7.0.0] ---
-// Se elimina la importación del lado del cliente de createServerClient.
-// Los módulos de servidor se importarán directamente a continuación.
-import { getDictionary } from '../../get-dictionary';
-import type { Locale } from '@razvolution/shared-utils';
-import { Footer } from '../../components/Footer';
-import { Header } from './components/Header';
-import { HeimdallProvider } from './components/HeimdallProvider';
-import '../global.css';
-
-// Se importa el módulo 'server-only' para garantizar que este componente
-// nunca se ejecute en el cliente.
 import 'server-only';
+import { useMemo } from 'react';
+import { getDictionary } from '../../get-dictionary';
 
-// Se importa el createServerClient directamente desde su archivo de origen
-// usando una ruta relativa. Esta es la forma soberana de consumir un módulo
-// de servidor desde otro módulo de servidor en un monorepo.
-import { createServerClient } from '../../../../shared/supabase/src/lib/server';
-// --- [FIN DE CORRECCIÓN SOBERANA v7.0.0] ---
+import { actions } from '@razvolution/shared-data-access';
+import {
+  HeimdallProvider,
+  logger,
+  useHeimdallVitals,
+} from '@razvolution/shared-logging';
+import { createServerClient } from '@razvolution/shared-supabase/server'; // Se necesita para el 'user'
+import { Footer } from '@razvolution/shared-ui';
+import type { Locale } from '@razvolution/shared-utils';
+import type { Tables } from '@razvolution/shared-db-types'; // Se necesita para el tipo 'profile'
+import { Header } from './components/Header';
+import '../global.css';
 
 export const metadata = {
   title: 'razvolution | Sovereign E-commerce',
   description: 'The Sovereign Base for the Modern Web',
 };
+
+function HeimdallVitals() {
+  'use client';
+  const pageLifecycleTraceId = useMemo(
+    () => logger.startTrace('PageLifecycle'),
+    []
+  );
+  useHeimdallVitals(pageLifecycleTraceId);
+  return null;
+}
 
 export default async function RootLayout({
   children,
@@ -39,22 +46,37 @@ export default async function RootLayout({
   params: { lang: Locale };
 }) {
   const dictionary = await getDictionary(lang);
-  const supabase = createServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
 
-  let profile = null;
+  // --- [INICIO DE REFACTORIZACIÓN SOBERANA v15.0.0] ---
+  const supabase = createServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let profile: Tables<'profiles'> | null = null;
+
   if (user) {
-    const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single();
-    profile = data;
+    const profileResult = await actions.auth.getUserProfileAction();
+    if (profileResult.success) {
+      profile = profileResult.data;
+    } else {
+      // Si la acción falla, registramos el error pero no bloqueamos el renderizado.
+      logger.error(
+        '[RootLayout] La acción getUserProfileAction falló.',
+        { error: profileResult.error }
+      );
+    }
   }
+  // --- [FIN DE REFACTORIZACIÓN SOBERANA v15.0.0] ---
 
   return (
     <html lang={lang}>
       <body className="flex flex-col min-h-screen bg-white text-black dark:bg-black dark:text-white">
         <HeimdallProvider>
+          <HeimdallVitals />
           <Header
             lang={lang}
-            user={user}
+            user={user} // Se pasa el objeto 'user' completo y soberano.
             profile={profile}
             navContent={dictionary.userNav}
           />

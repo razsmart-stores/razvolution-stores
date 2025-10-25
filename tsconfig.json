@@ -32,6 +32,9 @@
       "path": "./features/marketing"
     },
     {
+      "path": "./features/workspace"
+    },
+    {
       "path": "./shared/data-access"
     },
     {
@@ -44,10 +47,13 @@
       "path": "./features/ai-chat"
     },
     {
+      "path": "./features/product"
+    },
+    {
       "path": "./features/rewards"
     },
     {
-      "path": "./features/product"
+      "path": "./shared/db-types"
     },
     {
       "path": "./shared/payments"
@@ -56,25 +62,22 @@
       "path": "./shared/shipping"
     },
     {
-      "path": "./shared/db-types"
+      "path": "./shared/supabase"
     },
     {
-      "path": "./shared/supabase"
+      "path": "./shared/logging"
     },
     {
       "path": "./shared/shopify"
     },
     {
-      "path": "./shared/logging"
+      "path": "./features/auth"
     },
     {
       "path": "./features/cart"
     },
     {
       "path": "./shared/config"
-    },
-    {
-      "path": "./features/auth"
     },
     {
       "path": "./shared/utils"

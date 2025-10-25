@@ -6,17 +6,17 @@
  * @version 4.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
-import { AnimatePresence, motion } from "framer-motion";
-import * as React from "react";
+import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
+import { AnimatePresence, motion } from 'framer-motion';
+import * as React from 'react';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v4.0.0] ---
 
 // Paso 1 y 2: Alineación Arquitectónica e Inyección de Observabilidad
-import { logger } from "@razvolution/shared-logging";
-import { cn } from "@razvolution/shared-utils";
+import { logger } from '@razvolution/shared-logging';
+import { cn } from '@razvolution/shared-utils';
 
 // --- [FIN DE NIVELACIÓN SOBERANA v4.0.0] ---
 
@@ -28,7 +28,7 @@ const CollapsibleContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof CollapsiblePrimitive.Content>
 >(({ className, children, ...props }, ref) => {
   // Paso 2: Inyección de Observabilidad
-  logger.trace("[CollapsibleContent] Renderizando contenido animado v4.0.");
+  logger.trace('[CollapsibleContent] Renderizando contenido animado v4.0.');
   return (
     <AnimatePresence initial={false}>
       <CollapsiblePrimitive.Content
@@ -42,13 +42,13 @@ const CollapsibleContent = React.forwardRef<
           animate="open"
           exit="collapsed"
           variants={{
-            open: { opacity: 1, height: "auto" },
+            open: { opacity: 1, height: 'auto' },
             collapsed: { opacity: 0, height: 0 },
           }}
           transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
         >
           {/* Paso 3: Cumplimiento de Theming (ya se utiliza 'cn') */}
-          <div className={cn("pt-4", className)}>{children}</div>
+          <div className={cn('pt-4', className)}>{children}</div>
         </motion.div>
       </CollapsiblePrimitive.Content>
     </AnimatePresence>

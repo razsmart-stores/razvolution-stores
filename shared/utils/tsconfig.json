@@ -1,10 +1,24 @@
 // RUTA: shared/utils/tsconfig.json
 {
   "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Declara que esta biblioteca es una pieza componible del monorepo.
+    // Esencial para que otras bibliotecas puedan hacer referencia a ella.
+    "composite": true
+  },
+  // Intencionalmente vacío. La compilación se gestiona vía 'references'.
   "files": [],
   "include": [],
   "references": [
-    { "path": "./tsconfig.lib.json" },
-    { "path": "./tsconfig.spec.json" }
+    // Referencia a su propia receta de build.
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    // Referencia a su propio entorno de pruebas.
+    {
+      "path": "./tsconfig.spec.json"
+    }
+    // NOTA: 'utils' es una biblioteca base y no tiene dependencias internas.
+    // Si las tuviera, 'pnpm nx sync' las añadiría aquí automáticamente.
   ]
 }

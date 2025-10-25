@@ -1,5 +1,5 @@
 {
-  "name": "data-access",
+  "name": "@razvolution/shared-data-access",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "shared/data-access/src",
   "projectType": "library",

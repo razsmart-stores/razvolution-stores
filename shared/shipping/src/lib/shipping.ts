@@ -1,13 +1,11 @@
+// RUTA: shared/shipping/src/lib/shipping.ts
 /**
  * @file shipping.ts
  * @description SSoT y fachada para la Capa de Abstracción de Envíos (SAL).
- *              Define la interfaz genérica para todas las operaciones de logística.
- * @version 1.0.0 (Sovereign Boilerplate)
+ * @version 1.1.0 (Type-Safe Logging)
  * @author IA Arquitecto
  */
 import { logger } from '@razvolution/shared-logging';
-
-// --- CONTRATOS DE DATOS SOBERANOS PARA LA SAL ---
 
 export interface GetRatesParams {
   postalCode: string;
@@ -38,17 +36,15 @@ export interface TrackingInfo {
   }>;
 }
 
-// --- FUNCIONES DE LA FACHADA PÚBLICA DE LA SAL ---
-
-/**
- * @function getRates
- * @description Obtiene las cotizaciones de envío de todos los proveedores configurados.
- * @param {GetRatesParams} params Los parámetros para la cotización.
- * @returns {Promise<ShippingRate[]>} Una promesa que resuelve a un array de cotizaciones.
- * @warning Esta es una implementación de marcador de posición.
- */
-export const getRates = async (params: GetRatesParams): Promise<ShippingRate[]> => {
-  logger.info('[SAL] Obteniendo cotizaciones de envío (placeholder)...', { params });
+export const getRates = async (
+  params: GetRatesParams
+): Promise<ShippingRate[]> => {
+  // --- [INICIO DE CORRECCIÓN SOBERANA v1.1.0] ---
+  // Se pasa el objeto de parámetros dentro de una propiedad para cumplir con el contrato 'Json'.
+  logger.info('[SAL] Obteniendo cotizaciones de envío (placeholder)...', {
+    paramsData: { ...params },
+  });
+  // --- [FIN DE CORRECCIÓN SOBERANA v1.1.0] ---
   return Promise.resolve([
     {
       provider: 'Correios',
@@ -59,15 +55,14 @@ export const getRates = async (params: GetRatesParams): Promise<ShippingRate[]> 
   ]);
 };
 
-/**
- * @function trackPackage
- * @description Rastrea un paquete utilizando un proveedor específico.
- * @param {TrackPackageParams} params El código de rastreo y el proveedor.
- * @returns {Promise<TrackingInfo>} La información de seguimiento actualizada.
- * @warning Esta es una implementación de marcador de posición.
- */
-export const trackPackage = async (params: TrackPackageParams): Promise<TrackingInfo> => {
-  logger.info('[SAL] Rastreando paquete (placeholder)...', { params });
+export const trackPackage = async (
+  params: TrackPackageParams
+): Promise<TrackingInfo> => {
+  // --- [INICIO DE CORRECCIÓN SOBERANA v1.1.0] ---
+  logger.info('[SAL] Rastreando paquete (placeholder)...', {
+    paramsData: { ...params },
+  });
+  // --- [FIN DE CORRECCIÓN SOBERANA v1.1.0] ---
   return Promise.resolve({
     status: 'En Tránsito',
     history: [

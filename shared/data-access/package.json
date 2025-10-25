@@ -6,7 +6,6 @@
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "tslib": "^2.3.0",
     "next": "14.2.3",
     "zod": "^3.23.8",
     "@razvolution/shared-auth-contracts": "workspace:*",

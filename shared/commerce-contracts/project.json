@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/shared-commerce-contracts",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/commerce-contracts/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:contract"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/commerce-contracts",
+        "main": "shared/commerce-contracts/src/index.ts",
+        "tsConfig": "shared/commerce-contracts/tsconfig.lib.json",
+        "assets": ["shared/commerce-contracts/*.md"]
+      }
+    }
+  }
+}

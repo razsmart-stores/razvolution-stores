@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.5";
+    PostgrestVersion: '13.0.5';
   };
   public: {
     Tables: {
@@ -44,12 +44,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "ai_conversations_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'ai_conversations_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       anonymous_campaign_events: {
@@ -88,12 +88,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "anonymous_campaign_events_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'anonymous_campaign_events_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       aura_insights: {
@@ -105,7 +105,7 @@ export type Database = {
           recommendation: string | null;
           related_data: Json | null;
           resolved_at: string | null;
-          severity: Database["public"]["Enums"]["insight_severity"];
+          severity: Database['public']['Enums']['insight_severity'];
           title: string;
           workspace_id: string;
         };
@@ -117,7 +117,7 @@ export type Database = {
           recommendation?: string | null;
           related_data?: Json | null;
           resolved_at?: string | null;
-          severity: Database["public"]["Enums"]["insight_severity"];
+          severity: Database['public']['Enums']['insight_severity'];
           title: string;
           workspace_id: string;
         };
@@ -129,18 +129,18 @@ export type Database = {
           recommendation?: string | null;
           related_data?: Json | null;
           resolved_at?: string | null;
-          severity?: Database["public"]["Enums"]["insight_severity"];
+          severity?: Database['public']['Enums']['insight_severity'];
           title?: string;
           workspace_id?: string;
         };
         Relationships: [
           {
-            foreignKeyName: "aura_insights_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'aura_insights_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       bavi_assets: {
@@ -185,12 +185,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "bavi_assets_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'bavi_assets_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       bavi_variants: {
@@ -223,12 +223,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "bavi_variants_asset_id_fkey";
-            columns: ["asset_id"];
+            foreignKeyName: 'bavi_variants_asset_id_fkey';
+            columns: ['asset_id'];
             isOneToOne: false;
-            referencedRelation: "bavi_assets";
-            referencedColumns: ["asset_id"];
-          },
+            referencedRelation: 'bavi_assets';
+            referencedColumns: ['asset_id'];
+          }
         ];
       };
       campaign_artifacts: {
@@ -264,12 +264,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "campaign_artifacts_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'campaign_artifacts_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       campaign_drafts: {
@@ -299,12 +299,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "campaign_drafts_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'campaign_drafts_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       campaign_templates: {
@@ -343,12 +343,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "campaign_templates_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'campaign_templates_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       cogniread_articles: {
@@ -465,19 +465,19 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "community_comments_article_id_fkey";
-            columns: ["article_id"];
+            foreignKeyName: 'community_comments_article_id_fkey';
+            columns: ['article_id'];
             isOneToOne: false;
-            referencedRelation: "cogniread_articles";
-            referencedColumns: ["id"];
+            referencedRelation: 'cogniread_articles';
+            referencedColumns: ['id'];
           },
           {
-            foreignKeyName: "community_comments_parent_id_fkey";
-            columns: ["parent_id"];
+            foreignKeyName: 'community_comments_parent_id_fkey';
+            columns: ['parent_id'];
             isOneToOne: false;
-            referencedRelation: "community_comments";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'community_comments';
+            referencedColumns: ['id'];
+          }
         ];
       };
       heimdall_events: {
@@ -555,7 +555,7 @@ export type Database = {
           id: string;
           invited_by_user_id: string;
           invitee_email: string;
-          status: Database["public"]["Enums"]["invitation_status"];
+          status: Database['public']['Enums']['invitation_status'];
           token: string;
           workspace_id: string;
         };
@@ -564,7 +564,7 @@ export type Database = {
           id?: string;
           invited_by_user_id: string;
           invitee_email: string;
-          status?: Database["public"]["Enums"]["invitation_status"];
+          status?: Database['public']['Enums']['invitation_status'];
           token: string;
           workspace_id: string;
         };
@@ -573,18 +573,18 @@ export type Database = {
           id?: string;
           invited_by_user_id?: string;
           invitee_email?: string;
-          status?: Database["public"]["Enums"]["invitation_status"];
+          status?: Database['public']['Enums']['invitation_status'];
           token?: string;
           workspace_id?: string;
         };
         Relationships: [
           {
-            foreignKeyName: "invitations_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'invitations_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       notifications: {
@@ -594,7 +594,7 @@ export type Database = {
           is_read: boolean;
           link: string | null;
           message: string;
-          type: Database["public"]["Enums"]["notification_type"];
+          type: Database['public']['Enums']['notification_type'];
           user_id: string;
         };
         Insert: {
@@ -603,7 +603,7 @@ export type Database = {
           is_read?: boolean;
           link?: string | null;
           message: string;
-          type: Database["public"]["Enums"]["notification_type"];
+          type: Database['public']['Enums']['notification_type'];
           user_id: string;
         };
         Update: {
@@ -612,7 +612,7 @@ export type Database = {
           is_read?: boolean;
           link?: string | null;
           message?: string;
-          type?: Database["public"]["Enums"]["notification_type"];
+          type?: Database['public']['Enums']['notification_type'];
           user_id?: string;
         };
         Relationships: [];
@@ -701,12 +701,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "razprompts_entries_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'razprompts_entries_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       task_health_summary: {
@@ -714,7 +714,7 @@ export type Database = {
           context: Json | null;
           created_at: string;
           duration_ms: number | null;
-          status: Database["public"]["Enums"]["task_status"];
+          status: Database['public']['Enums']['task_status'];
           task_id: string;
           task_name: string;
           timestamp: string;
@@ -725,7 +725,7 @@ export type Database = {
           context?: Json | null;
           created_at?: string;
           duration_ms?: number | null;
-          status: Database["public"]["Enums"]["task_status"];
+          status: Database['public']['Enums']['task_status'];
           task_id: string;
           task_name: string;
           timestamp: string;
@@ -736,7 +736,7 @@ export type Database = {
           context?: Json | null;
           created_at?: string;
           duration_ms?: number | null;
-          status?: Database["public"]["Enums"]["task_status"];
+          status?: Database['public']['Enums']['task_status'];
           task_id?: string;
           task_name?: string;
           timestamp?: string;
@@ -745,12 +745,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "task_health_summary_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'task_health_summary_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       theme_fragments: {
@@ -786,12 +786,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "theme_fragments_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'theme_fragments_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       theme_presets: {
@@ -830,12 +830,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "theme_presets_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'theme_presets_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       user_activity_events: {
@@ -868,12 +868,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "user_activity_events_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'user_activity_events_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       user_preferences: {
@@ -987,17 +987,17 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "visitor_campaign_events_session_id_fkey";
-            columns: ["session_id"];
+            foreignKeyName: 'visitor_campaign_events_session_id_fkey';
+            columns: ['session_id'];
             isOneToOne: false;
-            referencedRelation: "visitor_sessions";
-            referencedColumns: ["session_id"];
-          },
+            referencedRelation: 'visitor_sessions';
+            referencedColumns: ['session_id'];
+          }
         ];
       };
       visitor_consents: {
         Row: {
-          consent_status: Database["public"]["Enums"]["consent_status_type"];
+          consent_status: Database['public']['Enums']['consent_status_type'];
           consented_at: string;
           fingerprint_id: string;
           id: string;
@@ -1006,7 +1006,7 @@ export type Database = {
           user_agent_encrypted: string | null;
         };
         Insert: {
-          consent_status: Database["public"]["Enums"]["consent_status_type"];
+          consent_status: Database['public']['Enums']['consent_status_type'];
           consented_at?: string;
           fingerprint_id: string;
           id?: string;
@@ -1015,7 +1015,7 @@ export type Database = {
           user_agent_encrypted?: string | null;
         };
         Update: {
-          consent_status?: Database["public"]["Enums"]["consent_status_type"];
+          consent_status?: Database['public']['Enums']['consent_status_type'];
           consented_at?: string;
           fingerprint_id?: string;
           id?: string;
@@ -1061,12 +1061,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "visitor_sessions_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'visitor_sessions_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       workspace_members: {
@@ -1090,12 +1090,12 @@ export type Database = {
         };
         Relationships: [
           {
-            foreignKeyName: "workspace_members_workspace_id_fkey";
-            columns: ["workspace_id"];
+            foreignKeyName: 'workspace_members_workspace_id_fkey';
+            columns: ['workspace_id'];
             isOneToOne: false;
-            referencedRelation: "workspaces";
-            referencedColumns: ["id"];
-          },
+            referencedRelation: 'workspaces';
+            referencedColumns: ['id'];
+          }
         ];
       };
       workspaces: {
@@ -1187,11 +1187,11 @@ export type Database = {
       };
     };
     Enums: {
-      consent_status_type: "accepted" | "rejected";
-      insight_severity: "low" | "medium" | "high" | "critical";
-      invitation_status: "pending" | "accepted" | "declined";
-      notification_type: "info" | "success" | "warning" | "error";
-      task_status: "SUCCESS" | "FAILURE";
+      consent_status_type: 'accepted' | 'rejected';
+      insight_severity: 'low' | 'medium' | 'high' | 'critical';
+      invitation_status: 'pending' | 'accepted' | 'declined';
+      notification_type: 'info' | 'success' | 'warning' | 'error';
+      task_status: 'SUCCESS' | 'FAILURE';
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -1199,134 +1199,134 @@ export type Database = {
   };
 };
 
-type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">;
+type DatabaseWithoutInternals = Omit<Database, '__InternalSupabase'>;
 
 type DefaultSchema = DatabaseWithoutInternals[Extract<
   keyof Database,
-  "public"
+  'public'
 >];
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
-    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals;
   }
-    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])
+    : never = never
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals;
 }
-  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
       Row: infer R;
     }
     ? R
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])
-    ? (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
-        Row: infer R;
-      }
-      ? R
-      : never
-    : never;
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema['Tables'] &
+      DefaultSchema['Views'])
+  ? (DefaultSchema['Tables'] &
+      DefaultSchema['Views'])[DefaultSchemaTableNameOrOptions] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : never;
 
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
+    | keyof DefaultSchema['Tables']
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals;
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
+    : never = never
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals;
 }
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Insert: infer I;
     }
     ? I
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Insert: infer I;
-      }
-      ? I
-      : never
-    : never;
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+  ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
+      Insert: infer I;
+    }
+    ? I
+    : never
+  : never;
 
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
+    | keyof DefaultSchema['Tables']
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals;
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
+    : never = never
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals;
 }
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Update: infer U;
     }
     ? U
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Update: infer U;
-      }
-      ? U
-      : never
-    : never;
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+  ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
+      Update: infer U;
+    }
+    ? U
+    : never
+  : never;
 
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
-    | keyof DefaultSchema["Enums"]
+    | keyof DefaultSchema['Enums']
     | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals;
   }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
+    : never = never
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals;
 }
-  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
-    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
-    : never;
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums']
+  ? DefaultSchema['Enums'][DefaultSchemaEnumNameOrOptions]
+  : never;
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof DefaultSchema["CompositeTypes"]
+    | keyof DefaultSchema['CompositeTypes']
     | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals;
   }
-    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+    : never = never
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals;
 }
-  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
-    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
-    : never;
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema['CompositeTypes']
+  ? DefaultSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
+  : never;
 
 export const Constants = {
   public: {
     Enums: {
-      consent_status_type: ["accepted", "rejected"],
-      insight_severity: ["low", "medium", "high", "critical"],
-      invitation_status: ["pending", "accepted", "declined"],
-      notification_type: ["info", "success", "warning", "error"],
-      task_status: ["SUCCESS", "FAILURE"],
+      consent_status_type: ['accepted', 'rejected'],
+      insight_severity: ['low', 'medium', 'high', 'critical'],
+      invitation_status: ['pending', 'accepted', 'declined'],
+      notification_type: ['info', 'success', 'warning', 'error'],
+      task_status: ['SUCCESS', 'FAILURE'],
     },
   },
 } as const;

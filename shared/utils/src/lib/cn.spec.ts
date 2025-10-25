@@ -14,7 +14,9 @@ describe('Utilidad `cn`', () => {
   });
 
   it('debe manejar clases condicionales', () => {
-    expect(cn('clase-a', { 'clase-b': true, 'clase-c': false })).toBe('clase-a clase-b');
+    expect(cn('clase-a', { 'clase-b': true, 'clase-c': false })).toBe(
+      'clase-a clase-b'
+    );
   });
 
   it('debe resolver conflictos de Tailwind CSS, priorizando la última clase', () => {

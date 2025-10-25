@@ -15,37 +15,6 @@
     "sourceMap": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "baseUrl": ".",
-    "paths": {
-      "@razvolution/features-auth": ["features/auth/src/index.ts"],
-      "@razvolution/ai-chat": ["features/ai-chat/src/index.ts"],
-      "@razvolution/cart": ["features/cart/src/index.ts"],
-      "@razvolution/checkout": ["features/checkout/src/index.ts"],
-      "@razvolution/community": ["features/community/src/index.ts"],
-      "@razvolution/marketing": ["features/marketing/src/index.ts"],
-      "@razvolution/product": ["features/product/src/index.ts"],
-      "@razvolution/rewards": ["features/rewards/src/index.ts"],
-      "@razvolution/shared-ai-contracts": ["shared/ai-contracts/src/index.ts"],
-      "@razvolution/shared-auth-contracts": ["shared/auth-contracts/src/index.ts"],
-      "@razvolution/shared-commerce-contracts": ["shared/commerce-contracts/src/index.ts"],
-      "@razvolution/shared-config": ["shared/config/src/index.ts"],
-      "@razvolution/shared-content-contracts": ["shared/content-contracts/src/index.ts"],
-      "@razvolution/shared-data-access": ["shared/data-access/src/index.ts"],
-      "@razvolution/shared-db-types": ["shared/db-types/src/index.ts"],
-      "@razvolution/shared-i18n": ["shared/i18n/src/index.ts"],
-      "@razvolution/shared-i18n-contracts": ["shared/i18n-contracts/src/index.ts"],
-      "@razvolution/shared-logging": ["shared/logging/src/index.ts"],
-      "@razvolution/shared-payments": ["shared/payments/src/index.ts"],
-      "@razvolution/shared-rewards-contracts": ["shared/rewards-contracts/src/index.ts"],
-      "@razvolution/shared-shipping": ["shared/shipping/src/index.ts"],
-      "@razvolution/shared-shopify": ["shared/shopify/src/index.ts"],
-      "@razvolution/shared-supabase": ["shared/supabase/src/index.ts"],
-      "@razvolution/shared-supabase/server": ["shared/supabase/src/lib/server.ts"],
-      "@razvolution/shared-test-utils": ["shared/test-utils/src/index.ts"],
-      "@razvolution/shared-ui": ["shared/ui/src/index.ts"],
-      "@razvolution/shared-utils": ["shared/utils/src/index.ts"],
-      "@razvolution/shared-workspace-contracts": ["shared/workspace-contracts/src/index.ts"]
-    },
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
@@ -53,7 +22,27 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    // --- [INICIO DE RESTAURACIÓN SOBERANA v3.0.0] ---
+    // Se restaura `baseUrl` y `paths` para realinear el proyecto con su
+    // arquitectura de resolución de alias nativa, resolviendo el error TS5090.
+    "baseUrl": ".",
+    "paths": {
+      // Se unifican todos los alias al patrón `@razvolution/scope-name` para
+      // eliminar la inconsistencia.
+      "@razvolution/features-auth": ["features/auth/src/index.ts"],
+      "@razvolution/features-workspace": ["features/workspace/src/index.ts"],
+      "@razvolution/shared-data-access": ["shared/data-access/src/index.ts"],
+      "@razvolution/shared-logging": ["shared/logging/src/index.ts"],
+      "@razvolution/shared-supabase": ["shared/supabase/src/index.ts"],
+      "@razvolution/shared-ui": ["shared/ui/src/index.ts"],
+      "@razvolution/shared-utils": ["shared/utils/src/index.ts"],
+      "@razvolution/shared-auth-contracts": ["shared/auth-contracts/src/index.ts"],
+      "@razvolution/shared-i18n-contracts": ["shared/i18n-contracts/src/index.ts"],
+      "@razvolution/shared-db-types": ["shared/db-types/src/index.ts"],
+      "@razvolution/shared-supabase/server": ["shared/supabase/src/lib/server.ts"],
+    }
+    // --- [FIN DE RESTAURACIÓN SOBERANA v3.0.0] ---
   },
   "exclude": ["node_modules", "tmp", "dist"]
 }

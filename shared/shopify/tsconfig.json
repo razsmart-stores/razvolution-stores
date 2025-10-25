@@ -4,16 +4,16 @@
   "include": [],
   "references": [
     {
-      "path": "./tsconfig.lib.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    },
-    {
       "path": "../commerce-contracts"
     },
     {
       "path": "../logging"
+    },
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
     }
   ]
 }

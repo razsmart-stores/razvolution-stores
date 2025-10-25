@@ -2,9 +2,9 @@
 /**
  * @file auth.types.ts
  * @description SSoT atómica y soberana para los tipos de base de datos del dominio
- *              de Autenticación y Gestión de Workspaces. Este contrato incluye
- *              tablas, enumeraciones y las Funciones RPC críticas.
- * @version 2.0.0 (Sovereign Contract Restoration)
+ *              de Autenticación y Gestión de Workspaces. Nivelado para un cumplimiento
+ *              estricto de tipos.
+ * @version 2.1.0 (Strict Type Compliance)
  * @author IA Arquitecto
  */
 export type Database = {
@@ -164,10 +164,9 @@ export type Database = {
         ];
       };
     };
-    Views: {};
-    // --- [INICIO DE RESTAURACIÓN DE CONTRATO SOBERANO v2.0.0] ---
-    // Se añade el contrato para las Funciones RPC, resolviendo la causa
-    // raíz de las fallas de compilación en 'data-access' y 'test-utils'.
+    // --- [INICIO DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v2.1.0] ---
+    Views: Record<string, never>;
+    // --- [FIN DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v2.1.0] ---
     Functions: {
       /**
        * @function get_user_role_in_workspace
@@ -199,7 +198,6 @@ export type Database = {
         Returns: undefined;
       };
     };
-    // --- [FIN DE RESTAURACIÓN DE CONTRATO SOBERANO v2.0.0] ---
     Enums: {
       /**
        * @enum invitation_status
@@ -212,6 +210,8 @@ export type Database = {
        */
       notification_type: 'info' | 'success' | 'warning' | 'error';
     };
-    CompositeTypes: {};
+    // --- [INICIO DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v2.1.0] ---
+    CompositeTypes: Record<string, never>;
+    // --- [FIN DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v2.1.0] ---
   };
 };

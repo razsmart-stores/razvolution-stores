@@ -1,34 +1,35 @@
-// RUTA: components/ui/TestimonialCard.tsx
-
+// RUTA: features/marketing/src/lib/components/TestimonialCard.tsx
 /**
  * @file TestimonialCard.tsx
  * @description Componente atómico de UI para mostrar un testimonio individual.
- *              v5.0.0 (Holistic Elite Leveling & MEA): Refactorizado para ser una
- *              experiencia de usuario de élite. Implementa el efecto 3D <TiltCard />,
- *              un icono de cita decorativo y participa en las animaciones de
- *              entrada orquestadas.
- * @version 5.0.0
- * @author RaZ Podestá - MetaShark Tech
+ *              v6.1.0 (Sovereign Code Hygiene & Canonical Styling): Se integra la
+ *              utilidad 'cn' para el manejo de clases, se adoptan las clases
+ *              canónicas de Tailwind y se mejora la reusabilidad del componente.
+ * @version 6.1.0
+ * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { motion, type Variants } from "framer-motion";
-import Image from "next/image";
-import React from "react";
+import { motion, type Variants } from 'framer-motion';
+import Image from 'next/image';
+import React from 'react';
 
-import { logger } from "@/shared/lib/logging";
+import { logger } from '@razvolution/shared-logging';
+import { DynamicIcon, TiltCard } from '@razvolution/shared-ui';
+import { cn } from '@razvolution/shared-utils';
 
-import { DynamicIcon } from "./DynamicIcon";
-import { TiltCard } from "./TiltCard";
-
+/**
+ * @interface TestimonialCardProps
+ * @description El contrato de datos para el componente TestimonialCard.
+ */
 interface TestimonialCardProps {
   quote: string;
   author: string;
   location: string;
   imageSrc: string;
+  className?: string; // <-- MEJORA PROACTIVA: Permite la personalización externa
 }
 
-// Variante para que la tarjeta participe en la animación orquestada por su contenedor padre.
 export const testimonialCardVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -36,7 +37,7 @@ export const testimonialCardVariants: Variants = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: "easeOut",
+      ease: 'easeOut',
     },
   },
 };
@@ -46,18 +47,27 @@ export function TestimonialCard({
   author,
   location,
   imageSrc,
+  className,
 }: TestimonialCardProps): React.ReactElement {
-  logger.info("[TestimonialCard] Renderizando v5.0 (Elite & MEA).");
+  logger.info('[TestimonialCard] Renderizando v6.1 (Elite Hygiene).');
 
   return (
-    <motion.article variants={testimonialCardVariants} className="h-full">
+    <motion.article
+      variants={testimonialCardVariants}
+      className={cn('h-full', className)} // Se aplica 'cn'
+    >
       <TiltCard className="h-full">
-        <div className="relative h-full rounded-lg border border-border bg-background/50 p-6 shadow-lg transition-shadow hover:shadow-primary/20 flex flex-col">
+        <div
+          className={cn( // Se aplica 'cn'
+            'relative h-full rounded-lg border border-border bg-background/50 p-6 shadow-lg transition-shadow hover:shadow-primary/20 flex flex-col'
+          )}
+        >
           <DynamicIcon
             name="Quote"
             className="absolute top-4 right-4 h-16 w-16 text-muted/20 -z-10"
+            aria-hidden="true"
           />
-          <div className="flex items-start gap-4 flex-grow">
+          <div className={cn('flex items-start gap-4 grow')}> {/* Se corrige a 'grow' */}
             <Image
               src={imageSrc}
               alt={`Foto de ${author}`}
@@ -65,7 +75,7 @@ export function TestimonialCard({
               height={48}
               className="h-12 w-12 rounded-full object-cover border-2 border-primary/50"
             />
-            <blockquote className="text-foreground flex-grow">
+            <blockquote className={cn('text-foreground grow')}> {/* Se corrige a 'grow' */}
               <p>&quot;{quote}&quot;</p>
             </blockquote>
           </div>

@@ -6,11 +6,11 @@
  * @version 2.0.0
  * @author RaZ Podestá - MetaShark Tech
  */
-"use client";
+'use client';
 
-import { motion, type Variants } from "framer-motion";
-import React from "react";
-import { twMerge } from "tailwind-merge";
+import { motion, type Variants } from 'framer-motion';
+import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 /**
  * @interface FadeInProps
@@ -43,7 +43,7 @@ const fadeInVariants: Variants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: 'easeOut',
     },
   },
 };
@@ -59,7 +59,7 @@ export function FadeIn({
   children,
   className,
 }: FadeInProps): React.ReactElement {
-  console.log("[Observabilidad] Renderizando contenedor FadeIn");
+  console.log('[Observabilidad] Renderizando contenedor FadeIn');
 
   return (
     <motion.div

@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/features-marketing",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "features/marketing/src",
+  "projectType": "library",
+  "tags": ["scope:feature", "type:marketing"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/features/marketing",
+        "main": "features/marketing/src/index.ts",
+        "tsConfig": "features/marketing/tsconfig.lib.json",
+        "assets": ["features/marketing/*.md"]
+      }
+    }
+  }
+}

@@ -30,9 +30,11 @@ import { z } from 'zod';
  * }
  */
 export const OAuthButtonsContentSchema = z.object({
-  google: z.string().min(1, "El texto para el botón de Google es requerido."),
-  apple: z.string().min(1, "El texto para el botón de Apple es requerido."),
-  facebook: z.string().min(1, "El texto para el botón de Facebook es requerido."),
+  google: z.string().min(1, 'El texto para el botón de Google es requerido.'),
+  apple: z.string().min(1, 'El texto para el botón de Apple es requerido.'),
+  facebook: z
+    .string()
+    .min(1, 'El texto para el botón de Facebook es requerido.'),
 });
 
 /**
@@ -88,7 +90,6 @@ export const ToggleThemeContentSchema = z.object({
   system: z.string().min(1),
 });
 
-
 // ============================================================================
 // §2. CONTRATOS DE COMPONENTES COMPLEJOS ("RAZBITS")
 //    Estos esquemas definen el contenido y la configuración de los componentes
@@ -122,7 +123,7 @@ export const MagicBentoConfigSchema = z.object({
   spotlightRadius: z.number().default(300),
   particleCount: z.number().default(12),
   enableTilt: z.boolean().default(false),
-  glowColor: z.string().default("primary"),
+  glowColor: z.string().default('primary'),
   clickEffect: z.boolean().default(true),
   enableMagnetism: z.boolean().default(true),
 });
@@ -132,8 +133,8 @@ export const MagicBentoConfigSchema = z.object({
  * @description Agrupa la configuración y las tarjetas para el componente `MagicBento`.
  */
 const MagicBentoContentSchema = z.object({
-    config: MagicBentoConfigSchema.optional(),
-    cards: z.array(BentoCardSchema),
+  config: MagicBentoConfigSchema.optional(),
+  cards: z.array(BentoCardSchema),
 });
 
 /**
@@ -142,8 +143,14 @@ const MagicBentoContentSchema = z.object({
  * @warning Duplicado temporalmente para romper dependencia circular.
  */
 export const RaysOriginSchema = z.enum([
-  "top-center", "top-left", "top-right", "right", "left",
-  "bottom-center", "bottom-right", "bottom-left",
+  'top-center',
+  'top-left',
+  'top-right',
+  'right',
+  'left',
+  'bottom-center',
+  'bottom-right',
+  'bottom-left',
 ]);
 
 /**
@@ -152,8 +159,8 @@ export const RaysOriginSchema = z.enum([
  * @warning Duplicado temporalmente para romper dependencia circular.
  */
 export const LightRaysConfigSchema = z.object({
-  raysOrigin: RaysOriginSchema.default("top-center").optional(),
-  raysColor: z.string().default("primary").optional(),
+  raysOrigin: RaysOriginSchema.default('top-center').optional(),
+  raysColor: z.string().default('primary').optional(),
   raysSpeed: z.number().min(0).default(1.5).optional(),
   lightSpread: z.number().min(0).default(0.8).optional(),
   rayLength: z.number().min(0).default(1.2).optional(),
@@ -165,7 +172,6 @@ export const LightRaysConfigSchema = z.object({
   noiseAmount: z.number().min(0).max(1).default(0.1).optional(),
   distortion: z.number().min(0).max(1).default(0.05).optional(),
 });
-
 
 // ============================================================================
 // §3. CONTRATOS DE FEATURES (FUNCIONALIDADES)
@@ -214,7 +220,6 @@ export const AuthFeatureContentSchema = z.object({
   loginPrompt: z.string().min(1),
   forgotPassword: ForgotPasswordContentSchema,
 });
-
 
 // ============================================================================
 // §4. CONTRATOS DE COMPONENTES DE DESARROLLO

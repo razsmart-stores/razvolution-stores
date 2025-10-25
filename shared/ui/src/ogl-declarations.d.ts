@@ -10,17 +10,17 @@
  */
 
 declare module 'ogl/src/core/Renderer.js' {
-    export * from 'ogl/types/core/Renderer';
+  export * from 'ogl/types/core/Renderer';
 }
 
 declare module 'ogl/src/core/Program.js' {
-    export * from 'ogl/types/core/Program';
+  export * from 'ogl/types/core/Program';
 }
 
 declare module 'ogl/src/core/Mesh.js' {
-    export * from 'ogl/types/core/Mesh';
+  export * from 'ogl/types/core/Mesh';
 }
 
 declare module 'ogl/src/extras/Triangle.js' {
-    export * from 'ogl/types/extras/Triangle';
+  export * from 'ogl/types/extras/Triangle';
 }

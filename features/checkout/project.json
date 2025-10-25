@@ -1,0 +1,19 @@
+{
+  "name": "@razvolution/features-checkout",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "features/checkout/src",
+  "projectType": "library",
+  "tags": ["scope:feature", "type:commerce"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/features/checkout",
+        "main": "features/checkout/src/index.ts",
+        "tsConfig": "features/checkout/tsconfig.lib.json",
+        "assets": ["features/checkout/*.md"]
+      }
+    }
+  }
+}

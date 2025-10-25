@@ -6,30 +6,30 @@
  * @version 3.0.0 (Sovereign Leveling)
  * @author IA Arquitecto
  */
-"use client";
+'use client';
 
-import { useTheme } from "next-themes";
-import React from "react";
+import { useTheme } from 'next-themes';
+import React from 'react';
 
 // --- [INICIO DE NIVELACIÓN SOBERANA v3.0.0] ---
-import { logger } from "@razvolution/shared-logging";
-import type { Dictionary } from "@razvolution/shared-i18n-contracts";
-import { Button } from "./Button";
+import { logger } from '@razvolution/shared-logging';
+import type { Dictionary } from '@razvolution/shared-i18n-contracts';
+import { Button } from './Button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./DropdownMenu";
-import { DynamicIcon } from "./DynamicIcon";
+} from './DropdownMenu';
+import { DynamicIcon } from './DynamicIcon';
 // --- [FIN DE NIVELACIÓN SOBERANA v3.0.0] ---
 
 interface ToggleThemeProps {
-  content: NonNullable<Dictionary["toggleTheme"]>;
+  content: NonNullable<Dictionary['toggleTheme']>;
 }
 
 export function ToggleTheme({ content }: ToggleThemeProps): React.ReactElement {
-  logger.trace("[ToggleTheme] Renderizando conmutador de tema v3.0.");
+  logger.trace('[ToggleTheme] Renderizando conmutador de tema v3.0.');
   const { setTheme } = useTheme();
 
   return (
@@ -52,13 +52,13 @@ export function ToggleTheme({ content }: ToggleThemeProps): React.ReactElement {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem onClick={() => setTheme('light')}>
           {content.light}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem onClick={() => setTheme('dark')}>
           {content.dark}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem onClick={() => setTheme('system')}>
           {content.system}
         </DropdownMenuItem>
       </DropdownMenuContent>

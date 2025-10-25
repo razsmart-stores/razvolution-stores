@@ -1,5 +1,5 @@
 {
-  "name": "test-utils",
+  "name": "@razvolution/shared-test-utils",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "shared/test-utils/src",
   "projectType": "library",
