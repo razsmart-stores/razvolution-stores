@@ -195,17 +195,6 @@
     "webpack": "^5.102.1"
   },
   "pnpm": {
-    "overrides": {
-      "react": "18.3.1",
-      "react-dom": "18.3.1"
-    },
-    "onlyBuiltDependencies": [
-      "@swc/core",
-      "esbuild",
-      "nx",
-      "supabase",
-      "unrs-resolver"
-    ],
     "neverBuiltDependencies": [
       "@parcel/watcher"
     ]
