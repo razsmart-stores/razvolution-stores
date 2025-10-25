@@ -1,89 +1,113 @@
-# RevolutionSmartStore
+<div align="center">
+  <img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="150" alt="Logo de Nx">
+  <h1>razvolution 🔱</h1>
+  <p><strong>El Acelerador Soberano para E-commerce de Élite</strong></p>
+  <p>Forjado por MetaShark Tech</p>
+</div>
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+<div align="center">
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+[![Estado del Build](https://img.shields.io/github/actions/workflow/status/razsmart-stores/razvolution-stores-store/ci.yml?branch=main&style=for-the-badge&logo=github)](https://github.com/razsmart-stores/razvolution-stores-store/actions)
+[![Versión del Proyecto](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge&logo=pnpm)](./package.json)
+[![Licencia](https://img.shields.io/badge/license-UNLICENSED-red?style=for-the-badge)](./LICENSE)
+[![Mantenido por](https://img.shields.io/badge/mantenido_por-MetaShark_Tech-0D9488?style=for-the-badge)](https://metashark.tech)
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+</div>
 
-## Finish your CI setup
+---
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/JMcSMDPV0r)
+## 🔱 Visión Soberana
 
-## Generate a library
+**razvolution** no es una tienda, es la **fundación definitiva** sobre la cual se forjan las plataformas de e-commerce de próxima generación. Es un acelerador de arquitectura que encapsula soluciones de grado productivo para los desafíos más complejos del comercio digital: autenticación, pagos, observabilidad, internacionalización (i18n) e inteligencia artificial.
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
-```
+Construido sobre una filosofía de **modularidad absoluta** y gobernado por un monorepo Nx, `razvolution` permite a los equipos de élite lanzar nuevas experiencias de compra con una velocidad y una calidad sin precedentes, eliminando la fricción del desarrollo y centrándose en lo que realmente importa: el producto.
 
-## Run tasks
+## ✨ Los 8 Pilares de Calidad
 
-To build the library use:
+Este proyecto se rige por un contrato inmutable de calidad, reflejado en ocho principios soberanos:
 
-```sh
-npx nx build pkg1
-```
+*   ⚛️ **Hiper-Atomización y Responsabilidad Única:** Cada componente, función o módulo tiene una única y bien definida responsabilidad.
+*   🛡️ **Seguridad de Tipos Absoluta y Contrato Estricto (Zod):** No hay lugar para `any`. Cada dato que fluye por el sistema es validado por un schema soberano.
+*   🔭 **Observabilidad Profunda y Logging de Élite:** Cada acción y proceso es trazable, medible y analizable a través del Protocolo Heimdall.
+*   🌍 **Internacionalización (i18n) Nativa:** La arquitectura soporta múltiples idiomas desde su concepción, no como un añadido.
+*   🎨 **Theming Semántico y Soberano:** Los estilos se derivan de un sistema de diseño centralizado, permitiendo una personalización profunda y consistente.
+*   📜 **Documentación Completa (TSDoc y Manifiestos):** El código no solo funciona, sino que explica su propósito, su contrato y su uso.
+*   🏛️ **Adherencia Arquitectónica y Fronteras Inmutables:** Se respetan las fronteras entre dominios (cliente vs. servidor, UI vs. datos).
+*   🧠 **Inteligencia Comportamental (Nos3 Compliance):** La capacidad de entender y reproducir la experiencia del usuario es una característica de primer nivel.
 
-To run any task with Nx use:
+## 🛠️ Stack Tecnológico
 
-```sh
-npx nx <target> <project-name>
-```
+| Categoría | Tecnologías |
+| :--- | :--- |
+| **Arquitectura** | ![Nx](https://img.shields.io/badge/-Nx-143055?style=flat&logo=nx) ![pnpm](https://img.shields.io/badge/-pnpm-F69220?style=flat&logo=pnpm) ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat&logo=typescript) |
+| **Frontend** | ![Next.js](https://img.shields.io/badge/-Next.js-000000?style=flat&logo=next.js) ![React](https://img.shields.io/badge/-React-61DAFB?style=flat&logo=react) ![Tailwind CSS](https://img.shields.io/badge/-Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss) ![Framer Motion](https://img.shields.io/badge/-Framer_Motion-0055FF?style=flat&logo=framer) |
+| **Backend & Datos** | ![Supabase](https://img.shields.io/badge/-Supabase-3ECF8E?style=flat&logo=supabase) ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-4169E1?style=flat&logo=postgresql) `Server Actions` |
+| **Gestión de Estado** | ![Zustand](https://img.shields.io/badge/-Zustand-000000?style=flat) |
+| **Validación** | ![Zod](https://img.shields.io/badge/-Zod-3E67B1?style=flat) |
+| **Observabilidad** | `Protocolo Heimdall` (Custom) |
+| **Pruebas** | ![Jest](https://img.shields.io/badge/-Jest-C21325?style=flat&logo=jest) |
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+## 🚀 Inicio Rápido (Getting Started)
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Para poner en marcha el acelerador en tu entorno local, sigue estos pasos soberanos:
 
-## Versioning and releasing
+1.  **Clonar el Repositorio:**
+    ```bash
+    git clone https://github.com/razsmart-stores/razvolution-stores-store.git
+    cd razvolution-stores-store
+    ```
 
-To version and release the library use
+2.  **Instalar Dependencias:**
+    Utilizamos `pnpm` para gestionar el workspace.
+    ```bash
+    pnpm install
+    ```
 
-```
-npx nx release
-```
+3.  **Configurar Variables de Entorno:**
+    Copia el archivo de ejemplo `.env` y rellena las credenciales necesarias (principalmente las de Supabase).
+    ```bash
+    # En Windows (Command Prompt)
+    copy .env.example .env
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+    # En Windows (PowerShell)
+    Copy-Item .env.example .env
+    ```
+    Abre el archivo `.env` y añade tus claves.
 
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+4.  **Iniciar el Entorno de Desarrollo:**
+    Este comando levanta la aplicación `store` y todas sus dependencias en modo de desarrollo con Hot Reloading.
+    ```bash
+    pnpm dev
+    ```
 
-## Keep TypeScript project references up to date
+    ¡Listo! Tu instancia de `razvolution` estará disponible en `http://localhost:4200`.
 
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
+## ⚙️ Comandos Soberanos
 
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
+Este monorepo se gobierna a través de los scripts definidos en `package.json`, orquestados por Nx.
 
-```sh
-npx nx sync
-```
+| Categoría | Comando | Descripción |
+| :--- | :--- | :--- |
+| 🚀 **Desarrollo** | `pnpm dev` | Inicia el servidor de desarrollo para la aplicación `store`. |
+| 📊 **Análisis** | `pnpm graph:web` | Abre una visualización interactiva del grafo de dependencias del proyecto. |
+| 🧹 **Calidad** | `pnpm lint:all` | Ejecuta ESLint en todas las bibliotecas y aplicaciones del monorepo. |
+| ✨ **Formato** | `pnpm format:write` | Formatea todo el código base utilizando Prettier. |
+| ✅ **Pruebas** | `pnpm test:all` | Ejecuta la suite de pruebas completa de Jest para todos los proyectos. |
+| | `pnpm test:affected`| Ejecuta las pruebas únicamente para los proyectos afectados por tus cambios. **¡Ideal para CI!** |
+| 📦 **Build** | `pnpm build:all` | Compila todas las bibliotecas y aplicaciones para producción. |
+| | `pnpm build:affected` | Compila únicamente los proyectos afectados por tus cambios. |
+| 🔬 **Validación** | `pnpm validate:all` | Ejecuta la secuencia completa de calidad: formato, linting, pruebas y build. |
+| 📜 **Generadores** | `pnpm gen:types` | Genera los tipos de la base de datos desde Supabase. |
+| | `pnpm gen:icons` | Genera el manifiesto de iconos de Lucide. |
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+---
 
-```sh
-npx nx sync:check
-```
+## 🏛️ Licencia y Propiedad
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+Este proyecto es **UNLICENSED** y es propiedad intelectual exclusiva de **MetaShark Tech**. Queda prohibida su distribución, copia o uso sin el consentimiento explícito por escrito del propietario.
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+© 2025 MetaShark Tech. Todos los derechos reservados.
 
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+<div align="center">
+  <p>Forjado con soberanía por <strong>RaZ Podestá</strong> en Florianópolis, SC, Brasil. 🇧🇷</p>
+</div>
