@@ -41,8 +41,8 @@
       "@razvolution/shared-i18n-contracts": ["shared/i18n-contracts/src/index.ts"],
       "@razvolution/shared-db-types": ["shared/db-types/src/index.ts"],
       "@razvolution/shared-supabase/server": ["shared/supabase/src/lib/server.ts"],
-    }
-    // --- [FIN DE RESTAURACIÓN SOBERANA v3.0.0] ---
+      "@razvolution/shared-shopify": ["shared/shopify/src/index.ts"],
+    } 
   },
   "exclude": ["node_modules", "tmp", "dist"]
 }
