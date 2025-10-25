@@ -102,7 +102,7 @@ Este monorepo se gobierna a través de los scripts definidos en `package.json`, 
 
 ---
 
-## 🏛️ Licencia y Propiedad
+## 🏛️ Licencia y Propiedad Intelectual
 
 Este proyecto es **UNLICENSED** y es propiedad intelectual exclusiva de **MetaShark Tech**. Queda prohibida su distribución, copia o uso sin el consentimiento explícito por escrito del propietario.
 
