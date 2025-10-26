@@ -7,7 +7,11 @@
  * @version 7.3.0
  * @author IA Arquitecto
  */
-export { logger, flushTelemetryQueue, setGlobalHeimdallContext } from './lib/logger';
+export {
+  logger,
+  flushTelemetryQueue,
+  setGlobalHeimdallContext,
+} from './lib/logger';
 export type { Logger } from './lib/logger';
 export * from './lib/heimdall.contracts';
 export * from './lib/vitals.contracts';

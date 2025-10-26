@@ -2,9 +2,23 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    // --- [INICIO DE CORRECCIÓN SOBERANA DE ENTORNO JEST] ---
+    // Se anula explícitamente el sistema de módulos a 'commonjs' para compatibilidad con Jest.
     "module": "commonjs",
+
+    // Se anula la resolución de módulos a 'node' para que sea compatible con 'commonjs'.
+    // Esto crea un "universo de pruebas" consistente que no entra en conflicto con la
+    // configuración 'NodeNext' del código fuente de producción.
+    "moduleResolution": "node",
+
     "outDir": "../../dist/out-tsc",
     "types": ["jest", "node"]
+    // --- [FIN DE CORRECCIÓN SOBERANA DE ENTORNO JEST] ---
   },
-  "include": ["jest.config.ts", "**/*.spec.ts", "**/*.spec.tsx", "**/*.d.ts"]
+  "include": [
+    "jest.config.ts",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.d.ts"
+  ]
 }

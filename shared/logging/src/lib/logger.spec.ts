@@ -7,7 +7,10 @@
  * @author IA Arquitecto de Calidad
  */
 import type { HeimdallEvent } from './heimdall.contracts';
-import type { Logger, setGlobalHeimdallContext as SetGlobalContextType } from './logger';
+import type {
+  Logger,
+  setGlobalHeimdallContext as SetGlobalContextType,
+} from './logger';
 
 // --- MOCKS SOBERANOS (Globales a todas las pruebas) ---
 const createLocalStorageMock = (): Storage => {
@@ -58,7 +61,6 @@ global.fetch = jest.fn(() =>
 jest.mock('@paralleldrive/cuid2', () => ({
   createId: jest.fn(() => 'mock-cuid-id-12345'),
 }));
-
 
 // --- Arnés de Pruebas Principal ---
 describe('Arnés de Pruebas v62.0: Heimdall Logger & Emitter', () => {
