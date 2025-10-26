@@ -10,7 +10,8 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/store"
+        "outputPath": "dist/apps/store",
+        "assets": ["apps/store/public"]
       },
       "configurations": {
         "development": {
