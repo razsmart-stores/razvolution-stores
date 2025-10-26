@@ -32,7 +32,8 @@ export function useSound(soundPath: string, volume = 1.0) {
     } catch (error) {
       // --- [INICIO DE CORRECCIÓN SOBERANA v2.0.0] ---
       // Se procesa el error 'unknown' a una cadena de texto antes de pasarlo al logger.
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
       logger.error(
         `[useSound] Fallo al crear instancia de Audio para: ${soundPath}`,
         { error: errorMessage }
@@ -47,7 +48,8 @@ export function useSound(soundPath: string, volume = 1.0) {
       audioRef.current.play().catch((error) => {
         // --- [INICIO DE CORRECCIÓN SOBERANA v2.0.0] ---
         // Se aplica el mismo patrón de manejo de errores seguro aquí.
-        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
         logger.warn(`[useSound] Fallo al reproducir sonido: ${soundPath}`, {
           error: errorMessage,
         });

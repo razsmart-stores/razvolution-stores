@@ -1,5 +1,9 @@
+// RUTA: shared/commerce-contracts/tsconfig.json
 {
   "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true
+  },
   "files": [],
   "include": [],
   "references": [

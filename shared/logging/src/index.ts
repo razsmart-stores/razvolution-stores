@@ -8,7 +8,11 @@
  * @version 7.2.0 (Public API Restoration)
  * @author IA Arquitecto
  */
-export { logger, flushTelemetryQueue, setGlobalHeimdallContext } from './lib/logger';
+export {
+  logger,
+  flushTelemetryQueue,
+  setGlobalHeimdallContext,
+} from './lib/logger';
 export * from './lib/heimdall.contracts';
 export * from './lib/vitals.contracts';
 export { HeimdallProvider } from './lib/HeimdallProvider';

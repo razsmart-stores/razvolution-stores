@@ -68,7 +68,9 @@ interface ShareButtonProps {
  * @returns {React.ReactElement} El elemento JSX del botón de compartir.
  */
 export function ShareButton({ shareData, content }: ShareButtonProps) {
-  logger.info('[ShareButton] Renderizando v6.0 (Sovereign & Type-Safe Error Handling).');
+  logger.info(
+    '[ShareButton] Renderizando v6.0 (Sovereign & Type-Safe Error Handling).'
+  );
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
@@ -83,7 +85,8 @@ export function ShareButton({ shareData, content }: ShareButtonProps) {
         // --- [INICIO DE CORRECCIÓN SOBERANA v6.0.0] ---
         // Se extrae el mensaje del error para asegurar que el payload es serializable
         // y cumple con el contrato del logger (evitando el error 'Type unknown is not assignable to type Json').
-        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
         logger.warn(
           '[ShareButton] El usuario canceló el diálogo de compartir nativo o hubo un error.',
           { error: errorMessage } // <-- Corregido

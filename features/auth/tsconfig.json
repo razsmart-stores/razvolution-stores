@@ -1,6 +1,14 @@
 // RUTA: features/auth/tsconfig.json
 {
   "extends": "../../tsconfig.base.json",
+  // --- [INICIO DE CORRECCIÓN SOBERANA DE JSX] ---
+  "compilerOptions": {
+    "composite": true,
+    // Se declara explícitamente el modo JSX para esta biblioteca de React.
+    // 'react-jsx' es el transform moderno que no requiere 'import React'.
+    "jsx": "react-jsx"
+  },
+  // --- [FIN DE CORRECCIÓN SOBERANA DE JSX] ---
   "files": [],
   "include": [],
   "references": [

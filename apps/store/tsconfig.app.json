@@ -2,14 +2,23 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "jsx": "preserve",
-    "allowJs": true,
-    "emitDeclarationOnly": false, // Las aplicaciones emiten JS, no solo tipos.
-    "noEmit": true, // Next.js se encarga de la transpilación.
-    "types": ["jest", "node"]
+    "emitDeclarationOnly": false,
+    "noEmit": true,
+    "types": ["node"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
-  "exclude": ["node_modules", "jest.config.ts", "src/**/*.spec.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "jest.config.ts",
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
+  ],
   "references": [
     {
       "path": "../../features/workspace/tsconfig.lib.json"

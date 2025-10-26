@@ -1,7 +1,9 @@
+// RUTA: features/product/tsconfig.json
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "composite": true
+    "composite": true,
+    "jsx": "react-jsx"
   },
   "files": [],
   "include": [],

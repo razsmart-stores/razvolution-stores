@@ -55,7 +55,9 @@ type ResetPasswordFailure = { data: null; error: AuthError };
 export const createMockAuthClient = (): jest.Mocked<SupabaseClient['auth']> => {
   const auth: Partial<jest.Mocked<GoTrueClient>> = {
     signInWithPassword: jest
-      .fn<(_: SignInWithPasswordCredentials) => Promise<AuthTokenResponsePassword>>()
+      .fn<
+        (_: SignInWithPasswordCredentials) => Promise<AuthTokenResponsePassword>
+      >()
       .mockResolvedValue({
         data: { session: mockSession, user: mockUser },
         error: null,
@@ -68,9 +70,11 @@ export const createMockAuthClient = (): jest.Mocked<SupabaseClient['auth']> => {
         error: null,
       }),
 
-    signOut: jest.fn<() => Promise<{ error: AuthError | null }>>().mockResolvedValue({
-      error: null,
-    }),
+    signOut: jest
+      .fn<() => Promise<{ error: AuthError | null }>>()
+      .mockResolvedValue({
+        error: null,
+      }),
 
     getUser: jest.fn<() => Promise<UserResponse>>().mockResolvedValue({
       data: { user: mockUser },
@@ -78,12 +82,10 @@ export const createMockAuthClient = (): jest.Mocked<SupabaseClient['auth']> => {
     }),
 
     // --- [INICIO DE CORRECCIÓN SOBERANA v5.5.0: Paridad de Unión Discriminada en `getSession`] ---
-    getSession: jest
-      .fn<() => Promise<GetSessionSuccess>>()
-      .mockResolvedValue({
-        data: { session: mockSession },
-        error: null,
-      }),
+    getSession: jest.fn<() => Promise<GetSessionSuccess>>().mockResolvedValue({
+      data: { session: mockSession },
+      error: null,
+    }),
     // --- [FIN DE CORRECCIÓN SOBERANA] ---
 
     setSession: jest

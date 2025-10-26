@@ -1,11 +1,21 @@
 // RUTA: apps/store/tsconfig.json
 {
   "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
   "files": [],
-  "include": [
-    ".next/types/**/*.ts",
-    "../../dist/apps/store/.next/types/**/*.ts"
-  ],
+  "include": [],
   "references": [
     {
       "path": "../../features/workspace"
@@ -40,18 +50,5 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ],
-  "compilerOptions": {
-    "allowJs": true,
-    "noEmit": true,
-    "incremental": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
-  }
+  ]
 }

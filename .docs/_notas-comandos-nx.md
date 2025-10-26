@@ -8,9 +8,7 @@ pnpm nx g @nx/js:lib shared/logging --tags="scope:shared,type:observability" --i
 
 pnpm nx g @nx/react:lib shared/ui --tags="scope:shared,type:ui" --importPath="@razvolution/shared/ui" --bundler=tsc --linter=eslint
 
-
 pnpm add @razvolution/shared-supabase --filter @razvolution/features-auth
-
 
 ---
 

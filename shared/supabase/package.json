@@ -13,6 +13,7 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
+    "tslib": "^2.3.0",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.57.4",
     "next": "14.2.3",

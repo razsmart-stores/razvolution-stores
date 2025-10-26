@@ -23,5 +23,7 @@
       "type:config"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
 }

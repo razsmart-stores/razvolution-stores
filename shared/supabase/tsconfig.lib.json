@@ -13,13 +13,9 @@
     "src/**/*.test.tsx"
   ],
   "references": [
-    // --- [INICIO DE CORRECCIÓN SOBERANA] ---
-    // Se añade la referencia explícita a la configuración de build de 'shared-logging'.
-    // Esto resuelve el error TS2307.
     {
       "path": "../logging/tsconfig.lib.json"
     },
-    // --- [FIN DE CORRECCIÓN SOBERANA] ---
     {
       "path": "../db-types/tsconfig.lib.json"
     }

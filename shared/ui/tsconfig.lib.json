@@ -1,38 +1,32 @@
+// RUTA: shared/ui/tsconfig.lib.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
+    "declaration": true,
     "types": [
       "node",
       "@nx/react/typings/cssmodule.d.ts",
       "@nx/react/typings/image.d.ts"
     ]
   },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/ogl-declarations.d.ts"],
   "exclude": [
     "jest.config.ts",
     "src/**/*.spec.ts",
     "src/**/*.test.ts",
     "src/**/*.spec.tsx",
-    "src/**/*.test.tsx",
-    "src/**/*.spec.js",
-    "src/**/*.test.js",
-    "src/**/*.spec.jsx",
-    "src/**/*.test.jsx"
+    "src/**/*.test.tsx"
   ],
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
   "references": [
-    // --- [INICIO DE CORRECCIÓN SOBERANA] ---
-    // Se añaden todas las referencias de build necesarias para 'shared-ui',
-    // incluyendo la crucial a 'shared-logging', para resolver la cascada de errores TS2307.
     {
-      "path": "../utils/tsconfig.lib.json"
+      "path": "../i18n-contracts/tsconfig.lib.json"
     },
     {
       "path": "../logging/tsconfig.lib.json"
     },
     {
-      "path": "../i18n-contracts/tsconfig.lib.json"
+      "path": "../utils/tsconfig.lib.json"
     }
-    // --- [FIN DE CORRECCIÓN SOBERANA] ---
   ]
 }

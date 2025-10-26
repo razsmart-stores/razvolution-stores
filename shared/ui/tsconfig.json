@@ -1,10 +1,9 @@
+// RUTA: shared/ui/tsconfig.json
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "allowJs": false,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true
+    "composite": true,
+    "jsx": "react-jsx"
   },
   "files": [],
   "include": [],
@@ -24,6 +23,5 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ],
-  "extends": "../../tsconfig.base.json"
+  ]
 }

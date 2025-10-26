@@ -4,32 +4,24 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "//": "--- [1] ORQUESTADORES DE DESARROLLO SOBERANO ---",
-    "dev": "pnpm nx serve apps-store --verbose",
-    "build": "pnpm nx build apps-store --verbose",
-
-    "//--": "--- [2] ANÁLISIS ARQUITECTÓNICO (GRAFO) ---",
+    "//": "--- [ SOBERANO ] ---",
+    "dev": "pnpm nx serve apps-store",
+    "build": "pnpm nx build apps-store",
     "graph": "pnpm nx graph",
-    "graph:json": "pnpm nx graph --file=graph.json",
-
-    "//---": "--- [3] CALIDAD Y VALIDACIÓN HOLÍSTICA ---",
     "lint": "pnpm nx run-many --target=lint --all --fix",
+    "test": "pnpm nx run-many --target=test --all --passWithNoTests",
+    "format:write": "prettier --write .",
+    "format:check": "prettier --check .",
+    "validate": "pnpm format:write && pnpm lint && pnpm test && pnpm build",
+    "//--": "--- [ AFECTADO (PARA CI/CD) ] ---",
     "lint:affected": "pnpm nx affected --target=lint --fix",
-    "format:write": "prettier --write . --log-level warn",
-    "format:check": "prettier --check . --log-level warn",
-    "test": "pnpm nx run-many --target=test --all --passWithNoTests --verbose",
-    "test:affected": "pnpm nx affected --target=test --passWithNoTests --verbose",
-    "validate:affected": "pnpm format:write && pnpm lint:affected && pnpm test:affected && pnpm nx affected --target=build",
-    "validate:all": "pnpm format:write && pnpm lint:all && pnpm test:all && pnpm nx run-many --target=build --all",
-
-    "//----": "--- [4] GENERADORES Y HERRAMIENTAS ---",
+    "test:affected": "pnpm nx affected --target=test --passWithNoTests",
+    "build:affected": "pnpm nx affected --target=build",
+    "//---": "--- [ HERRAMIENTAS Y GENERADORES ] ---",
     "gen:types": "pnpm nx g @razvolution/tools:generate-db-types",
     "gen:icons": "pnpm nx g @razvolution/tools:generate-icons",
-
-    "//-----": "--- [5] GESTIÓN DE SUPABASE ---",
     "supabase:login": "supabase login",
-    "supabase:link": "supabase link --project-ref lbdhtkfsnosfttorlblh",
-    "supabase:db:push": "supabase db push"
+    "supabase:link": "supabase link --project-ref lbdhtkfsnosfttorlblh"
   },
   "dependencies": {
     "@devnomic/marquee": "^1.0.2",
@@ -194,35 +186,8 @@
     "verdaccio": "^6.0.5",
     "webpack": "^5.102.1"
   },
-  "pnpm": {
-    "neverBuiltDependencies": [
-      "@parcel/watcher"
-    ]
-  },
   "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
   "nx": {
-    "includedScripts": [],
-    "targets": {
-      "local-registry": {
-        "executor": "@nx/js:verdaccio",
-        "options": {
-          "port": 4873,
-          "config": ".verdaccio/config.yml",
-          "storage": "tmp/local-registry/storage"
-        }
-      },
-      "generate-icons": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "pnpm nx g @razvolution/tools:generate-icons"
-        },
-        "dependsOn": [
-          {
-            "target": "build",
-            "project": "tools"
-          }
-        ]
-      }
-    }
+    "includedScripts": []
   }
 }

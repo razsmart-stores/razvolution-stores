@@ -58,7 +58,8 @@ export function TestimonialCard({
     >
       <TiltCard className="h-full">
         <div
-          className={cn( // Se aplica 'cn'
+          className={cn(
+            // Se aplica 'cn'
             'relative h-full rounded-lg border border-border bg-background/50 p-6 shadow-lg transition-shadow hover:shadow-primary/20 flex flex-col'
           )}
         >
@@ -67,7 +68,9 @@ export function TestimonialCard({
             className="absolute top-4 right-4 h-16 w-16 text-muted/20 -z-10"
             aria-hidden="true"
           />
-          <div className={cn('flex items-start gap-4 grow')}> {/* Se corrige a 'grow' */}
+          <div className={cn('flex items-start gap-4 grow')}>
+            {' '}
+            {/* Se corrige a 'grow' */}
             <Image
               src={imageSrc}
               alt={`Foto de ${author}`}
@@ -75,7 +78,9 @@ export function TestimonialCard({
               height={48}
               className="h-12 w-12 rounded-full object-cover border-2 border-primary/50"
             />
-            <blockquote className={cn('text-foreground grow')}> {/* Se corrige a 'grow' */}
+            <blockquote className={cn('text-foreground grow')}>
+              {' '}
+              {/* Se corrige a 'grow' */}
               <p>&quot;{quote}&quot;</p>
             </blockquote>
           </div>

@@ -8,10 +8,14 @@
   "dependencies": {
     "react": "18.3.1",
     "tslib": "^2.3.0",
+    "@razvolution/shared-auth-contracts": "workspace:*",
+    "@razvolution/shared-data-access": "workspace:*",
+    "@razvolution/shared-db-types": "workspace:*",
+    "@razvolution/shared-i18n-contracts": "workspace:*",
+    "@razvolution/shared-logging": "workspace:*",
     "@razvolution/shared-supabase": "workspace:*",
     "@razvolution/shared-ui": "workspace:*",
     "@razvolution/shared-utils": "workspace:*",
-    "@razvolution/shared-i18n-contracts": "workspace:*",
     "@razvolution/features-workspace": "workspace:*"
   },
   "devDependencies": {}

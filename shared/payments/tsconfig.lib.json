@@ -1,4 +1,3 @@
-// PLANTILLA SOBERANA DEFINITIVA: [biblioteca]/tsconfig.lib.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {

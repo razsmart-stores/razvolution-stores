@@ -1,6 +1,11 @@
 // RUTA: shared/db-types/tsconfig.json
 {
   "extends": "../../tsconfig.base.json",
+  // --- [INICIO DE NIVELACIÓN SOBERANA] ---
+  "compilerOptions": {
+    "composite": true
+  },
+  // --- [FIN DE NIVELACIÓN SOBERANA] ---
   "files": [],
   "include": [],
   "references": [

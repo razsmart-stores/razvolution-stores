@@ -61,10 +61,9 @@ export default async function RootLayout({
       profile = profileResult.data;
     } else {
       // Si la acción falla, registramos el error pero no bloqueamos el renderizado.
-      logger.error(
-        '[RootLayout] La acción getUserProfileAction falló.',
-        { error: profileResult.error }
-      );
+      logger.error('[RootLayout] La acción getUserProfileAction falló.', {
+        error: profileResult.error,
+      });
     }
   }
   // --- [FIN DE REFACTORIZACIÓN SOBERANA v15.0.0] ---
