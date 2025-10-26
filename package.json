@@ -10,6 +10,7 @@
     "graph": "pnpm nx graph",
     "lint": "pnpm nx run-many --target=lint --all --fix",
     "test": "pnpm nx run-many --target=test --all --passWithNoTests",
+    "build:all": "pnpm nx run-many --target=build --all",
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
     "validate": "pnpm format:write && pnpm lint && pnpm test && pnpm build",

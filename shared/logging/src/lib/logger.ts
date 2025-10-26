@@ -2,9 +2,10 @@
 /**
  * @file logger.ts
  * @description SSoT para el Logger Soberano del Protocolo Heimdall.
- *              Esta versión implementa Inversión de Control (IoC) y cumple con
- *              la regla de estrictez 'noPropertyAccessFromIndexSignature'.
- * @version 61.1.0 (Strict Compliance)
+ *              Esta versión implementa Inversión de Control (IoC), cumple con
+ *              la regla de estrictez 'noPropertyAccessFromIndexSignature' y
+ *              exporta su contrato de tipo soberano.
+ * @version 62.1.0 (Sovereign Type Exposure)
  * @author IA Arquitecto
  */
 import { createId } from '@paralleldrive/cuid2';
@@ -16,23 +17,14 @@ import type {
   HeimdallBatchPayload,
 } from './heimdall.contracts';
 
-// --- Almacén de Contexto Global y API de Inyección ---
 let globalHeimdallContext: Record<string, Json | undefined> = {};
 
-/**
- * @function setGlobalHeimdallContext
- * @description API pública y soberana para que la capa de aplicación inyecte o
- *              actualice el contexto global que se adjuntará a todos los eventos
- *              de telemetría de Heimdall.
- * @param {Record<string, Json | undefined>} newContext - El objeto de contexto a fusionar.
- */
 export function setGlobalHeimdallContext(
   newContext: Record<string, Json | undefined>
 ) {
   globalHeimdallContext = { ...globalHeimdallContext, ...newContext };
 }
 
-// --- Constantes y Configuración Soberana ---
 const IS_PRODUCTION = process.env['NODE_ENV'] === 'production';
 const IS_BROWSER = typeof window !== 'undefined';
 
@@ -45,7 +37,6 @@ const tasks = new Map<
   { name: string; startTime: number; event: EventIdentifier }
 >();
 
-// --- Lógica Pura y de Utilidad ---
 const getCurrentPath = (): string | undefined =>
   IS_BROWSER ? window.location.pathname : undefined;
 
@@ -66,7 +57,6 @@ const shouldSample = (isSampleable: boolean): boolean => {
   return Math.random() > SAMPLE_RATE;
 };
 
-// --- Motor de Encolado y Envío (Flush) ---
 export async function flushTelemetryQueue(isUnloading = false): Promise<void> {
   if (!IS_BROWSER) return;
 
@@ -101,13 +91,10 @@ export async function flushTelemetryQueue(isUnloading = false): Promise<void> {
   };
 
   try {
-    // --- [INICIO DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v61.1.0] ---
-    // Se utiliza la notación de corchetes para cumplir con la regla 'noPropertyAccessFromIndexSignature'.
     const headers = {
       'Content-Type': 'application/json',
       'x-workspace-id': String(globalHeimdallContext['workspaceId'] || ''),
     };
-    // --- [FIN DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v61.1.0] ---
 
     if (isUnloading && navigator.sendBeacon) {
       const blob = new Blob([JSON.stringify(payload)], {
@@ -137,8 +124,6 @@ export async function flushTelemetryQueue(isUnloading = false): Promise<void> {
     localStorage.setItem(TELEMETRY_QUEUE_KEY, JSON.stringify(newQueue));
   }
 }
-
-// --- Interfaz del Logger y sus Implementaciones ---
 
 type LogPayload = { [key: string]: Json };
 type LogContext = LogPayload & { traceId?: string };
@@ -187,7 +172,7 @@ function _createAndQueueEvent(
   }
 }
 
-interface Logger {
+export interface Logger {
   track: (
     eventName: string,
     data: {

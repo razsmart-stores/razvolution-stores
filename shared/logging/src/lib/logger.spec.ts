@@ -1,14 +1,13 @@
 // RUTA: shared/logging/src/lib/logger.spec.ts
 /**
  * @file logger.spec.ts
- * @description Arnés de pruebas soberano para Heimdall. Esta versión cumple
- *              con la regla de estrictez 'noPropertyAccessFromIndexSignature'
- *              para una seguridad de tipos absoluta en el acceso a propiedades.
- * @version 61.2.0 (Strict Compliance Fix)
+ * @description Arnés de pruebas soberano para Heimdall, refactorizado para
+ *              garantizar la atomicidad de las instancias de módulos en Jest.
+ * @version 62.0.0 (Atomic Module Instancing)
  * @author IA Arquitecto de Calidad
  */
-import { setGlobalHeimdallContext } from './logger';
 import type { HeimdallEvent } from './heimdall.contracts';
+import type { Logger, setGlobalHeimdallContext as SetGlobalContextType } from './logger';
 
 // --- MOCKS SOBERANOS (Globales a todas las pruebas) ---
 const createLocalStorageMock = (): Storage => {
@@ -60,16 +59,32 @@ jest.mock('@paralleldrive/cuid2', () => ({
   createId: jest.fn(() => 'mock-cuid-id-12345'),
 }));
 
+
 // --- Arnés de Pruebas Principal ---
-describe('Arnés de Pruebas v61.2: Heimdall Logger & Emitter (Strict Compliance)', () => {
+describe('Arnés de Pruebas v62.0: Heimdall Logger & Emitter', () => {
   let originalEnv: NodeJS.ProcessEnv;
   const MOCK_WORKSPACE_ID = 'ws-mock-id-from-test';
+
+  // Se declaran las variables del módulo en el scope del 'describe'
+  // para que puedan ser compartidas por 'beforeEach' y los 'it' blocks.
+  let logger: Logger;
+  let setGlobalHeimdallContext: typeof SetGlobalContextType;
+  let flushTelemetryQueue: () => Promise<void>;
 
   beforeEach(() => {
     jest.resetModules();
     originalEnv = { ...process.env };
     jest.clearAllMocks();
     localStorageMock.clear();
+
+    // Se importa el módulo UNA SOLA VEZ por prueba, después del reseteo.
+    // Esto asegura que 'setGlobalHeimdallContext' y 'logger' operan
+    // sobre la misma instancia de módulo.
+    const loggerModule = require('./logger');
+    logger = loggerModule.logger;
+    setGlobalHeimdallContext = loggerModule.setGlobalHeimdallContext;
+    flushTelemetryQueue = loggerModule.flushTelemetryQueue;
+
     setGlobalHeimdallContext({ workspaceId: MOCK_WORKSPACE_ID });
   });
 
@@ -81,8 +96,6 @@ describe('Arnés de Pruebas v61.2: Heimdall Logger & Emitter (Strict Compliance)
   describe('En Modo de Desarrollo (NODE_ENV=test)', () => {
     it('NO debe encolar eventos en localStorage y SÍ debe usar la consola', () => {
       process.env['NODE_ENV'] = 'test';
-      const { logger } = require('./logger');
-
       const consoleGroupSpy = jest
         .spyOn(console, 'groupCollapsed')
         .mockImplementation();
@@ -100,7 +113,6 @@ describe('Arnés de Pruebas v61.2: Heimdall Logger & Emitter (Strict Compliance)
   describe('En Modo de Producción (NODE_ENV=production)', () => {
     it('debe encolar un evento que contenga el contexto global inyectado', () => {
       process.env['NODE_ENV'] = 'production';
-      const { logger } = require('./logger');
 
       logger.startTask(
         { domain: 'PROD_TEST', entity: 'QUEUE', action: 'ENQUEUE' },
@@ -116,17 +128,12 @@ describe('Arnés de Pruebas v61.2: Heimdall Logger & Emitter (Strict Compliance)
       );
       expect(queue).toHaveLength(1);
       expect(queue[0].event.domain).toBe('PROD_TEST');
-
-      // --- [INICIO DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v61.2.0] ---
-      // Se utiliza la notación de corchetes para un acceso a propiedades de máxima seguridad de tipos.
       expect(queue[0].context['workspaceId']).toBe(MOCK_WORKSPACE_ID);
-      // --- [FIN DE CORRECCIÓN DE CUMPLIMIENTO ESTRICTO v61.2.0] ---
     });
 
     describe('Motor de Encolado y Envío (Emitter)', () => {
       it('debe enviar el workspaceId inyectado en las cabeceras del lote de eventos', async () => {
         process.env['NODE_ENV'] = 'production';
-        const { logger, flushTelemetryQueue } = require('./logger');
 
         logger.info('Event 1', { traceId: 'trace-1' });
 
@@ -137,7 +144,6 @@ describe('Arnés de Pruebas v61.2: Heimdall Logger & Emitter (Strict Compliance)
           expect.any(Object)
         );
         const fetchCall = (global.fetch as jest.Mock).mock.calls[0];
-
         expect(fetchCall[1].headers['x-workspace-id']).toBe(MOCK_WORKSPACE_ID);
       });
     });
