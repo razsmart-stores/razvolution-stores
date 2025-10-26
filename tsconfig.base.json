@@ -16,11 +16,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    // --- [CORRECCIÓN SOBERANA #1: LA ÚNICA FUENTE DE VERDAD PARA ALIAS] ---
-    // Esta sección es la SSoT para todos los alias de importación del monorepo.
-    // Garantiza que TypeScript, Jest y el editor de código hablen el mismo idioma.
+    // --- [INICIO DE LA CORRECCIÓN SOBERANA DEFINITIVA v6.0.0] ---
+    // Se restauran los "paths", pero ahora apuntan directamente al CÓDIGO FUENTE (`src/index.ts`).
+    // Esta es la configuración correcta que proporciona inteligencia al editor y al compilador,
+    // mientras que las "references" y pnpm manejan el orden de build y el runtime.
     "paths": {
-      "@razvolution/apps-store": ["apps/store/src/index.ts"],
       "@razvolution/features-ai-chat": ["features/ai-chat/src/index.ts"],
       "@razvolution/features-auth": ["features/auth/src/index.ts"],
       "@razvolution/features-cart": ["features/cart/src/index.ts"],
@@ -54,11 +54,15 @@
       "@razvolution/shared-shipping": ["shared/shipping/src/index.ts"],
       "@razvolution/shared-shopify": ["shared/shopify/src/index.ts"],
       "@razvolution/shared-supabase": ["shared/supabase/src/index.ts"],
+      "@razvolution/shared-supabase/server": [
+        "shared/supabase/src/lib/server.ts"
+      ],
       "@razvolution/shared-test-utils": ["shared/test-utils/src/index.ts"],
       "@razvolution/shared-ui": ["shared/ui/src/index.ts"],
       "@razvolution/shared-utils": ["shared/utils/src/index.ts"],
       "@razvolution/tools": ["tools/src/index.ts"]
     },
+    // --- [FIN DE LA CORRECCIÓN SOBERANA DEFINITIVA v6.0.0] ---
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,

@@ -3,10 +3,6 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
-    // --- [CORRECCIÓN SOBERANA DE JSX] ---
-    // Se declara explícitamente que esta biblioteca contiene código React,
-    // resolviendo el error TS6142 al permitir que el compilador
-    // entienda la sintaxis de los archivos .tsx.
     "jsx": "react-jsx"
   },
   "files": [],

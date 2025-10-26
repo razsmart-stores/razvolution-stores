@@ -1,5 +1,5 @@
 {
-  "name": "@razvolution/ai-contracts",
+  "name": "@razvolution/shared-ai-contracts",
   "version": "0.0.1",
   "private": true,
   "type": "module",

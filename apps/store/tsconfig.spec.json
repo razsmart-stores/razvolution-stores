@@ -15,10 +15,5 @@
     "types": ["jest", "node"]
     // --- [FIN DE CORRECCIÓN SOBERANA DE ENTORNO JEST] ---
   },
-  "include": [
-    "jest.config.ts",
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "**/*.d.ts"
-  ]
+  "include": ["jest.config.ts", "**/*.spec.ts", "**/*.spec.tsx", "**/*.d.ts"]
 }

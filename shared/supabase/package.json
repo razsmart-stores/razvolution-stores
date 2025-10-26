@@ -3,12 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "type": "commonjs",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
   "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    },
     "./server": {
-      "types": "./src/lib/server.ts",
-      "default": "./src/lib/server.ts"
+      "types": "./src/lib/server.d.ts",
+      "default": "./src/lib/server.js"
     },
     "./package.json": "./package.json"
   },

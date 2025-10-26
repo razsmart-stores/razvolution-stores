@@ -3,16 +3,30 @@
   "version": "0.0.1",
   "private": true,
   "type": "commonjs",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "dependencies": {
     "tslib": "^2.3.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "zod": "^3.23.8",
-    "@razvolution/shared-db-types": "workspace:*",
-    "web-vitals": "^4.2.0"
+    "web-vitals": "^4.2.0",
+    "@razvolution/shared-db-types": "workspace:*"
   },
   "peerDependencies": {
     "react": "18.3.1"
+  },
+  "nx": {
+    "tags": [
+      "scope:shared",
+      "type:observability"
+    ]
   }
 }

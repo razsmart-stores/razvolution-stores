@@ -5,17 +5,25 @@
   "type": "commonjs",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "dependencies": {
     "tslib": "^2.3.0",
     "next": "14.2.3",
     "zod": "^3.23.8",
     "@razvolution/shared-auth-contracts": "workspace:*",
+    "@razvolution/shared-db-types": "workspace:*",
     "@razvolution/shared-logging": "workspace:*",
-    "@razvolution/shared-supabase": "workspace:*",
-    "@razvolution/shared-utils": "workspace:*",
     "@razvolution/shared-payments": "workspace:*",
     "@razvolution/shared-shopify": "workspace:*",
-    "@razvolution/shared-db-types": "workspace:*"
+    "@razvolution/shared-supabase": "workspace:*",
+    "@razvolution/shared-utils": "workspace:*"
   },
   "devDependencies": {}
 }

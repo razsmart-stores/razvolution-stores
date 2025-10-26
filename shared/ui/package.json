@@ -5,10 +5,17 @@
   "type": "commonjs",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "dependencies": {
     "tslib": "^2.3.0",
     "react": "18.3.1",
-    "@razvolution/shared-utils": "workspace:*",
     "@radix-ui/react-accordion": "^1.1.2",
     "framer-motion": "^12.23.12",
     "class-variance-authority": "^0.7.0",
@@ -46,6 +53,13 @@
     "ogl": "^1.0.11",
     "gsap": "^3.13.0",
     "@razvolution/shared-logging": "workspace:*",
+    "@razvolution/shared-utils": "workspace:*",
     "@razvolution/shared-i18n-contracts": "workspace:*"
+  },
+  "nx": {
+    "tags": [
+      "scope:shared",
+      "type:ui"
+    ]
   }
 }

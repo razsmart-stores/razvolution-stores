@@ -1,5 +1,20 @@
-# Add files here to ignore them from prettier formatting
-/dist
-/coverage
-/.nx/cache
-/.nx/workspace-data
+# RUTA: .prettierignore
+
+# Ignorar todas las dependencias
+node_modules
+
+# Ignorar todos los artefactos de build y compilación
+dist
+.next
+.nx
+
+# Ignorar cachés y logs
+coverage
+tmp
+*.log
+error.log
+pnpm-lock.yaml
+
+# Ignorar archivos específicos de Vercel y Verdaccio
+.vercel
+.verdaccio

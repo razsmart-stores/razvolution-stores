@@ -1,5 +1,7 @@
 pnpm nx show projects
 
+nx run apps-store:build:production
+
 npx create-nx-workspace@latest razvolution
 
 pnpm nx g @nx/react:lib shared/ui --tags="scope:shared,type:ui" --importPath="@revolution-supplements/shared/ui" --buildable --bundler=tsc

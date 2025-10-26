@@ -702,7 +702,11 @@ importers:
         specifier: ^2.3.0
         version: 2.8.1
 
-  shared/rewards-contracts: {}
+  shared/rewards-contracts:
+    dependencies:
+      tslib:
+        specifier: ^2.3.0
+        version: 2.8.1
 
   shared/shipping:
     dependencies:
@@ -922,6 +926,9 @@ importers:
       '@razvolution/shared-db-types':
         specifier: workspace:*
         version: link:../db-types
+      tslib:
+        specifier: ^2.3.0
+        version: 2.8.1
 
   tools:
     dependencies:
